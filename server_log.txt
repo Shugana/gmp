@@ -1,0 +1,324 @@
+[19:15:15] 
+[19:15:15] Gothic Multiplayer Dedicated Server
+[19:15:15] -----------------------------------
+[19:15:15] GMP 1.6.0
+[19:15:15] -----------------------------------
+[19:15:15] https://gitlab.com/Reveares/GMP
+[19:15:15] https://discord.gg/JHuQvWB
+[19:15:15] 
+[19:15:15] Loading server configuration...
+[19:15:15] hostname:         GMP-Server
+[19:15:15] max players:      200
+[19:15:15] max bots:         2000
+[19:15:15] max timers:       1000
+[19:15:15] max items:        1000
+[19:15:15] max sounds:       1000
+[19:15:15] max global draws: 1000
+[19:15:15] max textures:     1000
+[19:15:15] stream distance:  3500 centimeters
+[19:15:15] stream rate:      1000 milliseconds
+[19:15:15] position rate:    200 milliseconds
+[19:15:15] key rate:         70 milliseconds
+[19:15:15] game time rate:   4000 milliseconds
+[19:15:15] bot update rate:  500 milliseconds
+[19:15:15] unsynch items:    true
+[19:15:15] stagger on hit:   true
+[19:15:15] Configuration successfully loaded.
+[19:15:15] 
+[19:15:15] 
+Gamemode 'gamemodes/new.lua' has been loaded.
+
+[19:15:15] 
+
+[19:15:15] [ERROR] Syntax: cannot open filterscripts/new.lua: No such file or directory
+[19:16:15] 
+[19:16:15] Gothic Multiplayer Dedicated Server
+[19:16:15] -----------------------------------
+[19:16:15] GMP 1.6.0
+[19:16:15] -----------------------------------
+[19:16:15] https://gitlab.com/Reveares/GMP
+[19:16:15] https://discord.gg/JHuQvWB
+[19:16:15] 
+[19:16:15] Loading server configuration...
+[19:16:15] hostname:         GMP-Server
+[19:16:15] max players:      200
+[19:16:15] max bots:         2000
+[19:16:15] max timers:       1000
+[19:16:15] max items:        1000
+[19:16:15] max sounds:       1000
+[19:16:15] max global draws: 1000
+[19:16:15] max textures:     1000
+[19:16:15] stream distance:  3500 centimeters
+[19:16:15] stream rate:      1000 milliseconds
+[19:16:15] position rate:    200 milliseconds
+[19:16:15] key rate:         70 milliseconds
+[19:16:15] game time rate:   4000 milliseconds
+[19:16:15] bot update rate:  500 milliseconds
+[19:16:15] unsynch items:    true
+[19:16:15] stagger on hit:   true
+[19:16:15] Configuration successfully loaded.
+[19:16:15] 
+[19:16:15] 
+Gamemode 'gamemodes/new.lua' has been loaded.
+
+[19:16:15] 
+
+[19:16:15] Awaiting for connections on 10.0.2.15|28960...
+[19:34:22] 
+[19:34:22] Gothic Multiplayer Dedicated Server
+[19:34:22] -----------------------------------
+[19:34:22] GMP 1.6.0
+[19:34:22] -----------------------------------
+[19:34:22] https://gitlab.com/Reveares/GMP
+[19:34:22] https://discord.gg/JHuQvWB
+[19:34:22] 
+[19:34:22] Loading server configuration...
+[19:34:22] hostname:         GMP-Server
+[19:34:22] max players:      200
+[19:34:22] max bots:         2000
+[19:34:22] max timers:       1000
+[19:34:22] max items:        1000
+[19:34:22] max sounds:       1000
+[19:34:22] max global draws: 1000
+[19:34:22] max textures:     1000
+[19:34:22] stream distance:  3500 centimeters
+[19:34:22] stream rate:      1000 milliseconds
+[19:34:22] position rate:    200 milliseconds
+[19:34:22] key rate:         70 milliseconds
+[19:34:22] game time rate:   4000 milliseconds
+[19:34:22] bot update rate:  500 milliseconds
+[19:34:22] unsynch items:    true
+[19:34:22] stagger on hit:   true
+[19:34:22] Configuration successfully loaded.
+[19:34:22] 
+[19:34:22] 
+Gamemode 'gamemodes/new.lua' has been loaded.
+
+[19:34:22] 
+
+[19:34:22] Awaiting for connections on 192.168.178.71|28960...
+[19:34:48] Incoming connection: 192.168.178.20|55103
+[19:34:48] [join] Nickname [192.168.178.20|55103] joined the server
+[19:35:03] [chat] Nickname: tet
+[19:35:40] [info] Nickname [192.168.178.20|55103] disconnected from server
+[20:12:32] 
+[20:12:32] Gothic Multiplayer Dedicated Server
+[20:12:32] -----------------------------------
+[20:12:32] GMP 1.6.0
+[20:12:32] -----------------------------------
+[20:12:32] https://gitlab.com/Reveares/GMP
+[20:12:32] https://discord.gg/JHuQvWB
+[20:12:32] 
+[20:12:32] Loading server configuration...
+[20:12:32] hostname:         GMP-Server
+[20:12:32] max players:      200
+[20:12:32] max bots:         2000
+[20:12:32] max timers:       1000
+[20:12:32] max items:        1000
+[20:12:32] max sounds:       1000
+[20:12:32] max global draws: 1000
+[20:12:32] max textures:     1000
+[20:12:32] stream distance:  3500 centimeters
+[20:12:32] stream rate:      1000 milliseconds
+[20:12:32] position rate:    200 milliseconds
+[20:12:32] key rate:         70 milliseconds
+[20:12:32] game time rate:   4000 milliseconds
+[20:12:32] bot update rate:  500 milliseconds
+[20:12:32] unsynch items:    true
+[20:12:32] stagger on hit:   true
+[20:12:32] Configuration successfully loaded.
+[20:12:32] 
+[20:12:32] 
+Gamemode 'gamemodes/new.lua' has been loaded.
+
+[20:12:32] 
+
+[20:12:32] Awaiting for connections on 192.168.178.71|28960...
+[20:12:46] Incoming connection: 192.168.178.20|58005
+[20:12:46] [join] ItchyWitchy [192.168.178.20|58005] joined the server
+[20:12:46] [ERROR] Runtime: gamemodes/new.lua:6: attempt to call global 'sendPlayerMessage' (a nil value)
+stack traceback:
+	gamemodes/new.lua:6: in function <gamemodes/new.lua:5>
+[20:13:07] [info] ItchyWitchy [192.168.178.20|58005] disconnected from server
+[20:13:33] 
+[20:13:33] Gothic Multiplayer Dedicated Server
+[20:13:33] -----------------------------------
+[20:13:33] GMP 1.6.0
+[20:13:33] -----------------------------------
+[20:13:33] https://gitlab.com/Reveares/GMP
+[20:13:33] https://discord.gg/JHuQvWB
+[20:13:33] 
+[20:13:33] Loading server configuration...
+[20:13:33] hostname:         GMP-Server
+[20:13:33] max players:      200
+[20:13:33] max bots:         2000
+[20:13:33] max timers:       1000
+[20:13:33] max items:        1000
+[20:13:33] max sounds:       1000
+[20:13:33] max global draws: 1000
+[20:13:33] max textures:     1000
+[20:13:33] stream distance:  3500 centimeters
+[20:13:33] stream rate:      1000 milliseconds
+[20:13:33] position rate:    200 milliseconds
+[20:13:33] key rate:         70 milliseconds
+[20:13:33] game time rate:   4000 milliseconds
+[20:13:33] bot update rate:  500 milliseconds
+[20:13:33] unsynch items:    true
+[20:13:33] stagger on hit:   true
+[20:13:33] Configuration successfully loaded.
+[20:13:33] 
+[20:13:33] 
+Gamemode 'gamemodes/new.lua' has been loaded.
+
+[20:13:33] 
+
+[20:13:33] Awaiting for connections on 192.168.178.71|28960...
+[20:13:43] Incoming connection: 192.168.178.20|63434
+[20:13:43] [join] ItchyWitchy [192.168.178.20|63434] joined the server
+[20:14:10] [chat] ItchyWitchy: test
+[20:14:35] [chat] ItchyWitchy: tetet
+[20:20:06] [info] ItchyWitchy [192.168.178.20|63434] disconnected from server
+[20:20:11] 
+[20:20:11] Gothic Multiplayer Dedicated Server
+[20:20:11] -----------------------------------
+[20:20:11] GMP 1.6.0
+[20:20:11] -----------------------------------
+[20:20:11] https://gitlab.com/Reveares/GMP
+[20:20:11] https://discord.gg/JHuQvWB
+[20:20:11] 
+[20:20:11] Loading server configuration...
+[20:20:11] hostname:         GMP-Server
+[20:20:11] max players:      200
+[20:20:11] max bots:         2000
+[20:20:11] max timers:       1000
+[20:20:11] max items:        1000
+[20:20:11] max sounds:       1000
+[20:20:11] max global draws: 1000
+[20:20:11] max textures:     1000
+[20:20:11] stream distance:  3500 centimeters
+[20:20:11] stream rate:      1000 milliseconds
+[20:20:11] position rate:    200 milliseconds
+[20:20:11] key rate:         70 milliseconds
+[20:20:11] game time rate:   4000 milliseconds
+[20:20:11] bot update rate:  500 milliseconds
+[20:20:11] unsynch items:    true
+[20:20:11] stagger on hit:   true
+[20:20:11] Configuration successfully loaded.
+[20:20:11] 
+[20:20:11] 
+Gamemode 'gamemodes/new.lua' has been loaded.
+
+[20:20:11] 
+
+[20:20:11] Awaiting for connections on 192.168.178.71|28960...
+[20:20:22] Incoming connection: 192.168.178.20|64046
+[20:20:22] [join] ItchyWitchy [192.168.178.20|64046] joined the server
+[20:20:32] [chat] ItchyWitchy: test
+[20:22:15] [info] ItchyWitchy [192.168.178.20|64046] disconnected from server
+[20:26:23] 
+[20:26:23] Gothic Multiplayer Dedicated Server
+[20:26:23] -----------------------------------
+[20:26:23] GMP 1.6.0
+[20:26:23] -----------------------------------
+[20:26:23] https://gitlab.com/Reveares/GMP
+[20:26:23] https://discord.gg/JHuQvWB
+[20:26:23] 
+[20:26:23] Loading server configuration...
+[20:26:23] hostname:         GMP-Server
+[20:26:23] max players:      200
+[20:26:23] max bots:         2000
+[20:26:23] max timers:       1000
+[20:26:23] max items:        1000
+[20:26:23] max sounds:       1000
+[20:26:23] max global draws: 1000
+[20:26:23] max textures:     1000
+[20:26:23] stream distance:  3500 centimeters
+[20:26:23] stream rate:      1000 milliseconds
+[20:26:23] position rate:    200 milliseconds
+[20:26:23] key rate:         70 milliseconds
+[20:26:23] game time rate:   4000 milliseconds
+[20:26:23] bot update rate:  500 milliseconds
+[20:26:23] unsynch items:    true
+[20:26:23] stagger on hit:   true
+[20:26:23] Configuration successfully loaded.
+[20:26:23] 
+[20:26:23] 
+Gamemode 'gamemodes/new.lua' has been loaded.
+
+[20:26:23] [ERROR] Runtime: gamemodes/new.lua:4: attempt to call global 'SetGameModeName' (a nil value)
+stack traceback:
+	gamemodes/new.lua:4: in function <gamemodes/new.lua:2>
+[20:26:23] 
+
+[20:26:23] Awaiting for connections on 192.168.178.71|28960...
+[20:27:02] 
+[20:27:02] Gothic Multiplayer Dedicated Server
+[20:27:02] -----------------------------------
+[20:27:02] GMP 1.6.0
+[20:27:02] -----------------------------------
+[20:27:02] https://gitlab.com/Reveares/GMP
+[20:27:02] https://discord.gg/JHuQvWB
+[20:27:02] 
+[20:27:02] Loading server configuration...
+[20:27:02] hostname:         GMP-Server
+[20:27:02] max players:      200
+[20:27:02] max bots:         2000
+[20:27:02] max timers:       1000
+[20:27:02] max items:        1000
+[20:27:02] max sounds:       1000
+[20:27:02] max global draws: 1000
+[20:27:02] max textures:     1000
+[20:27:02] stream distance:  3500 centimeters
+[20:27:02] stream rate:      1000 milliseconds
+[20:27:02] position rate:    200 milliseconds
+[20:27:02] key rate:         70 milliseconds
+[20:27:02] game time rate:   4000 milliseconds
+[20:27:02] bot update rate:  500 milliseconds
+[20:27:02] unsynch items:    true
+[20:27:02] stagger on hit:   true
+[20:27:02] Configuration successfully loaded.
+[20:27:02] 
+[20:27:02] 
+Gamemode 'gamemodes/new.lua' has been loaded.
+
+[20:27:02] 
+
+[20:27:02] Awaiting for connections on 192.168.178.71|28960...
+[20:27:25] Incoming connection: 192.168.178.20|50780
+[20:27:25] [join] ItchyWitchy [192.168.178.20|50780] joined the server
+[20:30:33] 
+[20:30:33] Gothic Multiplayer Dedicated Server
+[20:30:33] -----------------------------------
+[20:30:33] GMP 1.6.0
+[20:30:33] -----------------------------------
+[20:30:33] https://gitlab.com/Reveares/GMP
+[20:30:33] https://discord.gg/JHuQvWB
+[20:30:33] 
+[20:30:33] Loading server configuration...
+[20:30:33] hostname:         GMP-Server
+[20:30:33] max players:      200
+[20:30:33] max bots:         2000
+[20:30:33] max timers:       1000
+[20:30:33] max items:        1000
+[20:30:33] max sounds:       1000
+[20:30:33] max global draws: 1000
+[20:30:33] max textures:     1000
+[20:30:33] stream distance:  3500 centimeters
+[20:30:33] stream rate:      1000 milliseconds
+[20:30:33] position rate:    200 milliseconds
+[20:30:33] key rate:         70 milliseconds
+[20:30:33] game time rate:   4000 milliseconds
+[20:30:33] bot update rate:  500 milliseconds
+[20:30:33] unsynch items:    true
+[20:30:33] stagger on hit:   true
+[20:30:33] Configuration successfully loaded.
+[20:30:33] 
+[20:30:33] 
+Gamemode 'gamemodes/new.lua' has been loaded.
+
+[20:30:33] 
+
+[20:30:33] Awaiting for connections on 192.168.178.71|28960...
+[20:31:00] Incoming connection: 192.168.178.20|63096
+[20:31:00] [join] ItchyWitchy [192.168.178.20|63096] joined the server
+[20:32:47] [info] ItchyWitchy [192.168.178.20|63096] disconnected from server
