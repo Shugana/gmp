@@ -15,10 +15,7 @@ function OnPlayerConnect(playerid)
 end
 
 function OnPlayerText(playerid, text)
-  if not(text) then
-    return 0;
-  end
-  SendPlayerMessage(playerid, 207,175,55, "text send was: "..text);
+  OnPlayerCommandText(playerid, text);
   return 0;
 end
 
