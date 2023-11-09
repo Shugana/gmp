@@ -1,4 +1,3 @@
-
 function OnGamemodeInit()
   SetServerDescription("Fluffy Server");
   SetGamemodeName("Fluff Local Test");
@@ -24,7 +23,21 @@ function OnPlayerCommandText(playerid, command)
     return 0;
   end
   SendPlayerMessage(playerid, 207,175,55, "command send was: "..command);
-  if command == "/q" then
-	  ExitGame(playerid);
+  if FUNCTIONS[command] then
+    _G[command](playerid, params);
   end
 end
+
+function giveitem(playerid, params)
+  local result, itemid = sscanf(params, "s");
+  if (result ~= 1) then
+    SendPlayerMessage(playerid, 255,0,0, "invalid params");
+    return;
+  end
+  GiveItem(playerid, itemid, 1);
+end
+
+FUNCTIONS = {
+  q = "ExitGame"
+  giveitem = "giveitem"
+}
