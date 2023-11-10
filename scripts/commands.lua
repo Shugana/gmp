@@ -39,20 +39,19 @@ end
   
 function OnPlayerCommandText(playerid, text)
     if not(text) then
-        return 0;
+        return;
     end
     local command, params = GetCommand(text);
     if command:sub(1,1) == "/" then
-        command = command:sub(2).lower();
+        command = command:sub(2):lower();
         if not(COMMANDS[command]) 
         or not(PLAYERS[playerid].adminlevel > funcvalues.minadminlevel and (not(funcvalues.adminlevel) or PLAYERS[playerid].adminlevel == funcvalues.adminlevel)) then
             sendERRMessage(playerid, "Unbekannte Funktion: "..text);
             return;
         end
         _G[COMMANDS[command].func](playerid, params or "");
-        end
     else
-        sendINFOMessage(playerid, "used "..text);
+        sendINFOMessage(playerid, "chat "..text);
     end
 end
 
