@@ -36,14 +36,14 @@ function DB_insert(tablename, data)
     local values = {};
     local row = 1;
     for key,value in pairs(data) do
-        keys[row] = "'"..mysql_escape_string(DB.HANDLER, key).."'";
+        keys[row] = "`"..mysql_escape_string(DB.HANDLER, key).."`";
         values[row] = "'"..mysql_escape_string(DB.HANDLER, value).."'";
         row = row + 1;
     end
     keysstring = table.concat(keys, ", ");
     valuesstring = table.concat(values, ", ");
     
-    local query = "INSERT INTO '"..mysql_escape_string(DB.HANDLER, tablename).."' ("..keysstring..") VALUES ("..valuesstring..")";
+    local query = "INSERT INTO `"..mysql_escape_string(DB.HANDLER, tablename).."` ("..keysstring..") VALUES ("..valuesstring..")";
     sendINFOMessage(0, query);
     local response = mysql_query(DB.HANDLER, query);
     if response then
