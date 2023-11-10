@@ -11,7 +11,7 @@ COMMANDS = {
     },
     help = {
         func = "help",
-        help = "Zeigt diese Hilfe an"
+        help = "Zeigt diese Hilfe an",
         minadminlevel = ADMINRANKS.Ausgelogged
     },
     loc = {
