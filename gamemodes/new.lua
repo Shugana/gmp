@@ -8,7 +8,6 @@ function OnGamemodeInit()
 end
 
 function OnPlayerConnect(playerid)
-  SendPlayerMessage(playerid, 207,175,55, "connected to the fluff server, woop woop");
   SetPlayerWorld(playerid, "NEWWORLD\\KHORINIS.ZEN");
   SetPlayerPos(playerid, 0, 0, 0);
 end
@@ -28,18 +27,38 @@ function OnPlayerCommandText(playerid, command)
     if FUNCTIONS[cmd] then
       _G[FUNCTIONS[cmd].func](playerid, params or "");
     else
-      SendPlayerMessage(playerid, 255,0,0, "Unbekannte Funktion: "..command);
+      sendERRMessage(playerid, "Unbekannte Funktion: "..command);
     end
   end
 end
 
+function sendERRMessage(playerid, text)
+  SendPlayerMessage(playerid, 255, 0, 0, text);
+end
+
+function sendINFOMessage(playerid, text)
+  SendPlayerMessage(playerid, 207, 175,  55, text);
+end
+
 function giveitem(playerid, params)
-  local result, itemid = sscanf(params, "s");
+  local result, recipientid, itemid, amount = sscanf(params, "dsd");
   if (result ~= 1) then
-    SendPlayerMessage(playerid, 255,0,0, "invalid params");
+    sendERRMessage(playerid, "Ungültige Eingabe: versuche /giveitem <playerid> <itemid> <anzahl>");
     return;
   end
-  GiveItem(playerid, itemid, 1);
+  if (amount < 1) then
+    sendERRMessage(playerid, "Ungültige Eingabe: versuche /giveitem <playerid> <itemid> <anzahl>");
+    return;
+  end
+  if IsPlayerConnected(recipientid) then
+    sendERRMessage(playerid, "Spieler mit id "..recipientid.." ist nicht verbunden.");
+    return;
+  end
+  sendINFOMessage(playerid, GetPlayerName(playerid).." cheated "..GetPlayerName(recipientid).." "..amount.."x "..itemid);
+  if (recipientid ~= playerid) then
+    sendINFOMessage(recipientid, GetPlayerName(playerid).." cheated "..GetPlayerName(recipientid).." "..amount.."x "..itemid);
+  end
+  GiveItem(recipientid, itemid, amount);
 end
 
 function leaveGame(playerid, params)
@@ -48,8 +67,14 @@ end
 
 function help(playerid, params)
   for funcname, funcvalues in pairs(FUNCTIONS) do
-    SendPlayerMessage(playerid, 207, 175, 55, funcname..": "..funcvalues.help);
+    sendINFOMessage(playerid, funcname..": "..funcvalues.help);
   end
+end
+
+function getLocation(playerid, _params)
+  local world = GetPlayerWorld(playerid);
+  local x, y, z = GetPlayerPos(playerid);
+  sendINFOMessage(playerid, "Du bist in "..world.." bei "..math.ceil(x)..", "..math.ceil(y)..", "..math.ceil(z));
 end
 
 FUNCTIONS = {
@@ -64,5 +89,9 @@ FUNCTIONS = {
   help = {
     func = "help",
     help = "Zeigt diese Hilfe an"
+  },
+  loc = {
+    func = "getLocation",
+    help = "Zeigt dir an wo du bist"
   }
 };
