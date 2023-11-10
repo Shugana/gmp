@@ -19,7 +19,7 @@ function registerAccount(playerid, params)
     end
     name = name:sub(1,1):upper()..name:sub(2);
     local hashed = MD5(password);
-    local accounts = DB_select("*", "accounts", "name="..mysql_escape_string(DB.HANDLER, name));
+    local accounts = DB_select("*", "accounts", "name='"..mysql_escape_string(DB.HANDLER, name).."'");
     for _, _account in pairs(accounts) do
         sendERRMessage(playerid, "Account besteht bereits");
         return;
