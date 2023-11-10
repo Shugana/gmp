@@ -22,12 +22,13 @@ function OnPlayerCommandText(playerid, command)
   if not(command) then
     return 0;
   end
-  SendPlayerMessage(playerid, 207,175,55, "command send was: "..command);
   local cmd, params = GetCommand(command);
   if cmd:sub(1,1) == "/" then
     cmd = cmd:sub(2);
     if FUNCTIONS[cmd] then
-      _G[cmd.func](playerid, params or "");
+      _G[FUNCTIONS[cmd].func](playerid, params or "");
+    else
+      SendPlayerMessage(playerid, 255,0,0, "Unbekannte Funktion: "..command);
     end
   end
 end
