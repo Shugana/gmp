@@ -130,7 +130,7 @@ SPAWNS = {
     spawned = false
   },
   [2] = {
-    item = "ItPl_Mana_Herb_01"
+    item = "ItPl_Mana_Herb_01",
     location = {
       x = 310,
       y = -96,
