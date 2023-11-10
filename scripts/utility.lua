@@ -15,3 +15,7 @@ end
 function leaveGame(playerid, params)
     ExitGame(playerid);
 end
+
+function capitalize(text)
+    return text:sub(1,1):upper()..text:sub(2):lower();
+end
