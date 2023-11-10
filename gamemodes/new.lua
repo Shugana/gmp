@@ -1,3 +1,6 @@
+require("settings/db");
+
+require("scripts/db");
 require("scripts/commands");
 require("scripts/utility");
 require("scripts/itemhandling");
