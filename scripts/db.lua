@@ -36,7 +36,6 @@ function DB_insert(tablename, data)
     for key,value in pairs(data) do
         keys[row] = "'"..mysql_escape_string(DB.HANDLER, key).."'";
         values[row] = "'"..mysql_escape_string(DB.HANDLER, value).."'";
-        
         row = row + 1;
     end
     keysstring = table.concat(keys, ", ");
@@ -47,6 +46,5 @@ function DB_insert(tablename, data)
     if response then
         result = mysql_insert_id(mysql_handler);
     end
-    mysql_free_result(response);
     return result;
 end
