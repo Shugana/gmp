@@ -43,7 +43,8 @@ function DB_insert(tablename, data)
     keysstring = table.concat(keys, ", ");
     valuesstring = table.concat(values, ", ");
     
-    local query = "INSERT INTO '"..mysql_escape_string(DB.HANDLER, tablename).."' ("..keysstring..") VALUES ("..valuesstring..");";
+    local query = "INSERT INTO '"..mysql_escape_string(DB.HANDLER, tablename).."' ("..keysstring..") VALUES ("..valuesstring..")";
+    sendINFOMessage(0, query);
     local response = mysql_query(DB.HANDLER, query);
     if response then
         result = mysql_insert_id(DB.HANDLER);
