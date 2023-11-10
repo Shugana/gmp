@@ -51,7 +51,7 @@ function giveitem(playerid, params)
     sendERRMessage(playerid, "Ungültige Eingabe: versuche /giveitem <playerid> <itemid> <anzahl>");
     return;
   end
-  if IsPlayerConnected(recipientid) then
+  if not(IsPlayerConnected(recipientid)) then
     sendERRMessage(playerid, "Spieler mit id "..recipientid.." ist nicht verbunden.");
     return;
   end
@@ -93,9 +93,13 @@ function OnServerWorldTime(oldHour, oldMinute, newHour, newMinute)
 end
 
 function OnPlayerTakeItem(playerid, itemid, item_instance, amount, x, y, z, worldName)
+  if (itemid < 0) then
+    return;
+  end
   sendINFOMessage(playerid, "DEBUG OnPlayerTakeItem - Playerid: "..playerid..", itemid: "..itemid..", item_instance: "..item_instance..", amount: "..amount..", x: "..x..", y: "..y..", z: "..z..", worldName: "..worldName);
   GiveItem(playerid, item_instance, amount);
-  SPAWNS[WORLDITEMS.itemid].spawned = false;
+  SPAWNS[WORLDITEMS[itemid]].spawned = false;
+  WORLDITEMS[itemid] = nil;
 end
 
 WORLDITEMS = {};
