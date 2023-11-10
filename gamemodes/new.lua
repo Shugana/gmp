@@ -27,7 +27,7 @@ function OnPlayerCommandText(playerid, command)
   if cmd:sub(1,1) == "/" then
     cmd = cmd:sub(2);
     if FUNCTIONS[cmd] then
-      _G[cmd](playerid, params);
+      _G[cmd.func](playerid, params or "");
     end
   end
 end
@@ -41,7 +41,27 @@ function giveitem(playerid, params)
   GiveItem(playerid, itemid, 1);
 end
 
+function leaveGame(playerid, params)
+  ExitGame(playerid);
+end
+
+function help(playerid, params)
+  for funcname, funcvalues in pairs(FUNCTIONS) do
+    SendPlayerMessage(playerid, 207, 175, 55, funcname..": "..funcvalues.help);
+  end
+end
+
 FUNCTIONS = {
-  q = "ExitGame",
-  giveitem = "giveitem"
+  q = {
+    func = "leaveGame",
+    help = "Schlieﬂt das Game"
+  },
+  giveitem = {
+    func = "giveitem",
+    help = "Cheated ein Item"
+  },
+  help = {
+    func = "help",
+    help = "Zeigt diese Hilfe an"
+  }
 };
