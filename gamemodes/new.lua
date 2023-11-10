@@ -78,6 +78,28 @@ function getLocation(playerid, _params)
   sendINFOMessage(playerid, "Du bist in "..world.." bei "..math.ceil(x)..", "..math.ceil(y)..", "..math.ceil(z));
 end
 
+function OnServerWorldTime(oldHour, oldMinute, newHour, newMinute)
+  local rnd = math.random(1, 5);
+  if rnd ~= 3 then
+    return;
+  end
+  for spawnid, spawndata in pairs(SPAWNS) do
+    if (spawndata.spawned == false) then
+      local itemid = CreateItem(row.iteminstance, 1, spawndata.location.x, spawndata.location.y, spawndata.location.z);
+      WORLDITEMS[itemid] = spawnid;
+      SPAWNS[spawnid].spawned = true;
+    end
+  end
+end
+
+function OnPlayerTakeItem(playerid, itemid, item_instance, amount, x, y, z, worldName)
+  sendINFOMessage(playerid, "DEBUG OnPlayerTakeItem - Playerid: "..playerid..", itemid: "..itemid..", item_instance: "..item_instance..", amount: "..amount..", x: "..x..", y: "..y..", z: "..z..", worldName: "..worldName);
+  GiveItem(playerid, item_instance, amount);
+  SPAWNS[WORLDITEMS.itemid].spawned = false;
+end
+
+WORLDITEMS = {};
+
 FUNCTIONS = {
   q = {
     func = "leaveGame",
@@ -96,3 +118,24 @@ FUNCTIONS = {
     help = "Zeigt dir an wo du bist"
   }
 };
+
+SPAWNS = {
+  [1] = {
+    item = "ItPl_Beet",
+    location = {
+      x = 311,
+      y = -88,
+      z = -1552
+    },
+    spawned = false
+  },
+  [2] = {
+    item = "ItPl_Mana_Herb_01"
+    location = {
+      x = 310,
+      y = -96,
+      z = -1800
+    },
+    spawned = false
+  }
+}
