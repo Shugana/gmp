@@ -17,7 +17,7 @@ function DB_select(selection, tablename, condition)
     local result = {};
     local query = "SELECT "..mysql_escape_string(DB.HANDLER, selection)
         .." FROM "..mysql_escape_string(DB.HANDLER, tablename)
-        .." WHERE "..mysql_escape_string(DB.HANDLER, condition);
+        .." WHERE "..condition;
     local response = mysql_query(DB.HANDLER, query);
     local row = mysql_fetch_assoc(response);
     local length = 0;

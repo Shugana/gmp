@@ -37,7 +37,7 @@ function loginAccount(playerid, params)
     end
     name = name:sub(1,1):upper()..name:sub(2);
     local hashed = MD5(password);
-    local accounts = DB_select("*", "accounts", "name="..mysql_escape_string(DB.HANDLER, name).." AND password="..mysql_escape_string(DB.HANDLER, hashed));
+    local accounts = DB_select("*", "accounts", "name='"..mysql_escape_string(DB.HANDLER, name).."' AND password='"..mysql_escape_string(DB.HANDLER, hashed).."'");
     for _, account in pairs(accounts) do
         PLAYERS[playerid] = {
             account = account.id,
