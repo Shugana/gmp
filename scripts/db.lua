@@ -17,12 +17,12 @@ function DB_select(selection, table, condition)
     local data = {};
     local query = "SELECT "..selection.." FROM "..table.." WHERE "..condition;
     local result = mysql_query(DB.HANDLER, query);
-    local row = mysql_fetch_row(result);
+    local row = mysql_fetch_assoc(result);
     local length = 0;
     while row ~= nil do
         length = length + 1;
         data[length] = row;
-        row = mysql_fetch_row(result);
+        row = mysql_fetch_assoc(result);
     end
     mysql_free_result(result);
     return data;
