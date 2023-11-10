@@ -51,17 +51,17 @@ end
 function testdb(playerid, params)
     local a = DB_select("*", "test", "1");
     sendERRMessage(playerid, "Table A");
-    for x, y in pairs(a) do
-        SendPlayerMessage(playerid, "x: "..x..", y:"..y);
+    for _, row in pairs(a) do
+        SendPlayerMessage(playerid, "bla: "..row.bla..", blubb: "..row.blubb..", fasel"..row.fasel);
     end
     local b = DB_select("*", "test", "id=2");
     sendERRMessage(playerid, "Table B");
-    for x, y in pairs(a) do
-        SendPlayerMessage(playerid, "x: "..x..", y:"..y);
+    for _, row in pairs(a) do
+        SendPlayerMessage(playerid, "bla: "..row.bla..", blubb: "..row.blubb..", fasel"..row.fasel);
     end
     local c = DB_select("*", "test", "id=6");
     sendERRMessage(playerid, "Table C");
-    for x, y in pairs(a) do
-        SendPlayerMessage(playerid, "x: "..x..", y:"..y);
+    for _, row in pairs(a) do
+        SendPlayerMessage(playerid, "bla: "..row.bla..", blubb: "..row.blubb..", fasel"..row.fasel);
     end
 end
