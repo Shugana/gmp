@@ -15,7 +15,9 @@ end
 
 function DB_select(selection, tablename, condition)
     local result = {};
-    local query = "SELECT "..selection.." FROM "..tablename.." WHERE "..condition;
+    local query = "SELECT "..mysql_escape_string(DB.HANDLER, selection)
+        .." FROM "..mysql_escape_string(DB.HANDLER, tablename)
+        .." WHERE "..mysql_escape_string(DB.HANDLER, condition);
     local response = mysql_query(DB.HANDLER, query);
     local row = mysql_fetch_assoc(response);
     local length = 0;
@@ -41,7 +43,7 @@ function DB_insert(tablename, data)
     keysstring = table.concat(keys, ", ");
     valuesstring = table.concat(values, ", ");
     
-    local query = "INSERT INTO '"..tablename.."'("..keysstring..") VALUES ("..valuesstring..");";
+    local query = "INSERT INTO "..mysql_escape_string(DB.HANDLER, tablename).."("..keysstring..") VALUES ("..valuesstring..");";
     local response = mysql_query(DB.HANDLER, query);
     if response then
         result = mysql_insert_id(DB.HANDLER);
