@@ -49,11 +49,16 @@ function sendINFOMessage(playerid, text)
 end
 
 function testdb(playerid, params)
+    testReadDB(playerid);
+    testDeleteDB(playerid)
+    testReadDB(playerid);
     testWriteDB(playerid);
     testReadDB(playerid);
+    testDeleteDB(playerid)
 end
 
 function testReadDB(playerid)
+    sendERRMessage(playerid, "new call");
     local a = DB_select("*", "test", "1");
     for _, row in pairs(a) do
         sendINFOMessage(playerid, "bla: "..row.bla..", blubb: "..row.blubb..", fasel"..row.fasel);
@@ -61,21 +66,13 @@ function testReadDB(playerid)
 end
 
 function testWriteDB(playerid)
-    sendERRMessage(playerid, "Start Writing");
     DB_insert("test", {
         bla="x",
         blubb="y",
         fasel="z"
     });
-    DB_insert("test", {
-        bla="a",
-        blubb="b",
-        fasel="c"
-    });
-    DB_insert("test", {
-        bla="d",
-        blubb="ff",
-        fasel="ggg"
-    });
-    sendERRMessage(playerid, "End Writing");
+end
+
+function testDeleteDB(playerid)
+    DB_delete("test", "1");
 end

@@ -44,10 +44,17 @@ function DB_insert(tablename, data)
     valuesstring = table.concat(values, ", ");
     
     local query = "INSERT INTO `"..mysql_escape_string(DB.HANDLER, tablename).."` ("..keysstring..") VALUES ("..valuesstring..")";
-    sendINFOMessage(0, query);
     local response = mysql_query(DB.HANDLER, query);
     if response then
         result = mysql_insert_id(DB.HANDLER);
     end
     return result;
+end
+
+function DB_delete(tablename, condition)
+	local query = "DELETE FROM `"..tablename.."` WHERE "..condition..";";
+    local response = mysql_query(DB.HANDLER, query);
+	mysql_free_result(response);
+    local affected = mysql_affected_rows(DB.HANDLER);
+	return affected;
 end
