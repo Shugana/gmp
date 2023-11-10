@@ -43,6 +43,9 @@ function loginAccount(playerid, params)
             account = account.id,
             adminlevel = account.adminlevel
         }
+        sendINFOMessage(playerid, account.name);
+        sendINFOMessage(playerid, account.adminlevel);
+        sendINFOMessage(playerid, ADMINRANKS[account.adminlevel]);
         sendINFOMessage(playerid, "Erfolgreich eingelogged als "..account.name..". Du hast den Adminrang "..ADMINRANKS[account.adminlevel]);
         return;
     end
