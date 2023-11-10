@@ -72,8 +72,8 @@ function DB_update(tablename, data, condition)
         return false;
     end
     mysql_free_result(response);
-    local affectedrows = mysql_affected_rows(DB.HANDLER);
-    if affectedrows < 1 then
+    local affected = mysql_affected_rows(DB.HANDLER);
+    if affected < 1 then
         return false;
     end
     return true;
