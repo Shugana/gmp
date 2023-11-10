@@ -13,7 +13,7 @@ ADMINRANKS = {
 
 function registerAccount(playerid, params)
     local result, name, password = sscanf(params, "ss");
-    if not(result) then
+    if (result ~= 1) then
         sendERRMessage(playerid, "Benutze /register <Account> <Password>");
         return;
     end
@@ -31,7 +31,7 @@ end
 
 function loginAccount(playerid, params)
     local result, name, password = sscanf(params, "ss");
-    if not(result) then
+    if (result ~= 1) then
         sendERRMessage(playerid, "Benutze /login <Account> <Password>");
         return;
     end
