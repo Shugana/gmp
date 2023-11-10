@@ -40,9 +40,8 @@ function DB_insert(tablename, data)
         values[row] = "'"..mysql_escape_string(DB.HANDLER, value).."'";
         row = row + 1;
     end
-    keysstring = table.concat(keys, ", ");
-    valuesstring = table.concat(values, ", ");
-    
+    local keysstring = table.concat(keys, ", ");
+    local valuesstring = table.concat(values, ", ");
     local query = "INSERT INTO `"..mysql_escape_string(DB.HANDLER, tablename).."` ("..keysstring..") VALUES ("..valuesstring..")";
     local response = mysql_query(DB.HANDLER, query);
     if response then
@@ -57,4 +56,25 @@ function DB_delete(tablename, condition)
 	mysql_free_result(response);
     local affected = mysql_affected_rows(DB.HANDLER);
 	return affected;
+end
+
+function DB_update(tablename, data, condition)
+    local updates = {};
+    local row = 1;
+	for key, value in pairs(data) do
+        updates[row] = "`"..mysql_escape_string(DB.HANDLER, key).."` = '"..mysql_escape_string(DB.HANDLER, value).."'";
+	end
+    local updatesstring = table.concat(updates, ", ");
+
+	local query = "UPDATE `"..mysql_escape_string(DB.HANDLER, tablename).."` SET "..updatesstring.." WHERE "..condition..";";
+	local response = mysql_query(DB.HANDLER, query);
+	if not(response) then
+        return false;
+    end
+    mysql_free_result(response);
+    local affectedrows = mysql_affected_rows(DB.HANDLER);
+    if affectedrows < 1 then
+        return false;
+    end
+    return true;
 end

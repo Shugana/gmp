@@ -49,16 +49,10 @@ function sendINFOMessage(playerid, text)
 end
 
 function testdb(playerid, params)
-    testReadDB(playerid);
-    testDeleteDB(playerid)
-    testReadDB(playerid);
-    testWriteDB(playerid);
-    testReadDB(playerid);
-    testDeleteDB(playerid)
+    testUpdateDB(playerid);
 end
 
 function testReadDB(playerid)
-    sendERRMessage(playerid, "new call");
     local a = DB_select("*", "test", "1");
     for _, row in pairs(a) do
         sendINFOMessage(playerid, "bla: "..row.bla..", blubb: "..row.blubb..", fasel"..row.fasel);
@@ -75,4 +69,46 @@ end
 
 function testDeleteDB(playerid)
     DB_delete("test", "1");
+end
+
+function testUpdateDB(playerid)
+    sendERRMessage(playerid, "new call a");
+    local a = DB_update("test", {bla="a"}, "1"); -- everything
+    if (a) then
+        sendINFOMessage("a success");
+    else
+        sendINFOMessage("a fail");
+    end
+
+    sendERRMessage(playerid, "new call b");
+    local b = DB_update("test", {bla="b"}, "blubb='b'"); -- one
+    if (b) then
+        sendINFOMessage("b success");
+    else
+        sendINFOMessage("b fail");
+    end
+
+    sendERRMessage(playerid, "new call c");
+    local c = DB_update("test", {bla="c"}, "fasel='hurz'"); -- zero
+    if (c) then
+        sendINFOMessage("c success");
+    else
+        sendINFOMessage("c fail");
+    end
+
+    sendERRMessage(playerid, "new call d");
+    local d = DB_update("test", {bla="d"}, "derp='hurz'"); -- derp does not exist
+    if (d) then
+        sendINFOMessage("d success");
+    else
+        sendINFOMessage("d fail");
+    end
+
+    sendERRMessage(playerid, "new call e");
+    local e = DB_update("test", {derp="e"}, "1"); -- derp does not exist
+    if (e) then
+        sendINFOMessage("e success");
+    else
+        sendINFOMessage("e fail");
+    end
 end
