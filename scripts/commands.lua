@@ -21,7 +21,7 @@ COMMANDS = {
     },
     register = {
         func = "registerAccount",
-        help = "Legt einen neuen Accounts an",
+        help = "Legt einen neuen Account an",
         minadminlevel = ADMINRANKS.Ausgelogged,
         adminlevel = ADMINRANKS.Ausgelogged
     },
