@@ -1,6 +1,8 @@
 function help(playerid, params)
     for funcname, funcvalues in pairs(COMMANDS) do
-        sendINFOMessage(playerid, funcname..": "..funcvalues.help);
+        if (PLAYERS[playerid].adminlevel > funcvalues.minadminlevel and (not(funcvalues.adminlevel) or PLAYERS[playerid].adminlevel == funcvalues.adminlevel)) then
+            sendINFOMessage(playerid, funcname..": "..funcvalues.help);
+        end
     end
 end
 
