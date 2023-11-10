@@ -30,7 +30,7 @@ function OnPlayerCommandText(playerid, text)
         command = command:sub(2);
         if COMMANDS[command] then
             _G[COMMANDS[command].func](playerid, params or "");
-        elses
+        else
             sendERRMessage(playerid, "Unbekannte Funktion: "..text);
         end
     end
