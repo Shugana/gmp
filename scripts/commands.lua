@@ -14,6 +14,10 @@ COMMANDS = {
     loc = {
         func = "getLocation",
         help = "Zeigt dir an wo du bist"
+    },
+    testdb = {
+        func = "testdb",
+        help = "test the database"
     }
 };
 
@@ -42,4 +46,22 @@ end
 
 function sendINFOMessage(playerid, text)
     SendPlayerMessage(playerid, 207, 175, 55, text);
+end
+
+function testdb(playerid, params)
+    local a = DB_select("*", "test", "1");
+    sendERRMessage(playerid, "Table A");
+    for x, y in Pairs(a) do
+        SendPlayerMessage(playerid, "x: "..x..", y:"..y);
+    end
+    local b = DB_select("*", "test", "id=2");
+    sendERRMessage(playerid, "Table B");
+    for x, y in Pairs(a) do
+        SendPlayerMessage(playerid, "x: "..x..", y:"..y);
+    end
+    local c = DB_select("*", "test", "id=6");
+    sendERRMessage(playerid, "Table C");
+    for x, y in Pairs(a) do
+        SendPlayerMessage(playerid, "x: "..x..", y:"..y);
+    end
 end
