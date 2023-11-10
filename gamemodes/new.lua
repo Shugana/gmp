@@ -1,8 +1,8 @@
-require("/scripts/commands.lua");
-require("/scripts/utility.lua");
-require("/scripts/itemhandling.lua");
-require("/scripts/login.lua");
-require("/scripts/onserverworldtime.lua");
+require("scripts/commands");
+require("scripts/utility");
+require("scripts/itemhandling");
+require("scripts/login");
+require("scripts/onserverworldtime");
 
 function OnGamemodeInit()
     SetServerDescription("Fluffy Server");
