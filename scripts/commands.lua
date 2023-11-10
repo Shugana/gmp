@@ -52,16 +52,20 @@ function testdb(playerid, params)
     local a = DB_select("*", "test", "1");
     sendERRMessage(playerid, "Table A");
     for _, row in pairs(a) do
+        for x, y in pairs(row) do
+            sendERRMessage(playerid, x);
+            sendERRMessage(playerid, y);
+        end
         SendPlayerMessage(playerid, "bla: "..row.bla..", blubb: "..row.blubb..", fasel"..row.fasel);
     end
     local b = DB_select("*", "test", "id=2");
     sendERRMessage(playerid, "Table B");
-    for _, row in pairs(a) do
+    for _, row in pairs(b) do
         SendPlayerMessage(playerid, "bla: "..row.bla..", blubb: "..row.blubb..", fasel"..row.fasel);
     end
     local c = DB_select("*", "test", "id=6");
     sendERRMessage(playerid, "Table C");
-    for _, row in pairs(a) do
+    for _, row in pairs(c) do
         SendPlayerMessage(playerid, "bla: "..row.bla..", blubb: "..row.blubb..", fasel"..row.fasel);
     end
 end
