@@ -45,7 +45,7 @@ function OnPlayerCommandText(playerid, text)
     if command:sub(1,1) == "/" then
         command = command:sub(2):lower();
         if not(COMMANDS[command]) 
-        or not(PLAYERS[playerid].adminlevel > COMMANDS[command].minadminlevel and (not(COMMANDS[command].adminlevel) or PLAYERS[playerid].adminlevel == COMMANDS[command].adminlevel)) then
+        or not(PLAYERS[playerid].adminlevel >= COMMANDS[command].minadminlevel and (not(COMMANDS[command].adminlevel) or PLAYERS[playerid].adminlevel == COMMANDS[command].adminlevel)) then
             sendERRMessage(playerid, "Unbekannte Funktion: "..text);
             return;
         end
