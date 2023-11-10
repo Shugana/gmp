@@ -23,8 +23,12 @@ function OnPlayerCommandText(playerid, command)
     return 0;
   end
   SendPlayerMessage(playerid, 207,175,55, "command send was: "..command);
-  if FUNCTIONS[command] then
-    _G[command](playerid, params);
+  local cmd, params = GetCommand(cmdtext);
+  if (cmd:sub(1,1) == "/")) then
+    cmd = cmd:sub(2);
+    if FUNCTIONS[cmd] then
+      _G[cmd](playerid, params);
+    end
   end
 end
 
