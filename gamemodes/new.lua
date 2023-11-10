@@ -14,4 +14,5 @@ function OnGamemodeInit()
     EnableExitGame(0);
     EnableChat(0);
     math.randomseed(os.time());
+    ConnectDB();
 end
