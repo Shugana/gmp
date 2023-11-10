@@ -22,7 +22,7 @@ function DB_select(selection, table, condition)
     while row ~= nil do
         length = length + 1;
         data[length] = row;
-        row = mysql_fetch_row(DB.HANDLER);
+        row = mysql_fetch_row(result);
     end
     mysql_free_result(DB.HANDLER);
     return data;
