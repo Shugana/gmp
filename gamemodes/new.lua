@@ -38,6 +38,6 @@ function giveitem(playerid, params)
 end
 
 FUNCTIONS = {
-  q = "ExitGame"
+  q = "ExitGame",
   giveitem = "giveitem"
-}
+};
