@@ -19,7 +19,7 @@ function registerAccount(playerid, params)
     end
     name = name:sub(1,1):upper()..name:sub(2);
     local hashed = MD5(password);
-    local accounts = DB_select("*", "accounts", "name='"..name.."'");
+    local accounts = DB_select("*", "accounts", "name="..name);
     for _, _account in pairs(accounts) do
         sendERRMessage(playerid, "Account besteht bereits");
         return;
@@ -37,7 +37,7 @@ function loginAccount(playerid, params)
     end
     name = name:sub(1,1):upper()..name:sub(2);
     local hashed = MD5(password);
-    local accounts = DB_select("*", "accounts", "name='"..name.."' AND password='"..hashed.."'");
+    local accounts = DB_select("*", "accounts", "name="..name.." AND password="..hashed);
     for _, account in pairs(accounts) do
         PLAYERS[playerid] = {
             account = account.id,
