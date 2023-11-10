@@ -24,6 +24,6 @@ function DB_select(selection, table, condition)
         data[length] = row;
         row = mysql_fetch_row(result);
     end
-    mysql_free_result(DB.HANDLER);
+    mysql_free_result(result);
     return data;
 end
