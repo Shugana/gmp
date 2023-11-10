@@ -40,13 +40,10 @@ function loginAccount(playerid, params)
     local accounts = DB_select("*", "accounts", "name='"..mysql_escape_string(DB.HANDLER, name).."' AND password='"..mysql_escape_string(DB.HANDLER, hashed).."'");
     for _, account in pairs(accounts) do
         PLAYERS[playerid] = {
-            account = account.id,
-            adminlevel = account.adminlevel
+            account = tonumber(account.id),
+            adminlevel = tonumber(account.adminlevel)
         }
-        sendINFOMessage(playerid, account.name);
-        sendINFOMessage(playerid, account.adminlevel);
-        sendINFOMessage(playerid, ADMINRANKS[account.adminlevel]);
-        sendINFOMessage(playerid, "Erfolgreich eingelogged als "..account.name..". Du hast den Adminrang "..ADMINRANKS[account.adminlevel]);
+        sendINFOMessage(playerid, "Erfolgreich eingelogged als "..name..". Du hast den Adminrang "..ADMINRANKS[PLAYERS[playerid].adminlevel]);
         return;
     end
     sendERRMessage(playerid, "Kein Account mit dieser Name/Passwort Kombination vorhanden.");
