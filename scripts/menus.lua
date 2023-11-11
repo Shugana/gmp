@@ -58,14 +58,12 @@ function OnPlayerMouse(playerid, mouse, pressed, pos_x, pos_y)
         return;
     end
     for _, button in pairs(PLAYERS[playerid].menu.buttons) do
-        if mouse == MB_LEFT and gotButton(button, pos_x, pos_y) then
-            _G[button.func](playerid, button.args);
-            SetCursorVisible(playerid, 0);
-            return;
-        end
-        if mouse == MB_RIGHT and gotButton(button, pos_x, pos_y) then
+        if gotButton(button, pos_x, pos_y) then
             clearMenu(playerid);
             SetCursorVisible(playerid, 0);
+            if mouse == MB_LEFT) then
+                _G[button.func](playerid, button.args);
+            end
             return;
         end
     end
