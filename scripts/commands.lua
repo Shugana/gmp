@@ -30,6 +30,16 @@ COMMANDS = {
         help = "Logged in einen Account ein",
         minadminlevel = ADMINRANKS.Ausgelogged,
         adminlevel = ADMINRANKS.Ausgelogged
+    },
+    testmenu = {
+        func = "testmenu",
+        help = "Zeigt ein Testmenü",
+        minadminlevel = ADMINRANKS.Ausgelogged
+    },
+    mouse = {
+        func = "mouseon",
+        help = "Gibt dir einen Mauscursor",
+        minadminlevel = ADMINRANKS.Ausgelogged
     }
 };
 
@@ -55,10 +65,6 @@ function OnPlayerCommandText(playerid, text)
     end
 end
 
-function sendERRMessage(playerid, text)
-    SendPlayerMessage(playerid, 255, 0, 0, text);
-end
-
-function sendINFOMessage(playerid, text)
-    SendPlayerMessage(playerid, 207, 175, 55, text);
+function mouseon(playerid, params)
+    SetCursorVisible(playerid, 1);
 end

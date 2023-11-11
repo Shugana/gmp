@@ -19,3 +19,11 @@ end
 function capitalize(text)
     return text:sub(1,1):upper()..text:sub(2):lower();
 end
+
+function sendERRMessage(playerid, text)
+    SendPlayerMessage(playerid, 255, 0, 0, text);
+end
+
+function sendINFOMessage(playerid, text)
+    SendPlayerMessage(playerid, 207, 175, 55, text);
+end

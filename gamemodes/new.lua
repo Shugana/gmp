@@ -6,7 +6,9 @@ require("scripts/commands");
 require("scripts/utility");
 require("scripts/itemhandling");
 require("scripts/login");
+require("scripts/menus");
 require("scripts/onserverworldtime");
+
 
 function OnGamemodeInit()
     SetServerDescription("Fluffy Server");
