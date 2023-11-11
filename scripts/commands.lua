@@ -35,7 +35,7 @@ COMMANDS = {
         func = "logoutAccount",
         help = "Logged aus einem Account aus",
         minadminlevel = ADMINRANKS.Spieler
-    }
+    },
     testmenu = {
         func = "testmenu",
         help = "Zeigt ein Testmenü",
