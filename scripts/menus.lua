@@ -11,7 +11,7 @@ function createButton(playerid, text, startx, starty, sizex, sizey, r, g, b, fun
         x_min = startx,
         x_max = startx+sizex,
         y_min = starty,
-        y_max = starty+endy,
+        y_max = starty+sizey,
         func = func,
         args = args
     });
