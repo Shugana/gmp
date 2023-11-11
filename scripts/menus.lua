@@ -55,7 +55,7 @@ end
 
 function OnPlayerMouse(playerid, button, pressed, pos_x, pos_y)
     if button == MB_LEFT and pressed == 1 then
-        for _, button in pairs(PLAYER[playerid].menu.buttons) do
+        for _, button in pairs(PLAYERS[playerid].menu.buttons) do
             if (button.min_x <= pos_x and button.max_x >= pos_x and button.min_y <= pos_y and button.max_y) then
                 _G[button.func](playerid, button.args);
                 SetCursorVisible(playerid, 0);
@@ -64,7 +64,7 @@ function OnPlayerMouse(playerid, button, pressed, pos_x, pos_y)
         end
     end
     if button == MB_RIGHT and pressed == 1 then        
-        for _, button in pairs(PLAYER[playerid].menu.buttons) do
+        for _, button in pairs(PLAYERS[playerid].menu.buttons) do
             if (button.min_x <= pos_x and button.max_x >= pos_x and button.min_y <= pos_y and button.max_y) then
                 clearMenu(playerid);
                 SetCursorVisible(playerid, 0);
