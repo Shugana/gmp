@@ -53,23 +53,24 @@ function setupMenu(playerid)
     SetCursorVisible(playerid, 1);
 end
 
-function OnPlayerMouse(playerid, button, pressed, pos_x, pos_y)
-    if button == MB_LEFT and pressed == 1 then
-        for _, button in pairs(PLAYERS[playerid].menu.buttons) do
-            if (button.min_x <= pos_x and button.max_x >= pos_x and button.min_y <= pos_y and button.max_y) then
-                _G[button.func](playerid, button.args);
-                SetCursorVisible(playerid, 0);
-                return;
-            end
+function OnPlayerMouse(playerid, mouse, pressed, pos_x, pos_y)
+    if pressed ~= 1 then
+        return;
+    end
+    for _, button in pairs(PLAYERS[playerid].menu.buttons) do
+        if mouse == MB_LEFT and gotButton(button, pos_x, pos_y) then
+            _G[button.func](playerid, button.args);
+            SetCursorVisible(playerid, 0);
+            return;
+        end
+        if mouse == MB_RIGHT and gotButton(button, pos_x, pos_y) then
+            clearMenu(playerid);
+            SetCursorVisible(playerid, 0);
+            return;
         end
     end
-    if button == MB_RIGHT and pressed == 1 then        
-        for _, button in pairs(PLAYERS[playerid].menu.buttons) do
-            if (button.min_x <= pos_x and button.max_x >= pos_x and button.min_y <= pos_y and button.max_y) then
-                clearMenu(playerid);
-                SetCursorVisible(playerid, 0);
-                return;
-            end
-        end
-    end
+end
+
+function gotButton(button, pos_x, pos_y)
+    return button.x_min <= pos_x and button.x_max >= pos_x and button.y_min <= pos_y and button.y_max >= pos_y;
 end

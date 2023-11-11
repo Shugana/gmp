@@ -70,7 +70,7 @@ function testmenu(playerid, params)
 
     local x_start = 500;
     local x_size = 1500;
-    local y_start = 2250;
+    local y_start = 2500;
     local y_size = 280;
 
     setupMenu(playerid);
