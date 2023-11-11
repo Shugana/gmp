@@ -51,9 +51,8 @@ end
 
 function logoutAccount(playerid, _params)
     clearMenu(playerid);
-    SetPlayerWorld(playerid, "NEWWORLD\\KHORINIS.ZEN");
     SetPlayerPos(playerid, 0, 0, 0);
-    SpawnPlayer(playerid);
+    sendINFOMessage(playerid, "Erfolgreich ausgelogged.");
     PLAYERS[playerid] = {
         adminlevel = ADMINRANKS.Ausgelogged
     }
