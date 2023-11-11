@@ -31,14 +31,14 @@ COMMANDS = {
         minadminlevel = ADMINRANKS.Ausgelogged,
         adminlevel = ADMINRANKS.Ausgelogged
     },
+    logout = {
+        func = "logoutAccount",
+        help = "Logged aus einem Account aus",
+        minadminlevel = ADMINRANKS.Spieler
+    }
     testmenu = {
         func = "testmenu",
         help = "Zeigt ein Testmenü",
-        minadminlevel = ADMINRANKS.Ausgelogged
-    },
-    mouse = {
-        func = "mouseon",
-        help = "Gibt dir einen Mauscursor",
         minadminlevel = ADMINRANKS.Ausgelogged
     }
 };
@@ -65,6 +65,22 @@ function OnPlayerCommandText(playerid, text)
     end
 end
 
-function mouseon(playerid, params)
-    SetCursorVisible(playerid, 1);
+function testmenu(playerid, params)
+    local func = "handleTestmenu";
+
+    local x_start = 3500;
+    local x_size = 2500;
+    local y_start = 2250;
+    local y_size = 280;
+
+    setupMenu(playerid);
+    createText(playerid, "Testmenü", x_start, y_start, x_size*2, y_size, 255, 255, 255);
+    createButton(playerid, "Button A", x_start, y_start+y_size, x_size, y_size, 255, 255, 255, func, {pressed = "Button A"});
+    createButton(playerid, "Button B", x_start+x_size, y_start+y_size, x_size, y_size, 255, 255, 255, func, {pressed = "Button B"});
+    createButton(playerid, "Button C", x_start, y_start+y_size+y_size, x_size, y_size, 255, 255, 255, func, {pressed = "Button C"});
+    createButton(playerid, "Button D", x_start+x_size, y_start+y_size+y_size, x_size, y_size, 255, 255, 255, func, {pressed = "Button D"});   
+end
+
+function handleTestmenu(playerid, params)
+    sendINFOMessage(playerid, "Gedrückt: "..params.pressed);
 end
