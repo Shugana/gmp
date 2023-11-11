@@ -61,7 +61,7 @@ function OnPlayerMouse(playerid, mouse, pressed, pos_x, pos_y)
         if gotButton(button, pos_x, pos_y) then
             clearMenu(playerid);
             SetCursorVisible(playerid, 0);
-            if mouse == MB_LEFT) then
+            if mouse == MB_LEFT then
                 _G[button.func](playerid, button.args);
             end
             return;
