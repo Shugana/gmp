@@ -49,6 +49,12 @@ function loginAccount(playerid, params)
     sendERRMessage(playerid, "Kein Account mit dieser Name/Passwort Kombination vorhanden.");
 end
 
-function logoutAccount(playerid, params)
-    sendERRMessage(playerid, "stub");
+function logoutAccount(playerid, _params)
+    clearMenu(playerid);
+    SetPlayerWorld(playerid, "NEWWORLD\\KHORINIS.ZEN");
+    SetPlayerPos(playerid, 0, 0, 0);
+    SpawnPlayer(playerid);
+    PLAYERS[playerid] = {
+        adminlevel = ADMINRANKS.Ausgelogged
+    }
 end
