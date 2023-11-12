@@ -200,7 +200,7 @@ function switchCharakter(playerid, params)
     responses = DB_select("*", "characters", "accountid = "..PLAYERS[playerid].account.." AND name = '"..mysql_escape_string(DB.HANDLER, name).."'");
     for _key, response in pairs(responses) do
         savePosition(playerid);
-        loadFace(playerid, response.id);
+        loadFace(playerid);
         loadPosition(playerid);
         return;
     end
@@ -239,8 +239,12 @@ function loadPosition(playerid)
     end
 end
 
-function loadFace(playerid, characterid)
-    local responses = DB_select("*", "characters", "accountid = "..PLAYERS[playerid].account.." AND id = "..characterid);
+function loadFace(playerid)
+    if (PLAYERS[playerid].character == nil) then
+        sendERRMessage(playerid, "Face Laden fehlgeschlagen.");
+        return;
+    end
+    local responses = DB_select("*", "characters", "accountid = "..PLAYERS[playerid].account.." AND id = "..PLAYERS[playerid].character);
     for _key, response in pairs(responses) do
         PLAYERS[playerid].character = response.id;
         SetPlayerAdditionalVisual(playerid, 
