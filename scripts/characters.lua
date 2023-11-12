@@ -200,12 +200,12 @@ function switchCharakter(playerid, params)
     responses = DB_select("*", "characters", "accountid = "..PLAYERS[playerid].account.." AND name = '"..mysql_escape_string(DB.HANDLER, name).."'");
     for _key, response in pairs(responses) do
         savePosition(playerid);
-        PLAYERS[playerid].character = response.characterid;
+        PLAYERS[playerid].character = response.id;
         loadFace(playerid);
         loadPosition(playerid);
         return;
     end
-    sendERRMessage(playerid, "Dieser Charakter existiert nicht oder gehört dir nicht");
+    sendERRMessage(playerid, "Der Charakter '"..name.."' existiert nicht oder gehört dir nicht");
 end
 
 function savePosition(playerid)
