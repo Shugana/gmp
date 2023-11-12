@@ -48,7 +48,7 @@ COMMANDS = {
     },
     settime = {
         func = "setTime",
-        help = "Setzt die Zeit auf <Stunden> <Minuten>"
+        help = "Setzt die Zeit auf <Stunden> <Minuten>",
         minadminlevel = ADMINRANKS.Support
     }
 };
