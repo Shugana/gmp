@@ -80,27 +80,27 @@ function showFacechangeMenu(playerid)
 
     createText(playerid, "Character Editor", x_start+x_size*0, y_start+y_size*0, x_size*5, y_size, 255, 255, 255);
 
-    createButton(playerid, "Geschlecht", x_start+x_size*0, y_start+y_size*1, x_size, y_size, 255, 255, 255, func, {option = "sex", change=1});
+    createButton(playerid, "M/F", x_start+x_size*0, y_start+y_size*1, x_size, y_size, 255, 255, 255, func, {option = "sex", change=1});
     createText(playerid, " ", x_start+x_size*1, y_start+y_size*1, x_size*3, y_size, 255, 255, 255);
     createButton(playerid, "Zufällig", x_start+x_size*4, y_start+y_size*1, x_size, y_size, 255, 255, 255, func, {option = "random", change=1});
 
-    createButton(playerid, "<--", x_start+x_size*0, y_start+y_size*1, x_size, y_size, 255, 255, 255, func, {option = "torsoskin", change=1});
-    createText(playerid, "Körper", x_start+x_size*1, y_start+y_size*1, x_size*3, y_size, 255, 255, 255);
-    createButton(playerid, "-->", x_start+x_size*4, y_start+y_size*1, x_size, y_size, 255, 255, 255, func, {option = "torsoskin", change=-1});
+    createButton(playerid, "<--", x_start+x_size*0, y_start+y_size*2, x_size, y_size, 255, 255, 255, func, {option = "torsoskin", change=1});
+    createText(playerid, "Körper", x_start+x_size*1, y_start+y_size*2, x_size*3, y_size, 255, 255, 255);
+    createButton(playerid, "-->", x_start+x_size*4, y_start+y_size*2, x_size, y_size, 255, 255, 255, func, {option = "torsoskin", change=-1});
 
-    createButton(playerid, "<--", x_start+x_size*0, y_start+y_size*2, x_size, y_size, 255, 255, 255, func, {option = "head", change=1});
-    createText(playerid, "Kopf", x_start+x_size*1, y_start+y_size*2, x_size*3, y_size, 255, 255, 255);
-    createButton(playerid, "-->", x_start+x_size*4, y_start+y_size*2, x_size, y_size, 255, 255, 255, func, {option = "head", change=-1});
+    createButton(playerid, "<--", x_start+x_size*0, y_start+y_size*3, x_size, y_size, 255, 255, 255, func, {option = "head", change=1});
+    createText(playerid, "Kopf", x_start+x_size*1, y_start+y_size*3, x_size*3, y_size, 255, 255, 255);
+    createButton(playerid, "-->", x_start+x_size*4, y_start+y_size*3, x_size, y_size, 255, 255, 255, func, {option = "head", change=-1});
 
-    createButton(playerid, "<--", x_start+x_size*0, y_start+y_size*3, x_size, y_size, 255, 255, 255, func, {option = "headskin", change=1});
-    createText(playerid, "Frisur", x_start+x_size*1, y_start+y_size*3, x_size*3, y_size, 255, 255, 255);
-    createButton(playerid, "-->", x_start+x_size*4, y_start+y_size*3, x_size, y_size, 255, 255, 255, func, {option = "headskin", change=-1});
+    createButton(playerid, "<--", x_start+x_size*0, y_start+y_size*4, x_size, y_size, 255, 255, 255, func, {option = "headskin", change=1});
+    createText(playerid, "Frisur", x_start+x_size*1, y_start+y_size*4, x_size*3, y_size, 255, 255, 255);
+    createButton(playerid, "-->", x_start+x_size*4, y_start+y_size*4, x_size, y_size, 255, 255, 255, func, {option = "headskin", change=-1});
 
-    createButton(playerid, "<--", x_start+x_size*0, y_start+y_size*4, x_size, y_size, 255, 255, 255, func, {option = "fatness", change=0.01});
-    createText(playerid, "Gewicht", x_start+x_size*1, y_start+y_size*4, x_size*3, y_size, 255, 255, 255);
-    createButton(playerid, "-->", x_start+x_size*4, y_start+y_size*4, x_size, y_size, 255, 255, 255, func, {option = "fatness", change=-0.01});
+    createButton(playerid, "<--", x_start+x_size*0, y_start+y_size*5, x_size, y_size, 255, 255, 255, func, {option = "fatness", change=0.01});
+    createText(playerid, "Gewicht", x_start+x_size*1, y_start+y_size*5, x_size*3, y_size, 255, 255, 255);
+    createButton(playerid, "-->", x_start+x_size*4, y_start+y_size*5, x_size, y_size, 255, 255, 255, func, {option = "fatness", change=-0.01});
 
-    createButton(playerid, "Speichern", x_start+x_size*0, y_start+y_size*5, x_size*5, y_size, 255, 255, 255, "saveFacechange", {});
+    createButton(playerid, "Speichern", x_start+x_size*0, y_start+y_size*6, x_size*5, y_size, 255, 255, 255, "saveFacechange", {});
 end
 
 function alterFace(playerid, args)
@@ -200,6 +200,7 @@ function switchCharakter(playerid, params)
     name = capitalize(name);
     responses = DB_select("*", "characters", "accountid = "..PLAYERS[playerid].account.." AND name = '"..mysql_escape_string(DB.HANDLER, name).."'");
     for _key, response in pairs(responses) do
+        clearMenu(playerid);
         savePosition(playerid);
         PLAYERS[playerid].character = response.id;
         loadFace(playerid);
