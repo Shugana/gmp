@@ -233,10 +233,10 @@ function loadPosition(playerid)
     local responses = DB_select("*", "character_locations", "characterid = "..characterid);
     for _key, response in pairs(responses) do
         if (world ~= response.world) then
-            SetPlayerWorld(response.world);
+            SetPlayerWorld(playerid, response.world);
         end
-        SetPlayerPos(tonumber(response.x), tonumber(response.y), tonumber(response.z));
-        SetPlayerAngle(tonumber(response.angle));
+        SetPlayerPos(playerid, tonumber(response.x), tonumber(response.y), tonumber(response.z));
+        SetPlayerAngle(playerid, tonumber(response.angle));
     end
 end
 
