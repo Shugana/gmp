@@ -296,7 +296,7 @@ end
 
 function tryAutologinCharacter(playerid)
     local mac = GetMacAddress(playerid);
-    local responses = DB_select("*", "account_autologins", "mac = '"..mac.."'");
+    local responses = DB_select("*", "account_autologins", "characterid IS NOT NULL AND mac = '"..mac.."'");
     for _key, response in pairs(responses) do
         switchCharacterById(playerid, response.characterid);
         return;
