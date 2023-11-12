@@ -45,7 +45,7 @@ function DB_insert(tablename, data)
     local query = "INSERT INTO `"..mysql_escape_string(DB.HANDLER, tablename).."` ("..keysstring..") VALUES ("..valuesstring..")";
     local response = mysql_query(DB.HANDLER, query);
     if response then
-        result = mysql_insert_id(DB.HANDLER);
+        result = tonumber(mysql_insert_id(DB.HANDLER));
     end
     return result;
 end
@@ -55,7 +55,7 @@ function DB_delete(tablename, condition)
     local response = mysql_query(DB.HANDLER, query);
 	mysql_free_result(response);
     local affected = mysql_affected_rows(DB.HANDLER);
-	return affected;
+	return tonumer(affected);
 end
 
 function DB_update(tablename, data, condition)
@@ -72,9 +72,17 @@ function DB_update(tablename, data, condition)
         return false;
     end
     mysql_free_result(response);
-    local affected = mysql_affected_rows(DB.HANDLER);
+    local affected = tonumber(mysql_affected_rows(DB.HANDLER));
     if affected < 1 then
         return false;
     end
     return true;
+end
+
+function DB_exists(selection, tablename, condition)
+    local responses = DB_select(selection, tablename, condition);
+    for _key, _response in pairs(responses) do
+        return true;
+    end
+    return false;
 end

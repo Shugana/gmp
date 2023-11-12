@@ -43,9 +43,10 @@ function clearMenu(playerid)
     PLAYERS[playerid].menu = nil;
 end
 
-function setupMenu(playerid)
+function setupMenu(playerid, closable)
     clearMenu(playerid);
     PLAYERS[playerid].menu = {
+        closable = closable,
         buttons = {},
         texts = {},
         textures = {}
@@ -59,6 +60,9 @@ function OnPlayerMouse(playerid, mouse, pressed, pos_x, pos_y)
     end
     for _, button in pairs(PLAYERS[playerid].menu.buttons) do
         if gotButton(button, pos_x, pos_y) then
+            if mouse == MB_RIGHT and not(PLAYERS[playerid].menu.closable) then
+                return;
+            end
             clearMenu(playerid);
             SetCursorVisible(playerid, 0);
             if mouse == MB_LEFT then

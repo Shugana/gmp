@@ -20,6 +20,29 @@ function capitalize(text)
     return text:sub(1,1):upper()..text:sub(2):lower();
 end
 
+function indexOf(tabledata, query)
+    for key, value in pairs(tabledata) do
+        if (value == query) then
+            return key;
+        end
+    end
+    return nil;
+end
+
+function math.between(min, value, max)
+    return math.max(min, math.min(max, value));
+end
+
+function moduloTable(tablename, value)
+    if value > #tablename then
+        return moduloTable(tablename, value%#tablename)
+    end
+    if value < 1 then
+        return moduloTable(tablename, value+#tablename)
+    end
+    return value;
+end
+
 function sendERRMessage(playerid, text)
     SendPlayerMessage(playerid, 255, 0, 0, text);
 end

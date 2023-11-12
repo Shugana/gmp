@@ -36,10 +36,20 @@ COMMANDS = {
         help = "Logged aus einem Account aus",
         minadminlevel = ADMINRANKS.Spieler
     },
-    testmenu = {
-        func = "testmenu",
-        help = "Zeigt ein Testmenü",
-        minadminlevel = ADMINRANKS.Ausgelogged
+    newchar = {
+        func = "newCharacter",
+        help = "Erstellt einen neuen Charakter",
+        minadminlevel = ADMINRANKS.Spieler
+    },
+    switch = {
+        func = "switchCharakter",
+        help = "Wechselt auf einen anderen deiner Charaktere",
+        minadminlevel = ADMINRANKS.Spieler
+    },
+    facechange = {
+        func = "facechange",
+        help = "Ändert das Aussehen deines Charakters",
+        minadminlevel = ADMINRANKS.Spieler
     }
 };
 
@@ -73,12 +83,12 @@ function testmenu(playerid, params)
     local y_start = 2500;
     local y_size = 280;
 
-    setupMenu(playerid);
+    setupMenu(playerid, true);
     createText(playerid, "Testmenü", x_start, y_start, x_size*2, y_size, 255, 255, 255);
     createButton(playerid, "Button A", x_start, y_start+y_size, x_size, y_size, 255, 255, 255, func, {pressed = "Button A"});
     createButton(playerid, "Button B", x_start+x_size, y_start+y_size, x_size, y_size, 255, 255, 255, func, {pressed = "Button B"});
     createButton(playerid, "Button C", x_start, y_start+y_size+y_size, x_size, y_size, 255, 255, 255, func, {pressed = "Button C"});
-    createButton(playerid, "Button D", x_start+x_size, y_start+y_size+y_size, x_size, y_size, 255, 255, 255, func, {pressed = "Button D"});   
+    createButton(playerid, "Button D", x_start+x_size, y_start+y_size+y_size, x_size, y_size, 255, 255, 255, func, {pressed = "Button D"});
 end
 
 function handleTestmenu(playerid, params)
