@@ -16,6 +16,3 @@ function updateGametimeDraw(hour, minute)
     local rltime = os.date("%H:%M");
 	SetDrawText(SERVERDRAWS.time.id, "IG: "..hour..":"..minute.." Uhr || RL: "..rltime.." Uhr");
 end
-
-
-SetDrawText(ig_time, string.format("IG: %02d:%02d Uhr || RL: %s Uhr", newHour, newMinute, os.date('%H:%M')));
