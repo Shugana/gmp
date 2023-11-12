@@ -63,7 +63,6 @@ function setupFacechange(playerid)
 
 	local charactercreationvob = Vob.Create("Nix.3DS", world, x, y, z);
 	charactercreationvob:SetRotation(0, 180, 0);
-    charactercreationvob:Destroy();
 	SetCameraBehindVob(playerid, charactercreationvob);
 
     PLAYERS[playerid].facechange = {
@@ -167,6 +166,7 @@ function saveFacechange(playerid, args)
 
     SetDefaultCamera(playerid);
     local vob = PLAYERS[playerid].facechange.vob;
+    vob:Destroy();
     PLAYERS[playerid].facechange = nil;
     clearMenu(playerid);
     ShowChat(playerid, 1);
