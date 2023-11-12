@@ -154,6 +154,7 @@ function saveFacechange(playerid, args)
         torsoskin = TORSOSKINS[SEXES[PLAYERS[playerid].facechange.sexpick]][PLAYERS[playerid].facechange.torsoskinpick],
         head = HEADS[SEXES[PLAYERS[playerid].facechange.sexpick]][PLAYERS[playerid].facechange.headpick],
         headskin = HEADSKINS[SEXES[PLAYERS[playerid].facechange.sexpick]][PLAYERS[playerid].facechange.headskinpick],
+        fatness = PLAYERS[playerid].facechange.fatness,
         sex = SEXES[PLAYERS[playerid].facechange.sexpick]
     }, "id = "..PLAYERS[playerid].facechange.id);
 
