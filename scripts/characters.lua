@@ -34,9 +34,12 @@ HEADSKINS = {
         323,331,332,335,340,343,354,358,359,360,409,410,2187,2201,2205,2214,2221}
 };
 
-function setupFacechange(playerid, characterid)
+function setupFacechange(playerid)
+    if PLAYERS[playerid].character == nil then
+        sendERRMessage(playerid, "Du musst auf einem Charakter sein");
+    end
     local chardata = {};
-    local response = DB_select("*", "characters", "id = '"..characterid.."'");
+    local response = DB_select("*", "characters", "id = "..PLAYERS[playerid].character);
     for _, character in pairs(response) do
         chardata = {
             id = tonumber(character.id),
@@ -168,7 +171,7 @@ function newCharacter(playerid, params)
     end
     PLAYERS[playerid].character = character_id;
     loadFace(playerid);
-    setupFacechange(playerid, character_id);
+    setupFacechange(playerid);
 end
 
 function facechange(playerid, params)
@@ -176,7 +179,7 @@ function facechange(playerid, params)
         sendERRMessage(playerid, "Du musst auf einem Charakter sein");
         return;
     end
-    setupFacechange(playerid, PLAYERS[playerid].character);
+    setupFacechange(playerid);
 end
 
 function switchCharakter(playerid, params)
@@ -200,6 +203,7 @@ function switchCharakter(playerid, params)
     responses = DB_select("*", "characters", "accountid = "..PLAYERS[playerid].account.." AND name = '"..mysql_escape_string(DB.HANDLER, name).."'");
     for _key, response in pairs(responses) do
         savePosition(playerid);
+        PLAYERS[playerid].character = response.characterid;
         loadFace(playerid);
         loadPosition(playerid);
         return;
