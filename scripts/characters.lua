@@ -165,6 +165,8 @@ function newCharacter(playerid, params)
         sendERRMessage(playerid, "Charaktererstellung fehlgeschlagen.");
         return;
     end
+    PLAYERS[playerid].character = character_id;
+    loadFace(playerid);
     setupFacechange(playerid, character_id);
 end
 
@@ -246,7 +248,8 @@ function loadFace(playerid, characterid)
             response.head,
             tonumber(response.headskin)
         );
-        SetPlayerFatness(playerid, response.fatness)
+        SetPlayerFatness(playerid, response.fatness);
+        SetPlayerName(playerid, response.name);
         return;
     end
     sendERRMessage(playerid, "Face Laden fehlgeschlagen.");
