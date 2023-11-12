@@ -132,7 +132,7 @@ function alterFace(playerid, args)
 end
 
 function saveFacechange(playerid, args)
-    PLAYERS[playerid].character == PLAYERS[playerid].facechange.id;
+    PLAYERS[playerid].character = PLAYERS[playerid].facechange.id;
     DB_update(characters, {
         torso = TORSOS[PLAYERS[playerid].facechange.sexpick][PLAYERS[playerid].facechange.torsopick],
         torsoskin = TORSOSKINS[PLAYERS[playerid].facechange.sexpick][PLAYERS[playerid].facechange.torsoskinpick],
