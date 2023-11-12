@@ -59,7 +59,7 @@ function setupFacechange(playerid)
     SetPlayerAngle(playerid, 0);
     local x, y, z = GetPlayerPos(playerid);
     local world = GetPlayerWorld(playerid);
-    x = x + 150;
+    z = z + 150;
 
 	local charactercreationvob = Vob.Create("Nix.3DS", world, x, y, z);
 	charactercreationvob:SetRotation(0, 180, 0);
