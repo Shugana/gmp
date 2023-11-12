@@ -82,13 +82,6 @@ function setupFacechange(playerid)
 end
 
 function showFacechangeMenu(playerid)
-    sendERRMessage(playerid, "DEBUG - id          : "..PLAYERS[playerid].facechange.id);
-    sendERRMessage(playerid, "DEBUG - sexpick     : "..PLAYERS[playerid].facechange.sexpick);
-    sendERRMessage(playerid, "DEBUG - torsopick   : "..PLAYERS[playerid].facechange.torsopick);
-    sendERRMessage(playerid, "DEBUG - headpick    : "..PLAYERS[playerid].facechange.headpick);
-    sendERRMessage(playerid, "DEBUG - headskinpick: "..PLAYERS[playerid].facechange.headskinpick);
-    sendERRMessage(playerid, "DEBUG - fatness     : "..PLAYERS[playerid].facechange.fatness);
-
     local func = "alterFace";
 
     local x_start = 2500;
@@ -196,6 +189,7 @@ function newCharacter(playerid, params)
         return;
     end
     switchCharakter(playerid, params);
+    facechange(playerid);
 end
 
 function facechange(playerid, params)
@@ -230,6 +224,7 @@ function switchCharakter(playerid, params)
         PLAYERS[playerid].character = response.id;
         loadFace(playerid);
         loadPosition(playerid);
+        sendINFOMessage(playerid, "Erfolgreich auf '"..name.."' gewechselt.");
         return;
     end
     sendERRMessage(playerid, "Der Charakter '"..name.."' existiert nicht oder gehört dir nicht");
