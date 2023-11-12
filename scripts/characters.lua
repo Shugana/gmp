@@ -66,6 +66,7 @@ function setupFacechange(playerid)
         fatness = chardata.fatness
     };
     ShowChat(playerid, 0);
+    FreezePlayer(playerid, 1);
     showFacechangeMenu(playerid);
 end
 
@@ -89,8 +90,8 @@ function showFacechangeMenu(playerid)
     createText(playerid, "Facechange Menu", x_start+x_size*0, y_start+y_size*0, x_size*4, y_size, 255, 255, 255);
 
     createButton(playerid, "M / F", x_start+x_size*0, y_start+y_size*1, x_size, y_size, 255, 255, 255, func, {option = "sex", change=1});
-    createText(playerid, " ", x_start+x_size*1, y_start+y_size*1, x_size*3, y_size, 255, 255, 255);
-    createButton(playerid, "Zufällig", x_start+x_size*4, y_start+y_size*1, x_size, y_size, 255, 255, 255, func, {option = "random", change=1});
+    createText(playerid, " ", x_start+x_size*1, y_start+y_size*1, x_size*2, y_size, 255, 255, 255);
+    createButton(playerid, "Zufällig", x_start+x_size*3, y_start+y_size*1, x_size, y_size, 255, 255, 255, func, {option = "random", change=1});
 
     createButton(playerid, "<----", x_start+x_size*0, y_start+y_size*2, x_size, y_size, 255, 255, 255, func, {option = "torsoskin", change=-1});
     createText(playerid, "Körper", x_start+x_size*1, y_start+y_size*2, x_size*2, y_size, 255, 255, 255);
@@ -104,9 +105,9 @@ function showFacechangeMenu(playerid)
     createText(playerid, "Frisur", x_start+x_size*1, y_start+y_size*4, x_size*2, y_size, 255, 255, 255);
     createButton(playerid, "---->", x_start+x_size*3, y_start+y_size*4, x_size, y_size, 255, 255, 255, func, {option = "headskin", change=1});
 
-    createButton(playerid, "<----", x_start+x_size*0, y_start+y_size*5, x_size, y_size, 255, 255, 255, func, {option = "fatness", change=-0.01});
+    createButton(playerid, "<----", x_start+x_size*0, y_start+y_size*5, x_size, y_size, 255, 255, 255, func, {option = "fatness", change=-0.1});
     createText(playerid, "Gewicht", x_start+x_size*1, y_start+y_size*5, x_size*2, y_size, 255, 255, 255);
-    createButton(playerid, "---->", x_start+x_size*3, y_start+y_size*5, x_size, y_size, 255, 255, 255, func, {option = "fatness", change=0.01});
+    createButton(playerid, "---->", x_start+x_size*3, y_start+y_size*5, x_size, y_size, 255, 255, 255, func, {option = "fatness", change=0.1});
 
     createButton(playerid, "Speichern", x_start+x_size*0, y_start+y_size*6, x_size*4, y_size, 255, 255, 255, "saveFacechange", {});
 end
@@ -155,6 +156,7 @@ function saveFacechange(playerid, args)
     sendINFOMessage(playerid, "Face erfolgreich gespeichert");
     clearMenu(playerid);
     ShowChat(playerid, 1);
+    FreezePlayer(playerid, 0);
 end
 
 function newCharacter(playerid, params)
