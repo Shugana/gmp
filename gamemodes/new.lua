@@ -7,6 +7,7 @@ require("scripts/utility");
 require("scripts/itemhandling");
 require("scripts/login");
 require("scripts/menus");
+require("scripts/characters");
 require("scripts/onserverworldtime");
 
 
