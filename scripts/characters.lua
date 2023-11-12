@@ -235,7 +235,7 @@ function switchCharacterById(playerid, characterid)
         PLAYERS[playerid].character = response.id;
         loadFace(playerid);
         loadPosition(playerid);
-        sendINFOMessage(playerid, "Erfolgreich auf '"..name.."' gewechselt.");
+        sendINFOMessage(playerid, "Erfolgreich auf '"..response.name.."' gewechselt.");
         return;
     end
 end
