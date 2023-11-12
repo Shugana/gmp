@@ -120,9 +120,9 @@ function alterFace(playerid, args)
     sendERRMessage(playerid, "DEBUG - fatness     : "..PLAYERS[playerid].facechange.fatness);
 
     if args.option == "random" then
-        PLAYERS[playerid].facechange.torsoskinpick = math.random(#TORSOSKINS[PLAYERS[playerid].facechange.sexpick]);
-        PLAYERS[playerid].facechange.headpick = math.random(#HEADS[PLAYERS[playerid].facechange.sexpick]);
-        PLAYERS[playerid].facechange.headskinpick = math.random(#HEADSKINS[PLAYERS[playerid].facechange.sexpick]);
+        PLAYERS[playerid].facechange.torsoskinpick = math.random(#TORSOSKINS[SEXES[PLAYERS[playerid].facechange.sexpick]]);
+        PLAYERS[playerid].facechange.headpick = math.random(#HEADS[SEXES[PLAYERS[playerid].facechange.sexpick]]);
+        PLAYERS[playerid].facechange.headskinpick = math.random(#HEADSKINS[SEXES[PLAYERS[playerid].facechange.sexpick]]);
         PLAYERS[playerid].facechange.fatness = math.random(-9,19)/10;
     elseif args.option == "sex" then
         PLAYERS[playerid].facechange.sexpick = PLAYERS[playerid].facechange.sexpick%(#SEXES)+1;
@@ -133,18 +133,18 @@ function alterFace(playerid, args)
     elseif args.option == "fatness" then
         PLAYERS[playerid].facechange.fatness = math.between(-0.9,PLAYERS[playerid].facechange.fatness+args.change,1.9);
     elseif args.option == "torsoskin" then
-        PLAYERS[playerid].facechange.torsoskinpick = moduloTable(TORSOS[PLAYERS[playerid].facechange.sexpick], PLAYERS[playerid].facechange.torsoskinpick+args.change);
+        PLAYERS[playerid].facechange.torsoskinpick = moduloTable(TORSOS[SEXES[PLAYERS[playerid].facechange.sexpick]], PLAYERS[playerid].facechange.torsoskinpick+args.change);
     elseif args.option == "head" then
-        PLAYERS[playerid].facechange.headpick = moduloTable(HEADS[PLAYERS[playerid].facechange.sexpick], PLAYERS[playerid].facechange.headpick+args.change);
+        PLAYERS[playerid].facechange.headpick = moduloTable(HEADS[SEXES[PLAYERS[playerid].facechange.sexpick]], PLAYERS[playerid].facechange.headpick+args.change);
     elseif args.option == "headskin" then
-        PLAYERS[playerid].facechange.headskinpick = moduloTable(HEADSKINS[PLAYERS[playerid].facechange.sexpick], PLAYERS[playerid].facechange.headskinpick+args.change);
+        PLAYERS[playerid].facechange.headskinpick = moduloTable(HEADSKINS[SEXES[PLAYERS[playerid].facechange.sexpick]], PLAYERS[playerid].facechange.headskinpick+args.change);
     end
     
 	SetPlayerAdditionalVisual(playerid, 
-        TORSOS[PLAYERS[playerid].facechange.sexpick][PLAYERS[playerid].facechange.torsopick],
-        TORSOSKINS[PLAYERS[playerid].facechange.sexpick][PLAYERS[playerid].facechange.torsoskinpick],
-        HEADS[PLAYERS[playerid].facechange.sexpick][PLAYERS[playerid].facechange.headpick],
-        HEADSKINS[PLAYERS[playerid].facechange.sexpick][PLAYERS[playerid].facechange.headskinpick]
+        TORSOS[SEXES[PLAYERS[playerid].facechange.sexpick]][PLAYERS[playerid].facechange.torsopick],
+        TORSOSKINS[SEXES[PLAYERS[playerid].facechange.sexpick]][PLAYERS[playerid].facechange.torsoskinpick],
+        HEADS[SEXES[PLAYERS[playerid].facechange.sexpick]][PLAYERS[playerid].facechange.headpick],
+        HEADSKINS[SEXES[PLAYERS[playerid].facechange.sexpick]][PLAYERS[playerid].facechange.headskinpick]
     );
     SetPlayerFatness(playerid, fatness)
     showFacechangeMenu(playerid);
