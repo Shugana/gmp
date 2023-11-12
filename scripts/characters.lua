@@ -189,7 +189,6 @@ function switchCharakter(playerid, params)
         responses = DB_select("*", "characters", "accountid = "..PLAYERS[playerid].account);
         for _key, response in pairs(responses) do
             table.insert(charnames, "'"..response.name.."'");
-            local updatesstring = table.concat(updates, ", ");
         end
         if (#charnames > 0) then
             local charnamesstring = table.concat(charnames, ", ");
