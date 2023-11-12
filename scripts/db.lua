@@ -34,11 +34,9 @@ function DB_insert(tablename, data)
     local result = -1;
     local keys = {};
     local values = {};
-    local row = 1;
     for key,value in pairs(data) do
-        keys[row] = "`"..mysql_escape_string(DB.HANDLER, key).."`";
-        values[row] = "'"..mysql_escape_string(DB.HANDLER, value).."'";
-        row = row + 1;
+        table.insert(keys, "`"..mysql_escape_string(DB.HANDLER, key).."`");
+        table.insert(values, "'"..mysql_escape_string(DB.HANDLER, value).."'");
     end
     local keysstring = table.concat(keys, ", ");
     local valuesstring = table.concat(values, ", ");
@@ -60,14 +58,12 @@ end
 
 function DB_update(tablename, data, condition)
     local updates = {};
-    local row = 1;
 	for key, value in pairs(data) do
-        updates[row] = "`"..mysql_escape_string(DB.HANDLER, key).."` = '"..mysql_escape_string(DB.HANDLER, value).."'";
+        table.insert(updates, "`"..mysql_escape_string(DB.HANDLER, key).."` = '"..mysql_escape_string(DB.HANDLER, value).."'");
 	end
     local updatesstring = table.concat(updates, ", ");
 
 	local query = "UPDATE `"..mysql_escape_string(DB.HANDLER, tablename).."` SET "..updatesstring.." WHERE "..condition..";";
-    SendMessageToAll(255, 0, 0, query);
 	local response = mysql_query(DB.HANDLER, query);
 	if not(response) then
         return false;
