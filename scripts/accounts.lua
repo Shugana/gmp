@@ -54,6 +54,8 @@ function loginAccountById(playerid, accountid)
         }
         if not(DB_exists("*","account_autologins", "accountid="..accountid)) then
             DB_insert("account_autologins", {accountid=accountid, mac=mac});
+        else
+            DB_update("account_autologins", {mac=mac}, "accountid="..accountid);
         end
         sendINFOMessage(playerid, "Erfolgreich eingelogged mit Account '"..account.name.."' ("..ADMINRANKS[PLAYERS[playerid].adminlevel]..")");
         tryAutologinCharacter(playerid);
