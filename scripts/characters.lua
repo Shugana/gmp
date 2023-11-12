@@ -137,7 +137,8 @@ function saveFacechange(playerid, args)
         torso = TORSOS[PLAYERS[playerid].facechange.sexpick][PLAYERS[playerid].facechange.torsopick],
         torsoskin = TORSOSKINS[PLAYERS[playerid].facechange.sexpick][PLAYERS[playerid].facechange.torsoskinpick],
         head = HEADS[PLAYERS[playerid].facechange.sexpick][PLAYERS[playerid].facechange.headpick],
-        headskin = HEADSKINS[PLAYERS[playerid].facechange.sexpick][PLAYERS[playerid].facechange.headskinpick]
+        headskin = HEADSKINS[PLAYERS[playerid].facechange.sexpick][PLAYERS[playerid].facechange.headskinpick],
+        sex = SEXES[PLAYERS[playerid].facechange.sexpick]
     }, "id = "..PLAYERS[playerid].facechange.id);
     PLAYERS[playerid].facechange = nil;
     sendINFOMessage(playerid, "Face erfolgreich gespeichert");
@@ -160,7 +161,7 @@ function newCharacter(playerid, params)
         sendERRMessage(playerid, "Charaktererstellung fehlgeschlagen.");
         return;
     end
-    local character_location_id = DB_insert("character_locations", {character_id=character_id});
+    local character_location_id = DB_insert("character_locations", {characterid=character_id});
     if (character_location_id < 0) then
         sendERRMessage(playerid, "Charaktererstellung fehlgeschlagen.");
         return;

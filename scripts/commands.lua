@@ -74,23 +74,3 @@ function OnPlayerCommandText(playerid, text)
         sendINFOMessage(playerid, "chat "..text);
     end
 end
-
-function testmenu(playerid, params)
-    local func = "handleTestmenu";
-
-    local x_start = 500;
-    local x_size = 1500;
-    local y_start = 2500;
-    local y_size = 280;
-
-    setupMenu(playerid, true);
-    createText(playerid, "Testmenü", x_start, y_start, x_size*2, y_size, 255, 255, 255);
-    createButton(playerid, "Button A", x_start, y_start+y_size, x_size, y_size, 255, 255, 255, func, {pressed = "Button A"});
-    createButton(playerid, "Button B", x_start+x_size, y_start+y_size, x_size, y_size, 255, 255, 255, func, {pressed = "Button B"});
-    createButton(playerid, "Button C", x_start, y_start+y_size+y_size, x_size, y_size, 255, 255, 255, func, {pressed = "Button C"});
-    createButton(playerid, "Button D", x_start+x_size, y_start+y_size+y_size, x_size, y_size, 255, 255, 255, func, {pressed = "Button D"});
-end
-
-function handleTestmenu(playerid, params)
-    sendINFOMessage(playerid, "Gedrückt: "..params.pressed);
-end
