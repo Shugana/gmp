@@ -169,9 +169,7 @@ function newCharacter(playerid, params)
         sendERRMessage(playerid, "Charaktererstellung fehlgeschlagen.");
         return;
     end
-    PLAYERS[playerid].character = character_id;
-    loadFace(playerid);
-    setupFacechange(playerid);
+    switchCharakter(playerid, params);
 end
 
 function facechange(playerid, params)
@@ -185,7 +183,6 @@ end
 function switchCharakter(playerid, params)
     local result, name = sscanf(params, "s");
     local responses;
-    name = capitalize(name);
     if (result ~= 1) then
         sendERRMessage(playerid, "Benutze /switch <Name>");
         local charnames = {};
@@ -200,6 +197,7 @@ function switchCharakter(playerid, params)
         end
         return;
     end
+    name = capitalize(name);
     responses = DB_select("*", "characters", "accountid = "..PLAYERS[playerid].account.." AND name = '"..mysql_escape_string(DB.HANDLER, name).."'");
     for _key, response in pairs(responses) do
         savePosition(playerid);
