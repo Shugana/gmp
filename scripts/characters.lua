@@ -165,7 +165,8 @@ function saveFacechange(playerid, args)
     }, "id = "..PLAYERS[playerid].facechange.id);
 
     SetDefaultCamera(playerid);
-    PLAYERS[playerid].facechange.vob:Destroy;
+    local vob = PLAYERS[playerid].facechange.vob;
+    vob:Destroy;
     PLAYERS[playerid].facechange = nil;
     clearMenu(playerid);
     ShowChat(playerid, 1);
