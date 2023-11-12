@@ -31,11 +31,6 @@ COMMANDS = {
         minadminlevel = ADMINRANKS.Ausgelogged,
         adminlevel = ADMINRANKS.Ausgelogged
     },
-    logout = {
-        func = "logoutAccount",
-        help = "Logged aus einem Account aus",
-        minadminlevel = ADMINRANKS.Spieler
-    },
     newchar = {
         func = "newCharacter",
         help = "Erstellt einen neuen Charakter",

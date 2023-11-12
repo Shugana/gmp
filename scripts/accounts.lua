@@ -61,11 +61,11 @@ function loginAccountById(playerid, accountid)
     end
 end
 
-function logoutAccount(playerid, _params)
-    clearMenu(playerid);
-    SetPlayerPos(playerid, 0, 0, 0);
-    sendINFOMessage(playerid, "Erfolgreich ausgelogged.");
-    PLAYERS[playerid] = {
-        adminlevel = ADMINRANKS.Ausgelogged
-    }
+function tryAutologinAccount(playerid)
+    local mac = GetMacAddress(playerid);
+    local responses = DB_select("*", "account_autologins", "mac = '"..mac.."'");
+    for _key, response in pairs(responses) do
+        loginAccountById(playerid, response.accountid);
+        return;
+    end
 end
