@@ -7,6 +7,7 @@ function OnPlayerConnect(playerid)
         adminlevel = ADMINRANKS.Ausgelogged
     };
     tryAutologinAccount(playerid);
+    ShowDraw(playerid, DRAWS.time.id);
 end
 
 function OnPlayerDisconnect(playerid, reason)

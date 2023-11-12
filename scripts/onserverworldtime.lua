@@ -1,4 +1,5 @@
 function OnServerWorldTime(oldHour, oldMinute, newHour, newMinute)
+    updateGametimeDraw(newHour, newMinute);
     local rnd = math.random(1, 5);
     if rnd ~= 3 then
         return;

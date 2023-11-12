@@ -1,4 +1,5 @@
 require("settings/db");
+require("settings/server");
 
 require("scripts/db");
 require("scripts/accounts");
@@ -19,4 +20,5 @@ function OnGamemodeInit()
     EnableChat(0);
     math.randomseed(os.time());
     ConnectDB();
+    setupTimedraw();
 end
