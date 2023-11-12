@@ -1,13 +1,13 @@
 SERVERDRAWS = {
     time = {
         id = nil,
-        pos = {130, 7400},
-        color = {255,255,255}
+        pos = {x=130, y=7400},
+        color = {r=255,g=255,b=255}
     }
 }
 
 function setupTimedraw()
-    SERVERDRAWS.time.id = CreateDraw(SERVERDRAWS.time.pos, "IG: 00:00 Uhr || RL: 00:00 Uhr", FONTS.sequel, SERVERDRAWS.time.color);
+    SERVERDRAWS.time.id = CreateDraw(SERVERDRAWS.time.pos.x, SERVERDRAWS.time.pos.y, "IG: 00:00 Uhr || RL: 00:00 Uhr", FONTS.sequel, SERVERDRAWS.time.color.r, SERVERDRAWS.time.color.g, SERVERDRAWS.time.color.b);
 end
 
 function updateGametimeDraw(hour, minute)
