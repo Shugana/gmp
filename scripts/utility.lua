@@ -50,3 +50,12 @@ end
 function sendINFOMessage(playerid, text)
     SendPlayerMessage(playerid, 207, 175, 55, text);
 end
+
+function setTime(playerid, params)
+    local result, hour, minute = sscanf(params, "dd");
+    if (result ~= 1) then
+        sendERRMessage(playerid, "Benutze /settime <Stunden> <Minuten>");
+        return;
+    end
+    SetTime (hour, minute);
+end

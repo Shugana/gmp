@@ -45,6 +45,11 @@ COMMANDS = {
         func = "facechange",
         help = "Ändert das Aussehen deines Charakters",
         minadminlevel = ADMINRANKS.Spieler
+    },
+    settime = {
+        func = "setTime",
+        help = "Setzt die Zeit auf <Stunden> <Minuten>"
+        minadminlevel = ADMINRANKS.Support
     }
 };
 
