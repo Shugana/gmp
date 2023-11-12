@@ -24,7 +24,7 @@ function registerAccount(playerid, params)
         return;
     end
     DB_insert("accounts", {name=name, password=hashed});
-    sendINFOMessage(playerid, "Dein Account "..name.." wurde erfolgreich erstellt. Merke dir dein Passwort: '"..password.."' gut, es wird dir nur dieses eine mal angezeigt.");
+    sendINFOMessage(playerid, "Dein Account '"..name.."' wurde erfolgreich erstellt. Merke dir dein Passwort: '"..password.."' gut, es wird dir nur dieses eine mal angezeigt.");
     loginAccount(playerid, params);
 end
 
@@ -38,14 +38,28 @@ function loginAccount(playerid, params)
     local hashed = MD5(password);
     local accounts = DB_select("*", "accounts", "name='"..mysql_escape_string(DB.HANDLER, name).."' AND password='"..mysql_escape_string(DB.HANDLER, hashed).."'");
     for _, account in pairs(accounts) do
+        loginAccountById(playerid, account.id);
+        return;
+    end
+    sendERRMessage(playerid, "Kein Account mit dieser Name/Passwort Kombination vorhanden.");
+end
+
+function loginAccountById(playerid, accountid)
+    local accounts = DB_select("*", "accounts", "id="..accountid);
+    for _, account in pairs(accounts) do
+        loginAccountById(playerid, account.id);
+        return;
         PLAYERS[playerid] = {
             account = tonumber(account.id),
             adminlevel = tonumber(account.adminlevel)
         }
-        sendINFOMessage(playerid, "Erfolgreich eingelogged als "..name..". Du hast den Adminrang "..ADMINRANKS[PLAYERS[playerid].adminlevel]);
+        if not(DB_exists("*","account_autologins", "accountid="..accountid)) then
+            DB_insert("account_autologins", {accountid=accountid});
+        end
+        sendINFOMessage(playerid, "Erfolgreich eingelogged mit Account '"..name.."' ("..ADMINRANKS[PLAYERS[playerid].adminlevel]..")");
+        tryAutologinCharacter(playerid);
         return;
     end
-    sendERRMessage(playerid, "Kein Account mit dieser Name/Passwort Kombination vorhanden.");
 end
 
 function logoutAccount(playerid, _params)

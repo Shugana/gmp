@@ -220,6 +220,16 @@ function switchCharakter(playerid, params)
     name = capitalize(name);
     responses = DB_select("*", "characters", "accountid = "..PLAYERS[playerid].account.." AND name = '"..mysql_escape_string(DB.HANDLER, name).."'");
     for _key, response in pairs(responses) do
+        switchCharacterById(playerid, response.id);
+        return;
+    end
+    sendERRMessage(playerid, "Der Charakter '"..name.."' existiert nicht oder gehört dir nicht");
+end
+
+function switchCharacterById(playerid, characterid)
+    responses = DB_select("*", "characters", "id = "..characterid);
+    for _key, response in pairs(responses) do
+        DB_update("account_autologins", {characterid=response.id}, "accountid = "..PLAYERS[playerid].account);
         clearMenu(playerid);
         savePosition(playerid);
         PLAYERS[playerid].character = response.id;
@@ -228,7 +238,6 @@ function switchCharakter(playerid, params)
         sendINFOMessage(playerid, "Erfolgreich auf '"..name.."' gewechselt.");
         return;
     end
-    sendERRMessage(playerid, "Der Charakter '"..name.."' existiert nicht oder gehört dir nicht");
 end
 
 function savePosition(playerid)
@@ -283,4 +292,13 @@ function loadFace(playerid)
         return;
     end
     sendERRMessage(playerid, "Face Laden fehlgeschlagen.");
+end
+
+function tryAutologinCharacter(playerid)
+    local mac = GetMacAddress(playerid);
+    local responses = DB_select("*", "account_autologins", "mac = "..mac);
+    for _key, response in pairs(responses) do
+        switchCharacterById(playerid, response.characterid);
+        return;
+    end
 end
