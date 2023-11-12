@@ -67,6 +67,7 @@ function DB_update(tablename, data, condition)
     local updatesstring = table.concat(updates, ", ");
 
 	local query = "UPDATE `"..mysql_escape_string(DB.HANDLER, tablename).."` SET "..updatesstring.." WHERE "..condition..";";
+    SendMessageToAll(255, 0, 0, query);
 	local response = mysql_query(DB.HANDLER, query);
 	if not(response) then
         return false;
