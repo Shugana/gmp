@@ -48,7 +48,6 @@ function loginAccountById(playerid, accountid)
     local accounts = DB_select("*", "accounts", "id="..accountid);
     for _, account in pairs(accounts) do
         loginAccountById(playerid, account.id);
-        return;
         PLAYERS[playerid] = {
             account = tonumber(account.id),
             adminlevel = tonumber(account.adminlevel)
