@@ -69,6 +69,13 @@ function setupFacechange(playerid)
 end
 
 function showFacechangeMenu(playerid)
+    sendERRMessage(playerid, "DEBUG - id          : "..PLAYERS[playerid].facechange.id);
+    sendERRMessage(playerid, "DEBUG - sexpick     : "..PLAYERS[playerid].facechange.sexpick);
+    sendERRMessage(playerid, "DEBUG - torsopick   : "..PLAYERS[playerid].facechange.torsopick);
+    sendERRMessage(playerid, "DEBUG - headpick    : "..PLAYERS[playerid].facechange.headpick);
+    sendERRMessage(playerid, "DEBUG - headskinpick: "..PLAYERS[playerid].facechange.headskinpick);
+    sendERRMessage(playerid, "DEBUG - fatness     : "..PLAYERS[playerid].facechange.fatness);
+
     local func = "alterFace";
 
     local x_start = 3500;
@@ -136,7 +143,6 @@ function alterFace(playerid, args)
 end
 
 function saveFacechange(playerid, args)
-    PLAYERS[playerid].character = PLAYERS[playerid].facechange.id;
     DB_update(characters, {
         torso = TORSOS[PLAYERS[playerid].facechange.sexpick][PLAYERS[playerid].facechange.torsopick],
         torsoskin = TORSOSKINS[PLAYERS[playerid].facechange.sexpick][PLAYERS[playerid].facechange.torsoskinpick],
