@@ -14,5 +14,9 @@ function updateGametimeDraw(hour, minute)
     hour = string.format("%02d", hour);
     minute = string.format("%02d", minute)
     local rltime = os.date("%H:%M");
-	SetDrawText(SERVERDRAWS.time.id, "IG: "..hour..":"..minute.." Uhr || RL: "..rltime.." Uhr");
+    if (SERVERDRAWS.time.id ~= nil) then
+	    SetDrawText(SERVERDRAWS.time.id, "IG: "..hour..":"..minute.." Uhr || RL: "..rltime.." Uhr");
+    else
+        SendMessageToAll(255,255,255,"WTF");
+    end
 end
