@@ -65,6 +65,7 @@ function setupFacechange(playerid)
         headskinpick = indexOf(HEADSKINS[chardata.sex], chardata.headskin),
         fatness = chardata.fatness
     };
+    ShowChat(playerid, 0);
     showFacechangeMenu(playerid);
 end
 
@@ -78,36 +79,36 @@ function showFacechangeMenu(playerid)
 
     local func = "alterFace";
 
-    local x_start = 3500;
+    local x_start = 2500;
     local x_size = 500;
-    local y_start = 4500;
+    local y_start = 500;
     local y_size = 280;
 
     setupMenu(playerid, false);
 
-    createText(playerid, "Character Editor", x_start+x_size*0, y_start+y_size*0, x_size*5, y_size, 255, 255, 255);
+    createText(playerid, "Facechange Menu", x_start+x_size*0, y_start+y_size*0, x_size*4, y_size, 255, 255, 255);
 
-    createButton(playerid, "M/F", x_start+x_size*0, y_start+y_size*1, x_size, y_size, 255, 255, 255, func, {option = "sex", change=1});
+    createButton(playerid, "M / F", x_start+x_size*0, y_start+y_size*1, x_size, y_size, 255, 255, 255, func, {option = "sex", change=1});
     createText(playerid, " ", x_start+x_size*1, y_start+y_size*1, x_size*3, y_size, 255, 255, 255);
     createButton(playerid, "Zufällig", x_start+x_size*4, y_start+y_size*1, x_size, y_size, 255, 255, 255, func, {option = "random", change=1});
 
-    createButton(playerid, "<--", x_start+x_size*0, y_start+y_size*2, x_size, y_size, 255, 255, 255, func, {option = "torsoskin", change=1});
-    createText(playerid, "Körper", x_start+x_size*1, y_start+y_size*2, x_size*3, y_size, 255, 255, 255);
-    createButton(playerid, "-->", x_start+x_size*4, y_start+y_size*2, x_size, y_size, 255, 255, 255, func, {option = "torsoskin", change=-1});
+    createButton(playerid, "<----", x_start+x_size*0, y_start+y_size*2, x_size, y_size, 255, 255, 255, func, {option = "torsoskin", change=-1});
+    createText(playerid, "Körper", x_start+x_size*1, y_start+y_size*2, x_size*2, y_size, 255, 255, 255);
+    createButton(playerid, "---->", x_start+x_size*3, y_start+y_size*2, x_size, y_size, 255, 255, 255, func, {option = "torsoskin", change=1});
 
-    createButton(playerid, "<--", x_start+x_size*0, y_start+y_size*3, x_size, y_size, 255, 255, 255, func, {option = "head", change=1});
-    createText(playerid, "Kopf", x_start+x_size*1, y_start+y_size*3, x_size*3, y_size, 255, 255, 255);
-    createButton(playerid, "-->", x_start+x_size*4, y_start+y_size*3, x_size, y_size, 255, 255, 255, func, {option = "head", change=-1});
+    createButton(playerid, "<----", x_start+x_size*0, y_start+y_size*3, x_size, y_size, 255, 255, 255, func, {option = "head", change=-1});
+    createText(playerid, "Kopf", x_start+x_size*1, y_start+y_size*3, x_size*2, y_size, 255, 255, 255);
+    createButton(playerid, "---->", x_start+x_size*3, y_start+y_size*3, x_size, y_size, 255, 255, 255, func, {option = "head", change=1});
 
-    createButton(playerid, "<--", x_start+x_size*0, y_start+y_size*4, x_size, y_size, 255, 255, 255, func, {option = "headskin", change=1});
-    createText(playerid, "Frisur", x_start+x_size*1, y_start+y_size*4, x_size*3, y_size, 255, 255, 255);
-    createButton(playerid, "-->", x_start+x_size*4, y_start+y_size*4, x_size, y_size, 255, 255, 255, func, {option = "headskin", change=-1});
+    createButton(playerid, "<----", x_start+x_size*0, y_start+y_size*4, x_size, y_size, 255, 255, 255, func, {option = "headskin", change=-1});
+    createText(playerid, "Frisur", x_start+x_size*1, y_start+y_size*4, x_size*2, y_size, 255, 255, 255);
+    createButton(playerid, "---->", x_start+x_size*3, y_start+y_size*4, x_size, y_size, 255, 255, 255, func, {option = "headskin", change=1});
 
-    createButton(playerid, "<--", x_start+x_size*0, y_start+y_size*5, x_size, y_size, 255, 255, 255, func, {option = "fatness", change=0.01});
-    createText(playerid, "Gewicht", x_start+x_size*1, y_start+y_size*5, x_size*3, y_size, 255, 255, 255);
-    createButton(playerid, "-->", x_start+x_size*4, y_start+y_size*5, x_size, y_size, 255, 255, 255, func, {option = "fatness", change=-0.01});
+    createButton(playerid, "<----", x_start+x_size*0, y_start+y_size*5, x_size, y_size, 255, 255, 255, func, {option = "fatness", change=-0.01});
+    createText(playerid, "Gewicht", x_start+x_size*1, y_start+y_size*5, x_size*2, y_size, 255, 255, 255);
+    createButton(playerid, "---->", x_start+x_size*3, y_start+y_size*5, x_size, y_size, 255, 255, 255, func, {option = "fatness", change=0.01});
 
-    createButton(playerid, "Speichern", x_start+x_size*0, y_start+y_size*6, x_size*5, y_size, 255, 255, 255, "saveFacechange", {});
+    createButton(playerid, "Speichern", x_start+x_size*0, y_start+y_size*6, x_size*4, y_size, 255, 255, 255, "saveFacechange", {});
 end
 
 function alterFace(playerid, args)
@@ -125,7 +126,7 @@ function alterFace(playerid, args)
     elseif args.option == "fatness" then
         PLAYERS[playerid].facechange.fatness = math.between(-0.9,PLAYERS[playerid].facechange.fatness+args.change,1.9);
     elseif args.option == "torsoskin" then
-        PLAYERS[playerid].facechange.torsoskinpick = moduloTable(TORSOS[SEXES[PLAYERS[playerid].facechange.sexpick]], PLAYERS[playerid].facechange.torsoskinpick+args.change);
+        PLAYERS[playerid].facechange.torsoskinpick = moduloTable(TORSOSKINS[SEXES[PLAYERS[playerid].facechange.sexpick]], PLAYERS[playerid].facechange.torsoskinpick+args.change);
     elseif args.option == "head" then
         PLAYERS[playerid].facechange.headpick = moduloTable(HEADS[SEXES[PLAYERS[playerid].facechange.sexpick]], PLAYERS[playerid].facechange.headpick+args.change);
     elseif args.option == "headskin" then
@@ -144,15 +145,16 @@ end
 
 function saveFacechange(playerid, args)
     DB_update(characters, {
-        torso = TORSOS[PLAYERS[playerid].facechange.sexpick][PLAYERS[playerid].facechange.torsopick],
-        torsoskin = TORSOSKINS[PLAYERS[playerid].facechange.sexpick][PLAYERS[playerid].facechange.torsoskinpick],
-        head = HEADS[PLAYERS[playerid].facechange.sexpick][PLAYERS[playerid].facechange.headpick],
-        headskin = HEADSKINS[PLAYERS[playerid].facechange.sexpick][PLAYERS[playerid].facechange.headskinpick],
+        torso = TORSOS[SEXES[PLAYERS[playerid].facechange.sexpick]][PLAYERS[playerid].facechange.torsopick],
+        torsoskin = TORSOSKINS[SEXES[PLAYERS[playerid].facechange.sexpick]][PLAYERS[playerid].facechange.torsoskinpick],
+        head = HEADS[SEXES[PLAYERS[playerid].facechange.sexpick]][PLAYERS[playerid].facechange.headpick],
+        headskin = HEADSKINS[SEXES[PLAYERS[playerid].facechange.sexpick]][PLAYERS[playerid].facechange.headskinpick],
         sex = SEXES[PLAYERS[playerid].facechange.sexpick]
     }, "id = "..PLAYERS[playerid].facechange.id);
     PLAYERS[playerid].facechange = nil;
     sendINFOMessage(playerid, "Face erfolgreich gespeichert");
     clearMenu(playerid);
+    ShowChat(playerid, 1);
 end
 
 function newCharacter(playerid, params)
