@@ -56,6 +56,15 @@ function setupFacechange(playerid)
         return;
     end
 
+    SetPlayerAngle(playerid, 0);
+    local x, y, z = GetPlayerPos(playerid);
+    local world = GetPlayerWorld(playerid);
+    x = x + 150;
+
+	local charactercreationvob = Vob.Create("Nix.3DS", world, x, y, z);
+	charactercreationvob:SetRotation(0, 180, 0);
+	SetCameraBehindVob(playerid, charactercreationvob);
+
     PLAYERS[playerid].facechange = {
         id = chardata.id,
         sexpick = indexOf(SEXES, chardata.sex),
@@ -63,8 +72,10 @@ function setupFacechange(playerid)
         torsoskinpick = indexOf(TORSOSKINS[chardata.sex], chardata.torsoskin),
         headpick = indexOf(HEADS[chardata.sex], chardata.head),
         headskinpick = indexOf(HEADSKINS[chardata.sex], chardata.headskin),
-        fatness = chardata.fatness
+        fatness = chardata.fatness,
+        vob = charactercreationvob
     };
+    
     ShowChat(playerid, 0);
     FreezePlayer(playerid, 1);
     showFacechangeMenu(playerid);
@@ -145,18 +156,21 @@ function alterFace(playerid, args)
 end
 
 function saveFacechange(playerid, args)
-    DB_update(characters, {
+    DB_update("characters", {
         torso = TORSOS[SEXES[PLAYERS[playerid].facechange.sexpick]][PLAYERS[playerid].facechange.torsopick],
         torsoskin = TORSOSKINS[SEXES[PLAYERS[playerid].facechange.sexpick]][PLAYERS[playerid].facechange.torsoskinpick],
         head = HEADS[SEXES[PLAYERS[playerid].facechange.sexpick]][PLAYERS[playerid].facechange.headpick],
         headskin = HEADSKINS[SEXES[PLAYERS[playerid].facechange.sexpick]][PLAYERS[playerid].facechange.headskinpick],
         sex = SEXES[PLAYERS[playerid].facechange.sexpick]
     }, "id = "..PLAYERS[playerid].facechange.id);
+
+    SetDefaultCamera(playerid);
+    PLAYERS[playerid].facechange.vob:Destroy;
     PLAYERS[playerid].facechange = nil;
-    sendINFOMessage(playerid, "Face erfolgreich gespeichert");
     clearMenu(playerid);
     ShowChat(playerid, 1);
     FreezePlayer(playerid, 0);
+    sendINFOMessage(playerid, "Face erfolgreich gespeichert");
 end
 
 function newCharacter(playerid, params)
