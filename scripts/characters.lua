@@ -111,6 +111,14 @@ function showFacechangeMenu(playerid)
 end
 
 function alterFace(playerid, args)
+    sendERRMessage(playerid, "DEBUG - ALTERFACE MENU CALLED - option: "..args.option..", change: "..args.change);
+    sendERRMessage(playerid, "DEBUG - id          : "..PLAYERS[playerid].facechange.id);
+    sendERRMessage(playerid, "DEBUG - sexpick     : "..PLAYERS[playerid].facechange.sexpick);
+    sendERRMessage(playerid, "DEBUG - torsopick   : "..PLAYERS[playerid].facechange.torsopick);
+    sendERRMessage(playerid, "DEBUG - headpick    : "..PLAYERS[playerid].facechange.headpick);
+    sendERRMessage(playerid, "DEBUG - headskinpick: "..PLAYERS[playerid].facechange.headskinpick);
+    sendERRMessage(playerid, "DEBUG - fatness     : "..PLAYERS[playerid].facechange.fatness);
+
     if args.option == "random" then
         PLAYERS[playerid].facechange.torsoskinpick = math.random(#TORSOSKINS[PLAYERS[playerid].facechange.sexpick]);
         PLAYERS[playerid].facechange.headpick = math.random(#HEADS[PLAYERS[playerid].facechange.sexpick]);
