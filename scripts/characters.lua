@@ -212,9 +212,12 @@ function savePosition(playerid)
     if (PLAYERS[playerid].character == nil) then
         return;
     end
-    local x, y, z = GetPlayerPos(playerid);
     local world = GetPlayerWorld(playerid);
+    sendERRMessage(playerid, "DEBUG - SAVING world: "..world);
+    local x, y, z = GetPlayerPos(playerid);
+    sendERRMessage(playerid, "DEBUG - SAVING Position: "..x..", "..y..", "..z);
     local angle = GetPlayerAngle(playerid);
+    sendERRMessage(playerid, "DEBUG - SAVING angle: "..angle);
     DB_update("character_locations", {
         x = x,
         y = y,
@@ -222,6 +225,7 @@ function savePosition(playerid)
         world = world,
         angle = angle
     }, "characterid = "..PLAYERS[playerid].character);
+    sendERRMessage(playerid, "DEBUG - SAVED");
 end
 
 function loadPosition(playerid)
@@ -235,12 +239,12 @@ function loadPosition(playerid)
     for _key, response in pairs(responses) do
         sendERRMessage(playerid, "DEBUG - newworld: "..response.world);
         if (world ~= response.world) then
-            sendERRMessage(playerid, "DEBUG - Setting new world: "..response.world);
+            sendERRMessage(playerid, "DEBUG - Loading world: "..response.world);
             SetPlayerWorld(playerid, response.world);
         end
-        sendERRMessage(playerid, "DEBUG - Setting new Position: "..tonumber(response.x)..", "..tonumber(response.y)..", "..tonumber(response.z));
+        sendERRMessage(playerid, "DEBUG - Loading Position: "..tonumber(response.x)..", "..tonumber(response.y)..", "..tonumber(response.z));
         SetPlayerPos(playerid, tonumber(response.x), tonumber(response.y), tonumber(response.z));
-        sendERRMessage(playerid, "DEBUG - Setting angle: "..tonumber(response.angle));
+        sendERRMessage(playerid, "DEBUG - Loading angle: "..tonumber(response.angle));
         SetPlayerAngle(playerid, tonumber(response.angle));
         return;
     end
