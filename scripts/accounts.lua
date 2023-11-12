@@ -45,6 +45,7 @@ function loginAccount(playerid, params)
 end
 
 function loginAccountById(playerid, accountid)
+    local mac = GetMacAddress(playerid);
     local accounts = DB_select("*", "accounts", "id="..accountid);
     for _, account in pairs(accounts) do
         PLAYERS[playerid] = {
@@ -52,7 +53,7 @@ function loginAccountById(playerid, accountid)
             adminlevel = tonumber(account.adminlevel)
         }
         if not(DB_exists("*","account_autologins", "accountid="..accountid)) then
-            DB_insert("account_autologins", {accountid=accountid});
+            DB_insert("account_autologins", {accountid=accountid, mac=mac});
         end
         sendINFOMessage(playerid, "Erfolgreich eingelogged mit Account '"..account.name.."' ("..ADMINRANKS[PLAYERS[playerid].adminlevel]..")");
         tryAutologinCharacter(playerid);
