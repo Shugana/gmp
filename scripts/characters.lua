@@ -229,14 +229,20 @@ function loadPosition(playerid)
         return;
     end
     local world = GetPlayerWorld(playerid);
+    sendERRMessage(playerid, "DEBUG - oldworld: "..world);
     local characterid = PLAYERS[playerid].character;
     local responses = DB_select("*", "character_locations", "characterid = "..characterid);
     for _key, response in pairs(responses) do
+        sendERRMessage(playerid, "DEBUG - newworld: "..response.world);
         if (world ~= response.world) then
+            sendERRMessage(playerid, "DEBUG - Setting new world: "..response.world);
             SetPlayerWorld(playerid, response.world);
         end
+        sendERRMessage(playerid, "DEBUG - Setting new Position: "..tonumber(response.x)..", "..tonumber(response.y)..", "..tonumber(response.z));
         SetPlayerPos(playerid, tonumber(response.x), tonumber(response.y), tonumber(response.z));
+        sendERRMessage(playerid, "DEBUG - Setting angle: "..tonumber(response.angle));
         SetPlayerAngle(playerid, tonumber(response.angle));
+        return;
     end
 end
 
