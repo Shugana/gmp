@@ -34,7 +34,7 @@ function playerGetsItem(playerid, iteminstance, amount)
     local charid = PLAYERS[playerid].character;
     local itemid = nil;
     local itemname = nil;
-    local responses = DB_select("*", "items", "instance = "..iteminstance);
+    local responses = DB_select("*", "items", "instance = '"..iteminstance.."'");
     for _key, response in pairs(responses) do
         itemid = tonumber(response.id);
         itemname = response.name;
