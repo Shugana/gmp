@@ -5,7 +5,7 @@ COMMANDS = {
         minadminlevel = ADMINRANKS.Ausgelogged
     },
     giveitem = {
-        func = "giveitem",
+        func = "cheatItem",
         help = "Cheated ein Item",
         minadminlevel = ADMINRANKS.Admin
     },

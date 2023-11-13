@@ -233,8 +233,10 @@ function switchCharacterById(playerid, characterid)
         clearMenu(playerid);
         savePosition(playerid);
         PLAYERS[playerid].character = response.id;
+        ClearInventory (playerid);
         loadFace(playerid);
         loadPosition(playerid);
+        loadInventory(playerid);
         sendINFOMessage(playerid, "Erfolgreich auf Charakter '"..response.name.."' gewechselt.");
         return;
     end

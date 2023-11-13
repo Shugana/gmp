@@ -1,16 +1,16 @@
 WORLDITEMS = {};
 
-function giveitem(playerid, params)
+function cheatItem(playerid, params)
     local result, recipientid, itemid, amount = sscanf(params, "dsd");
     if (result ~= 1) then
         sendERRMessage(playerid, "Ungültige Eingabe: versuche /giveitem <playerid> <itemid> <anzahl>");
         return;
     end
     if (amount < 1) then
-        sendERRMessage(playerid, "Ungültige Eingabe: versuche /giveitem <playerid> <itemid> <anzahl>");
+        sendERRMessage(playerid, "Ungültige Eingabe: Die Anzahl darf nicht negativ sein");
         return;
     end
-    if not(IsPlayerConnected(recipientid)) then
+    if (PLAYERS[recipientid] == nil or PLAYERS[recipientid].character == nil) then
         sendERRMessage(playerid, "Spieler mit id "..recipientid.." ist nicht verbunden.");
         return;
     end
@@ -27,6 +27,36 @@ function OnPlayerTakeItem(playerid, itemid, item_instance, amount, x, y, z, worl
         return;
     end
     DB_update("item_spawns", {spawned=0}, "id="..WORLDITEMS[itemid]);
+    playerGetsItem(playerid, iteminstance, amount);
+end
+
+function playerGetsItem(playerid, iteminstance, amount)
+    local charid = PLAYERS[playerid].character;
+    local itemid = nil;
+    local itemname = nil;
+    local responses = DB_select("*", "items", "instance = "..iteminstance);
+    for _key, response in pairs(responses) do
+        itemid = tonumber(response.id);
+        itemname = response.name;
+    end
+    if (itemid == nil) then
+        sendERRMessage(playerid, "Item mit der iteminstance '"..iteminstance.."' ist nicht in der DB. Melde dies dem Team");
+        return;
+    end
+    if not(DB_exists("*", "character_inventory", "characterid = "..charid.." AND itemid = "..itemid) then
+        DB_insert("character_inventory", {characterid=charid, itemid=itemid, amount=0});
+    end
+    DB_update("character_inventory", {amount="amount"+amount}, "characterid = "..charid.." AND itemid = "..itemid);
+    sendINFOMessage(playerid, "Du bekommst "..amount.."x "..itemname);
+end
+
+function loadInventory(playerid)
+    local responses = DB_select("items.iteminstance, character_inventory.amount",
+        "items, character_inventory",
+        "items.id = character_inventory.itemid AND character_inventory.charid = "..PLAYERS[playerid].character);
+    for _key, response in pairs(responses) do
+        GiveItem(playerid, response.instance, tonumber(response.amount));
+    end
 end
 
 function respawnTick()
