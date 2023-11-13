@@ -1,6 +1,7 @@
 function OnPlayerConnect(playerid)
-    SetPlayerWorld(playerid, "NEWWORLD\\KHORINIS.ZEN");
-    SetPlayerPos(playerid, 0, 0, 0);
+    
+    SetPlayerWorld(playerid, "NEWWORLD\\ABANDONED.ZEN");
+    SetPlayerPos(playerid, 1093, -122, 295);
     SpawnPlayer(playerid);
 
     PLAYERS[playerid] = {
