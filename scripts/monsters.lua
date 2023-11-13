@@ -14,7 +14,7 @@ function spawnMonster(playerid, params)
     local responses = DB_select("*", "monstertypes", "instance = '"..tier.."'");
     for _key, response in pairs(responses) do
         local npc = CreateNPC(response.name);
-        if(npc == -1)
+        if (npc == -1) then
             sendERRMessage(playerid, "NPC erstellen fehlgeschlagen");
             return;
         end
