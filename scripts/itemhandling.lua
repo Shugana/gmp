@@ -59,7 +59,7 @@ end
 function loadInventory(playerid)
     local responses = DB_select("items.instance, character_inventory.amount",
         "items, character_inventory",
-        "items.id = character_inventory.itemid AND character_inventory.characterid = "..PLAYERS[playerid].character);
+        "items.id = character_inventory.itemid AND character_inventory.amount > 0 AND character_inventory.characterid = "..PLAYERS[playerid].character);
     for _key, response in pairs(responses) do
         GiveItem(playerid, response.instance, tonumber(response.amount));
     end
