@@ -43,10 +43,15 @@ function playerGetsItem(playerid, iteminstance, amount)
         sendERRMessage(playerid, "Item mit der iteminstance '"..iteminstance.."' ist nicht in der DB. Melde dies dem Team");
         return;
     end
-    if not(DB_exists("*", "character_inventory", "characterid = "..charid.." AND itemid = "..itemid)) then
+    local oldamount = nil;
+    responses = DB_select("*", "character_inventory", "characterid = "..charid.." AND itemid = "..itemid);
+    for _key, response in pairs(responses) do
+        oldamount = tonumber(response.amount);
+    end
+    if oldamount == nil then
         DB_insert("character_inventory", {characterid=charid, itemid=itemid, amount=0});
     end
-    DB_update("character_inventory", {amount="amount"+amount}, "characterid = "..charid.." AND itemid = "..itemid);
+    DB_update("character_inventory", {amount=oldamount+amount}, "characterid = "..charid.." AND itemid = "..itemid);
     sendINFOMessage(playerid, "Du bekommst "..amount.."x "..itemname);
 end
 
