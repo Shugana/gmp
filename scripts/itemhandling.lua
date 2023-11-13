@@ -31,6 +31,7 @@ end
 
 function respawnTick()
     SPAWNTICKS = SPAWNTICKS+1%10;
+    SendMessageToAll(255,255,255,"SPAWNTICKS: "..SPAWNTICKS);
     if (SPAWNTICKS == 1) then
         local responses = DB_select(
             "items.instance AS instance, item_spawns.id as id, item_spawns.x AS x, item_spawns.y AS y, item_spawns.z AS z, item_spawns.world AS world",
