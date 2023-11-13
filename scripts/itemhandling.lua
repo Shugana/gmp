@@ -50,6 +50,7 @@ function playerGetsItem(playerid, iteminstance, amount)
     end
     if oldamount == nil then
         DB_insert("character_inventory", {characterid=charid, itemid=itemid, amount=0});
+        oldamount = 0;
     end
     DB_update("character_inventory", {amount=oldamount+amount}, "characterid = "..charid.." AND itemid = "..itemid);
     sendINFOMessage(playerid, "Du bekommst "..amount.."x "..itemname);
