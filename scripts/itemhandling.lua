@@ -30,9 +30,9 @@ function OnPlayerTakeItem(playerid, itemid, item_instance, amount, x, y, z, worl
 end
 
 function respawnTick()
-    SPAWNTICKS = SPAWNTICKS+1%10;
+    SPAWNTICKS = (SPAWNTICKS+1)%25;
     SendMessageToAll(255,255,255,"SPAWNTICKS: "..SPAWNTICKS);
-    if (SPAWNTICKS == 1) then
+    if (SPAWNTICKS == 24) then
         local responses = DB_select(
             "items.instance AS instance, item_spawns.id as id, item_spawns.x AS x, item_spawns.y AS y, item_spawns.z AS z, item_spawns.world AS world",
             "items, item_spawns",
@@ -42,6 +42,7 @@ function respawnTick()
             local itemid = CreateItem(response.instance, 1, response.x, response.y, response.z, response.world);
             WORLDITEMS[itemid] = response.id;
             DB_update("item_spawns", {spawned=1}, "id="..response.id);
+            SendMessageToAll(255,255,255,"Spawned: "..response.instance);
         end
     end
 end
