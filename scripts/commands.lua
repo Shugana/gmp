@@ -50,6 +50,11 @@ COMMANDS = {
         func = "setTime",
         help = "Setzt die Zeit auf <Stunden> <Minuten>",
         minadminlevel = ADMINRANKS.Support
+    },
+    spawn = {
+        func = "spawnMonster"
+        help = "Spawned on Tier in dein Umfeld",
+        minadminlevel = ADMINRANKS.Support
     }
 };
 

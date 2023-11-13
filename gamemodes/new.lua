@@ -9,6 +9,7 @@ require("scripts/itemhandling");
 require("scripts/login");
 require("scripts/menus");
 require("scripts/characters");
+require("scripts/monsters");
 require("scripts/onserverworldtime");
 
 
