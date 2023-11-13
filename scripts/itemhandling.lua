@@ -3,8 +3,12 @@ WORLDITEMS = {};
 function cheatItem(playerid, params)
     local result, recipientid, itemnameraw, amount = sscanf(params, "dsd");
     if (result ~= 1) then
-        sendERRMessage(playerid, "Ungültige Eingabe: versuche /giveitem <playerid> <itemname> <anzahl>");
-        return;
+        result, recipientid, itemnameraw = sscanf(params, "ds");
+        amount = 1;
+        if (result ~= 1) then
+            sendERRMessage(playerid, "Ungültige Eingabe: versuche /giveitem <playerid> <itemname> [<anzahl>]");
+            return;
+        end
     end
     if (amount < 1) then
         sendERRMessage(playerid, "Ungültige Eingabe: Die Anzahl darf nicht negativ sein");
@@ -15,12 +19,12 @@ function cheatItem(playerid, params)
         return;
     end
     local iteminstance = nil;
-    local responses = DB_select("*", "items", "instance = '"..itemnameraw.."'");
+    local responses = DB_select("*", "items", "name = '"..itemnameraw.."'");
     for _key, response in pairs(responses) do
         iteminstance = response.instance;
     end
     if (iteminstance == nil) then
-        responses = DB_select("*", "items", "instance LIKE '"..itemnameraw.."%'");
+        responses = DB_select("*", "items", "name LIKE '"..itemnameraw.."%'");
         for _key, response in pairs(responses) do
             iteminstance = response.instance;
         end
