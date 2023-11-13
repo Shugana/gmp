@@ -1,5 +1,5 @@
 NPCS = {};
-NPC_ID = -1;
+NPC_ID = 500;
 
 function spawnMonster(playerid, params)
     local result, tier = sscanf(params, "s");
