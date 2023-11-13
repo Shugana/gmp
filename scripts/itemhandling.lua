@@ -18,15 +18,19 @@ function cheatItem(playerid, params)
         sendERRMessage(playerid, "Spieler mit id "..recipientid.." ist nicht verbunden.");
         return;
     end
+    itemnameraw = capitalize(itemnameraw);
     local iteminstance = nil;
+    local itemname = nil;
     local responses = DB_select("*", "items", "name = '"..itemnameraw.."'");
     for _key, response in pairs(responses) do
         iteminstance = response.instance;
+        itemname = response.name;
     end
     if (iteminstance == nil) then
         responses = DB_select("*", "items", "name LIKE '"..itemnameraw.."%'");
         for _key, response in pairs(responses) do
             iteminstance = response.instance;
+            itemname = response.name;
         end
     end
     if (iteminstance == nil) then
