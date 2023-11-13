@@ -33,23 +33,23 @@ function respawnTick()
     SPAWNTICKS = SPAWNTICKS+1%10;
     if (SPAWNTICKS == 1) then
         local responses = DB_select(
-            "items.instance AS instance, item_respawns.id as id, item_respawns.x AS x, item_respawns.y AS y, item_respawns.z AS z, item_respawns.world AS world",
-            "items, item_respawns",
+            "items.instance AS instance, item_spawns.id as id, item_spawns.x AS x, item_spawns.y AS y, item_spawns.z AS z, item_spawns.world AS world",
+            "items, item_spawns",
             "items.id = items_respawn.itemid AND items_respawn.spawned=0"
         );
         for _key, response in pairs(responses) do
             local itemid = CreateItem(response.instance, 1, response.x, response.y, response.z, response.world);
             WORLDITEMS[itemid] = response.id;
-            DB_update("item_respawns", {respawn=1}, "id="..response.id);
+            DB_update("item_spawns", {respawn=1}, "id="..response.id);
         end
     end
 end
 
 function spawnOnServerInit()
     local responses = DB_select(
-        "items.instance AS instance, item_respawns.id as id, item_respawns.x AS x, item_respawns.y AS y, item_respawns.z AS z, item_respawns.world AS world",
-        "items, item_respawns",
-        "items.id = items_respawn.itemid AND items_respawn.spawned=1"
+        "items.instance AS instance, item_spawns.id as id, item_spawns.x AS x, item_spawns.y AS y, item_spawns.z AS z, item_spawns.world AS world",
+        "items, item_spawns",
+        "items.id = item_spawns.itemid AND items_respawn.spawned=1"
     );
     for _key, response in pairs(responses) do
         local itemid = CreateItem(response.instance, 1, response.x, response.y, response.z, response.world);
