@@ -1,9 +1,9 @@
 WORLDITEMS = {};
 
 function cheatItem(playerid, params)
-    local result, recipientid, itemid, amount = sscanf(params, "dsd");
+    local result, recipientid, itemnameraw, amount = sscanf(params, "dsd");
     if (result ~= 1) then
-        sendERRMessage(playerid, "Ungültige Eingabe: versuche /giveitem <playerid> <itemid> <anzahl>");
+        sendERRMessage(playerid, "Ungültige Eingabe: versuche /giveitem <playerid> <itemname> <anzahl>");
         return;
     end
     if (amount < 1) then
@@ -14,11 +14,28 @@ function cheatItem(playerid, params)
         sendERRMessage(playerid, "Spieler mit id "..recipientid.." ist nicht verbunden.");
         return;
     end
-    sendINFOMessage(playerid, GetPlayerName(playerid).." cheated "..GetPlayerName(recipientid).." "..amount.."x "..itemid);
-    if (recipientid ~= playerid) then
-        sendINFOMessage(recipientid, GetPlayerName(playerid).." cheated "..GetPlayerName(recipientid).." "..amount.."x "..itemid);
+    local iteminstance = nil;
+    local responses = DB_select("*", "items", "instance = '"..itemnameraw.."'");
+    for _key, response in pairs(responses) do
+        iteminstance = response.instance;
     end
-    GiveItem(recipientid, itemid, amount);
+    if (iteminstance == nil) then
+        responses = DB_select("*", "items", "instance LIKE '"..itemnameraw.."%'");
+        for _key, response in pairs(responses) do
+            iteminstance = response.instance;
+        end
+    end
+    if (iteminstance == nil) then
+        sendERRMessage(playerid, "Item '"..itemnameraw.."' nicht in der DB vorhanden.");
+        return;
+    end
+
+    sendINFOMessage(playerid, GetPlayerName(playerid).." cheated "..GetPlayerName(recipientid).." "..amount.."x "..itemname);
+    if (recipientid ~= playerid) then
+        sendINFOMessage(recipientid, GetPlayerName(playerid).." cheated "..GetPlayerName(recipientid).." "..amount.."x "..itemname);
+    end
+    GiveItem(recipientid, iteminstance, amount);
+    playerGetsItem(recipientid, iteminstance, amount);
 end
 
 function OnPlayerTakeItem(playerid, itemid, iteminstance, amount, x, y, z, worldName)
