@@ -26,7 +26,7 @@ function OnPlayerTakeItem(playerid, itemid, item_instance, amount, x, y, z, worl
         sendERRMessage(playerid, "itemid "..itemid.." below 0");
         return;
     end
-    DB_update("item_respawns", {respawn=0}, "id="..WORLDITEMS[itemid]);
+    DB_update("item_respawns", {spawned=0}, "id="..WORLDITEMS[itemid]);
 end
 
 function respawnTick()
@@ -40,7 +40,7 @@ function respawnTick()
         for _key, response in pairs(responses) do
             local itemid = CreateItem(response.instance, 1, response.x, response.y, response.z, response.world);
             WORLDITEMS[itemid] = response.id;
-            DB_update("item_spawns", {respawn=1}, "id="..response.id);
+            DB_update("item_spawns", {spawned=1}, "id="..response.id);
         end
     end
 end
