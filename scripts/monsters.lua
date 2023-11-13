@@ -20,15 +20,15 @@ function spawnMonster(playerid, params)
             return;
         end
         
-        SetPlayerInstance(npc, reponse.instance);
+        SetPlayerInstance(npc, response.instance);
         
         SetPlayerLevel(npc, 0);
-        SetPlayerStrength(npc, tonumber(reponse.str));
-        SetPlayerDexterity(npc, tonumber(reponse.dex));
-        SetPlayerMaxHealth(npc, tonumber(reponse.hp));
-        SetPlayerHealth(npc, tonumber(reponse.hp));
-        SetPlayerMaxMana(npc, tonumber(reponse.mana));
-        SetPlayerMana(npc, tonumber(reponse.mana));
+        SetPlayerStrength(npc, tonumber(response.str));
+        SetPlayerDexterity(npc, tonumber(response.dex));
+        SetPlayerMaxHealth(npc, tonumber(response.hp));
+        SetPlayerHealth(npc, tonumber(response.hp));
+        SetPlayerMaxMana(npc, tonumber(response.mana));
+        SetPlayerMana(npc, tonumber(response.mana));
 
         SetPlayerWorld(npc, GetPlayerWorld(playerid));
         SetPlayerPos(npc, GetPlayerPos(playerid));
