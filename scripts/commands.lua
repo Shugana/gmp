@@ -52,7 +52,7 @@ COMMANDS = {
         minadminlevel = ADMINRANKS.Support
     },
     spawn = {
-        func = "spawnMonster"
+        func = "spawnMonster",
         help = "Spawned on Tier in dein Umfeld",
         minadminlevel = ADMINRANKS.Support
     }
