@@ -1,26 +1,5 @@
 WORLDITEMS = {};
 
-SPAWNS = {
-    [1] = {
-        item = "ItPl_Beet",
-        spawned = false,
-        location = {
-            x = 311,
-            y = -88,
-            z = -1552
-        }
-    },
-    [2] = {
-        item = "ItPl_Mana_Herb_01",
-        spawned = false,
-        location = {
-            x = 310,
-            y = -96,
-            z = -1800
-        }
-    }
-};
-
 function giveitem(playerid, params)
     local result, recipientid, itemid, amount = sscanf(params, "dsd");
     if (result ~= 1) then
@@ -47,7 +26,33 @@ function OnPlayerTakeItem(playerid, itemid, item_instance, amount, x, y, z, worl
         sendERRMessage(playerid, "itemid "..itemid.." below 0");
         return;
     end
-    sendINFOMessage(playerid, "DEBUG OnPlayerTakeItem - Playerid: "..playerid..", itemid: "..itemid..", item_instance: "..item_instance..", amount: "..amount..", x: "..x..", y: "..y..", z: "..z..", worldName: "..worldName);
-    SPAWNS[WORLDITEMS[itemid]].spawned = false;
-    WORLDITEMS[itemid] = nil;
+    DB_update("item_respawns", {respawn=0}, "id="..WORLDITEMS[itemid]);
+end
+
+function respawnTick()
+    SPAWNTICKS = SPAWNTICKS+1%10;
+    if (SPAWNTICKS == 1) then
+        local responses = DB_select(
+            "items.instance AS instance, item_respawns.id as id, item_respawns.x AS x, item_respawns.y AS y, item_respawns.z AS z, item_respawns.world AS world",
+            "items, item_respawns",
+            "items.id = items_respawn.itemid AND items_respawn.spawned=0"
+        );
+        for _key, response in pairs(responses) do
+            local itemid = CreateItem(response.instance, 1, response.x, response.y, response.z, response.world);
+            WORLDITEMS[itemid] = response.id;
+            DB_update("item_respawns", {respawn=1}, "id="..response.id);
+        end
+    end
+end
+
+function spawnOnServerInit()
+    local responses = DB_select(
+        "items.instance AS instance, item_respawns.id as id, item_respawns.x AS x, item_respawns.y AS y, item_respawns.z AS z, item_respawns.world AS world",
+        "items, item_respawns",
+        "items.id = items_respawn.itemid AND items_respawn.spawned=1"
+    );
+    for _key, response in pairs(responses) do
+        local itemid = CreateItem(response.instance, 1, response.x, response.y, response.z, response.world);
+        WORLDITEMS[itemid] = response.id;
+    end
 end

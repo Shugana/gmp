@@ -21,4 +21,5 @@ function OnGamemodeInit()
     math.randomseed(os.time());
     ConnectDB();
     setupTimedraw();
+    spawnOnServerInit();
 end
