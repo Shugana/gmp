@@ -1,8 +1,11 @@
 function OnPlayerConnect(playerid)
+    SpawnPlayer(playerid);
+    if (playerid == NPC_ID) then
+        return;
+    end
     
     SetPlayerWorld(playerid, "NEWWORLD\\ABANDONED.ZEN");
     SetPlayerPos(playerid, 1093, -122, 295);
-    SpawnPlayer(playerid);
 
     PLAYERS[playerid] = {
         adminlevel = ADMINRANKS.Ausgelogged
