@@ -26,7 +26,7 @@ function OnPlayerTakeItem(playerid, itemid, item_instance, amount, x, y, z, worl
         sendERRMessage(playerid, "itemid "..itemid.." below 0");
         return;
     end
-    DB_update("item_respawns", {spawned=0}, "id="..WORLDITEMS[itemid]);
+    DB_update("item_spawns", {spawned=0}, "id="..WORLDITEMS[itemid]);
 end
 
 function respawnTick()
