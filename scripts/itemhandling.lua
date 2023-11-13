@@ -21,7 +21,7 @@ function cheatItem(playerid, params)
     GiveItem(recipientid, itemid, amount);
 end
 
-function OnPlayerTakeItem(playerid, itemid, item_instance, amount, x, y, z, worldName)
+function OnPlayerTakeItem(playerid, itemid, iteminstance, amount, x, y, z, worldName)
     if (itemid < 0) then
         sendERRMessage(playerid, "itemid "..itemid.." below 0");
         return;
