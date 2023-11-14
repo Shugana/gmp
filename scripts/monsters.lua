@@ -175,7 +175,7 @@ end
 
 function followPlayer(npcid)
     local distance = {
-        current = nil
+        current = nil,
         slow = 1000,
         arrived = 100
     }
