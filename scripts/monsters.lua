@@ -141,3 +141,12 @@ function moveMonster(playerid, params)
     PlayAnimation(tierid, "S_FISTRUNL");
     sendINFOMessage(playerid, "Tier "..tierid.." sollte sich bewegen!")
 end
+
+function playAni(playerid, params)
+    local result, targetid, animation = sscanf(params, "ds");
+    if (result ~= 1) then
+        sendERRMessage(playerid, "Benutze /ani <id> <ani>");
+        return;
+    end
+    PlayAnimation(targetid, ani);
+end

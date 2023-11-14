@@ -70,6 +70,11 @@ COMMANDS = {
         func = "moveMonster",
         help = "Tier bewegt sich vorwärts",
         minadminlevel = ADMINRANKS.Support
+    },
+    ani = {
+        func = "playAni",
+        help = "Ziel macht Animation",
+        minadminlevel = ADMINRANKS.Support
     }
 };
 
