@@ -54,6 +54,9 @@ end
 function NPCloop()
     local distance;
     for npcid, npc in pairs(NPCS) do
+        debug("state: "..npc.state);
+        debug(NPCSTATES[npc.state].func);
+        debug(npcid);
         _G[NPCSTATES[npc.state].func](npcid);
     end
 end
