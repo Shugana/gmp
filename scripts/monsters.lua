@@ -8,7 +8,9 @@ NPCSTATES = {
     attack = {id=3, func="monsterAttack"},
     [3] = {id=3, func="monsterAttack"},
     follow = {id=4, func="monsterFollow"},
-    [4] = {id=4, func="monsterFollow"}
+    [4] = {id=4, func="monsterFollow"},
+    showanis = {id=5, func="monsterShowAni"},
+    [5] = {id=5, func="monsterShowAni"}
 }
 
 function spawnMonster(playerid, params)
@@ -85,7 +87,7 @@ function monsterWarn(npcid)
     else
         NPCS[npcid].warnings = math.max(0, NPCS[npcid].warnings - 1);
         if NPCS[npcid].warnings > 0 then
-            monsterAni(npcid, "S_STAND")
+            monsterAni(npcid, "S_FISTRUN");
         else
             monsterAni(npcid, "S_SLEEP");
         end
@@ -172,12 +174,23 @@ function monsterAttack(npcid)
     elseif (random < 11) then
         monsterAni(npcid, "T_FISTPARADEJUMPB");
     else
+
         monsterAni(npcid, "S_FISTATTACK");
     end
 end
 
 function monsterFollow(npcid)
-    monsterTurn(npcid, playerid);
+    monsterTurn(npcid, NPCS[npcid].followid);
+    
+    local distance = GetDistancePlayers(npcid, NPCS[npcid].followid);
+    if distance < NPCS[npcid].attackrange then
+        monsterAni(npcid, "S_SLEEP");
+    elseif distance < NPCS[npcid].runrange then
+        monsterAni(npcid, "S_FISTWALKL");
+    else
+        monsterAni(npcid, "S_FISTRUNL");
+    end
+end
 end
 
 function testhit(playerid, params)
@@ -203,16 +216,6 @@ function lookAtMe(playerid, params)
     sendINFOMessage(playerid, "Tier "..tierid.."schaut dich an!")
 end
 
-function moveMonster(playerid, params)
-    local result, tierid = sscanf(params, "d");
-    if (result ~= 1) then
-        sendERRMessage(playerid, "Benutze /move <id>");
-        return;
-    end
-    PlayAnimation(tierid, "S_FISTRUNL");
-    sendINFOMessage(playerid, "Tier "..tierid.." sollte sich bewegen!")
-end
-
 function playAni(playerid, params)
     local result, targetid, animation = sscanf(params, "ds");
     if (result ~= 1) then
@@ -228,7 +231,8 @@ function follow(playerid, params)
         sendERRMessage(playerid, "Benutze /follow <id>");
         return;
     end
-    NPCS[tierid].follow = playerid;
+    NPCS[tierid].state = NPCSTATES.follow.id;
+    NPCS[tierid].followid = playerid;
 end
 
 function unfollow(playerid, params)
@@ -237,33 +241,8 @@ function unfollow(playerid, params)
         sendERRMessage(playerid, "Benutze /unfollow <id>");
         return;
     end
-    NPCS[tierid].follow = nil;
-end
-
-function followPlayer(npcid)
-    local distance = {
-        current = nil,
-        slow = 1250,
-        arrived = 250
-    };
-    local playerid = NPCS[npcid].follow;
-    
-    SetPlayerAngle(npcid, GetAngleToPlayer(npcid, playerid));
-    
-    distance.current = GetDistancePlayers(npcid, playerid);
-    if distance.current > distance.slow then
-        if (GetPlayerAnimationName(npcid)  ~= "S_FISTRUNL") then
-            PlayAnimation(npcid, "S_FISTRUNL");
-        end
-    elseif distance.current > distance.arrived then
-        if (GetPlayerAnimationName(npcid)  ~= "S_FISTWALKL") then
-            PlayAnimation(npcid, "S_FISTWALKL");
-        end
-    else
-        if (GetPlayerAnimationName(npcid)  ~= "S_SLEEP") then
-            PlayAnimation(npcid, "S_SLEEP");
-        end
-    end
+    NPCS[tierid].state = NPCSTATES.idle.id;
+    NPCS[tierid].followid = nil;
 end
 
 function showAni(playerid, params)
@@ -278,7 +257,7 @@ function showAni(playerid, params)
     end
 end
 
-function printAni(playerid, params)
+function monsterShowAni(playerid)
     local ani = GetPlayerAnimationName(playerid);
     if ani ~= NPCS[playerid].lastani then
         NPCS[playerid].lastani = ani;
