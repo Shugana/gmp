@@ -84,7 +84,7 @@ function turnNPC(npcid, targetid)
         direction = direction * -1;
     end
 
-    if (maxturn > 180)) then
+    if (maxturn > 180) then
         direction = direction * -1;
     end
     local turnamount = math.min(maxturn, NPCS[npcid].turnspeed)*direction;
