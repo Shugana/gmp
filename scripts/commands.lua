@@ -55,6 +55,16 @@ COMMANDS = {
         func = "spawnMonster",
         help = "Spawned on Tier in dein Umfeld",
         minadminlevel = ADMINRANKS.Support
+    },
+    hit = {
+        func = "testhit",
+        help = "Tier haut dich",
+        minadminlevel = ADMINRANKS.Support
+    },
+    look = {
+        func = "lookAtMe",
+        help = "Tier schaut dich an",
+        minadminlevel = ADMINRANKS.Support
     }
 };
 
