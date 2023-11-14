@@ -58,9 +58,6 @@ end
 function NPCloop()
     local distance;
     for npcid, npc in pairs(NPCS) do
-        debug("state: "..npc.state);
-        debug(NPCSTATES[npc.state].func);
-        debug(npcid);
         _G[NPCSTATES[npc.state].func](npcid);
     end
 end
@@ -84,9 +81,9 @@ function monsterWarn(npcid)
     else
         NPCS[npcid].warnings = math.max(0, NPCS[npcid].warnings - 1);
         if NPCS[npcid].warnings > 0 then
-            monsterAni(npcid, "T_STAND")
+            monsterAni(npcid, "S_STAND")
         else
-            monsterAni(npcid, "T_SLEEP");
+            monsterAni(npcid, "S_SLEEP");
         end
     end
 end
