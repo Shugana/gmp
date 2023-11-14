@@ -21,8 +21,8 @@ function spawnMonster(playerid, params)
     end
     local responses = DB_select("*", "monstertypes", "instance = '"..tier.."'");
     for _key, response in pairs(responses) do
-        local npc = CreateNPC(response.name);
-        if (npc == -1) then
+        local npcid = CreateNPC(response.name);
+        if (npcid == -1) then
             sendERRMessage(playerid, "NPC erstellen fehlgeschlagen");
             return;
         end
@@ -44,7 +44,7 @@ function spawnMonster(playerid, params)
             warnings = 0,
             target = nil,
             turnspeed = 10
-        }
+        };
     end
 end
 
@@ -72,6 +72,7 @@ function turnNPCloop()
 end
 
 function turnNPC(npcid, targetid)
+    debug("turning "..npcid.." to "..targetid);
     local npcangle = GetPlayerAngle(npcid);
     local targetangle = GetAngleToPlayer(npcid, targetid);
 
@@ -90,6 +91,8 @@ function turnNPC(npcid, targetid)
     local turnamount = math.min(maxturn, NPCS[npcid].turnspeed)*direction;
     SetPlayerAngle((npcangle + turnamount)%360);
 
+    debug("turned "..turnamount.."°");
+
     if (turnamount < NPCS[npcid].turnspeed) then
         return true;
     else
@@ -98,6 +101,7 @@ function turnNPC(npcid, targetid)
 end
 
 function warn(npcid)
+    debug(npcid.." warning");
     PlayAnimation(npcid, "T_WARN");
     NPCS[npcid].warnings = NPCS[npcid].warnings + 1;
 end

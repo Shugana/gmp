@@ -59,3 +59,7 @@ function setTime(playerid, params)
     end
     SetTime (hour, minute);
 end
+
+function debug(text)
+    SendMessageToAll(255, 0, 0, "Debug - "..text);
+end
