@@ -2,9 +2,13 @@ NPCS = {};
 NPC_ID = 500;
 NPCSTATES = {
     idle = {id=1, func="monsterWarn"},
+    [1] = {id=1, func="monsterWarn"},
     approach = {id=2, func="monsterApproach"},
+    [2] = {id=2, func="monsterApproach"},
     attack = {id=3, func="monsterAttack"},
-    follow = {id=4, func="monsterFollow"}
+    [3] = {id=3, func="monsterAttack"},
+    follow = {id=4, func="monsterFollow"},
+    [4] = {id=4, func="monsterFollow"}
 }
 
 function spawnMonster(playerid, params)
