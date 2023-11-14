@@ -74,7 +74,7 @@ function turnNPCloop()
 end
 
 function turnNPC(npcid, targetid)
-    NPCS[npcid].turning = (NPCS[npcid.turning]+1)%NPCS[npcid].turnspeed;
+    NPCS[npcid].turning = (NPCS[npcid].turning+1)%NPCS[npcid].turnspeed;
     if NPCS[npcid].turning ~= 0 then
         return false;
     end
