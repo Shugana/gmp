@@ -43,9 +43,9 @@ function spawnMonster(playerid, params)
         NPCS[npcid] = {
             warnings = 0,
             target = nil,
-            turnspeed = response.turnspeed,
+            turnspeed = tonumber(response.turnspeed),
             turning = 0,
-            aggrorange = response.aggrorange
+            aggrorange = tonumber(response.aggrorange)
         };
     end
 end
