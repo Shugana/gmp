@@ -128,9 +128,7 @@ function lookAtMe(playerid, params)
         sendERRMessage(playerid, "Benutze /look <id>");
         return;
     end
-    local x, _y, z = GetPlayerPos(playerid);
-    --SetPlayerAngle(tierid, GetAngleToPlayer(tierid, playerid));
-    TurnPlayerTo(tierid, x, z);
+    SetPlayerAngle(tierid, GetAngleToPlayer(tierid, playerid));
     sendINFOMessage(playerid, "Tier "..tierid.."schaut dich an!")
 end
 
@@ -140,6 +138,6 @@ function moveMonster(playerid, params)
         sendERRMessage(playerid, "Benutze /move <id>");
         return;
     end
-    PlayAnimation(tierid, "S_RUN");
+    PlayAnimation(tierid, "S_FISTRUNL");
     sendINFOMessage(playerid, "Tier "..tierid.." sollte sich bewegen!")
 end
