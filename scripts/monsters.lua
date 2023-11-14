@@ -24,7 +24,7 @@ function spawnMonster(playerid, params)
         sendERRMessage(playerid, "Tier '"..tier.."' nicht in der Datenbank");
         return;
     end
-    local responses = DB_select("*", "monstertypes", "instance = '"..tier.."'");
+    local responses = DB_select("*", "monstertypes", "name = '"..tier.."'");
     for _key, response in pairs(responses) do
         local npcid = CreateNPC(response.name);
         if (npcid == -1) then
