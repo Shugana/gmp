@@ -51,7 +51,8 @@ function spawnMonster(playerid, params)
             runrange = tonumber(response.runrange),
             attackrange = tonumber(response.attackrange),
             warntime = tonumber(response.warntime),
-            lastani = "NULL"
+            lastani = "NULL",
+            delay = 0
         };
     end
 end
@@ -146,6 +147,10 @@ end
 
 function monsterAttack(npcid)
     monsterTurn(npcid, NPCS[npcid].target);
+    NPCS[npcid].delay = (NPCS[npcid].delay+1)%5;
+    if (NPCS[npcid].delay ~= 1) then
+        return;
+    end
     local distance = GetDistancePlayers(npcid, NPCS[npcid].target);
     if distance > NPCS[npcid].attackrange then
         NPCS[npcid].state = NPCSTATES.approach.id;
