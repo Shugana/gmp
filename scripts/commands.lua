@@ -65,6 +65,11 @@ COMMANDS = {
         func = "lookAtMe",
         help = "Tier schaut dich an",
         minadminlevel = ADMINRANKS.Support
+    },
+    move = {
+        func = "moveMonster",
+        help = "Tier bewegt sich vorwärts",
+        minadminlevel = ADMINRANKS.Support
     }
 };
 

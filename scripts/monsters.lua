@@ -81,7 +81,6 @@ function turnNPC(npcid, targetid)
     debug("turning "..npcid.." to "..targetid.. "up to "..NPCS[npcid].turnspeed.."°");
     local npcangle = GetPlayerAngle(npcid);
     local targetangle = GetAngleToPlayer(npcid, targetid);
-    local turnamount = 0;
 
     local direction = 1;
     local maxturn = math.max(npcangle, targetangle) - math.min(npcangle, targetangle);
@@ -95,10 +94,9 @@ function turnNPC(npcid, targetid)
     end
 
     if (maxturn > 0) then
-        turnamount = math.min(maxturn, 1)*direction;
         SetPlayerAngle(npcid, (npcangle + direction)%360);
     end
-    if (turnamount < NPCS[npcid].turnspeed) then
+    if (maxturn < NPCS[npcid].turnspeed) then
         return true;
     else
         return false;
@@ -132,4 +130,15 @@ function lookAtMe(playerid, params)
     end
     SetPlayerAngle(tierid, GetAngleToPlayer(tierid, playerid));
     sendINFOMessage(playerid, "Tier "..tierid.."schaut dich an!")
+end
+
+function moveMonster(playerid, params)
+    local result, tierid = sscanf(params, "d");
+    if (result ~= 1) then
+        sendERRMessage(playerid, "Benutze /move <id>");
+        return;
+    end
+    PlayAnimation(tierid, "S_RUN");
+    SetPlayerAngle(tierid, GetAngleToPlayer(tierid, playerid));
+    sendINFOMessage(playerid, "Tier "..tierid.." sollte sich bewegen!")
 end
