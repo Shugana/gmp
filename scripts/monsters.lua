@@ -43,7 +43,9 @@ function spawnMonster(playerid, params)
         NPCS[npcid] = {
             warnings = 0,
             target = nil,
-            turnspeed = 10
+            turnspeed = response.turnspeed,
+            turning = 0,
+            aggrorange = response.aggrorange
         };
     end
 end
@@ -55,10 +57,10 @@ function turnNPCloop()
     local aggrorange = 3000;
     for npcid, npcdata in pairs(NPCS) do
         targetPlayer = nil;
-        mindist = nil;
+        mindist = NPCS[npcid].aggrorange;
         for playerid, playerdata in pairs(PLAYERS) do
             distance = GetDistancePlayers(npcid, playerid);
-            if (GetPlayerWorld(npcid) == GetPlayerWorld(playerid)) and (distance < aggrorange) and (mindist == nil or distance < mindist) then
+            if (GetPlayerWorld(npcid) == GetPlayerWorld(playerid)) and (distance < aggrorange) and (distance < mindist) then
                 mindist = distance;
                 targetPlayer = playerid;
             end
@@ -72,17 +74,17 @@ function turnNPCloop()
 end
 
 function turnNPC(npcid, targetid)
+    NPCS[npcid].turning = (NPCS[npcid.turning]+1)%NPCS[npcid].turnspeed;
+    if NPCS[npcid].turning ~= 0 then
+        return false;
+    end
     debug("turning "..npcid.." to "..targetid.. "up to "..NPCS[npcid].turnspeed.."°");
     local npcangle = GetPlayerAngle(npcid);
-    debug("npcangle: "..npcangle);
     local targetangle = GetAngleToPlayer(npcid, targetid);
-    debug("targetangle: "..targetangle);
+    local turnamount = 0;
 
-    local flip = false;
-    local forwards = true;
     local direction = 1;
     local maxturn = math.max(npcangle, targetangle) - math.min(npcangle, targetangle);
-    debug("maxturn: "..maxturn);
 
     if (npcangle > targetangle) then
         direction = direction * -1;
@@ -91,10 +93,11 @@ function turnNPC(npcid, targetid)
     if (maxturn > 180) then
         direction = direction * -1;
     end
-    local turnamount = math.min(maxturn, NPCS[npcid].turnspeed)*direction;
-    debug("turnamount: "..turnamount);
-    SetPlayerAngle(npcid, (npcangle + turnamount)%360);
 
+    if (maxturn > 0) then
+        turnamount = math.min(maxturn, 1)*direction;
+        SetPlayerAngle(npcid, (npcangle + direction)%360);
+    end
     if (turnamount < NPCS[npcid].turnspeed) then
         return true;
     else
