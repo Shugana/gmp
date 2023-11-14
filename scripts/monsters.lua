@@ -176,8 +176,8 @@ end
 function followPlayer(npcid)
     local distance = {
         current = nil,
-        slow = 1000,
-        arrived = 100
+        slow = 1250,
+        arrived = 250
     };
     local playerid = NPCS[npcid].follow;
     
