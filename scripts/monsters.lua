@@ -64,7 +64,7 @@ end
 
 function monsterAni(npcid, ani)
     if (NPCS[npcid].lastani ~= ani) then
-        debug("Monsterani ("..npcid.."): "..NPCS[npcid].lastani.. " --> "..ani);
+        debug("Monsterani ("..npcid.."): "..NPCS[npcid].lastani or "NULL".. " --> "..ani);
         PlayAnimation(npcid, ani);
         NPCS[npcid].lastani = ani;
     end
