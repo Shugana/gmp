@@ -148,5 +148,5 @@ function playAni(playerid, params)
         sendERRMessage(playerid, "Benutze /ani <id> <ani>");
         return;
     end
-    PlayAnimation(targetid, ani);
+    PlayAnimation(targetid, animation);
 end
