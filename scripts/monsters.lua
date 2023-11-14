@@ -72,14 +72,17 @@ function turnNPCloop()
 end
 
 function turnNPC(npcid, targetid)
-    debug("turning "..npcid.." to "..targetid);
+    debug("turning "..npcid.." to "..targetid.. "up to "..NPCS[npcid].turnspeed.."°");
     local npcangle = GetPlayerAngle(npcid);
+    debug("npcangle: "..npcangle);
     local targetangle = GetAngleToPlayer(npcid, targetid);
+    debug("targetangle: "..targetangle);
 
     local flip = false;
     local forwards = true;
     local direction = 1;
     local maxturn = math.max(npcangle, targetangle) - math.min(npcangle, targetangle);
+    debug("maxturn: "..maxturn);
 
     if (npcangle > targetangle) then
         direction = direction * -1;
@@ -89,9 +92,8 @@ function turnNPC(npcid, targetid)
         direction = direction * -1;
     end
     local turnamount = math.min(maxturn, NPCS[npcid].turnspeed)*direction;
+    debug("turnamount: "..turnamount);
     SetPlayerAngle((npcangle + turnamount)%360);
-
-    debug("turned "..turnamount.."°");
 
     if (turnamount < NPCS[npcid].turnspeed) then
         return true;
