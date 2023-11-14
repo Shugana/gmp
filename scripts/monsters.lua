@@ -191,7 +191,6 @@ function monsterFollow(npcid)
         monsterAni(npcid, "S_FISTRUNL");
     end
 end
-end
 
 function testhit(playerid, params)
     local result, tierid = sscanf(params, "d");
