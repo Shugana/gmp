@@ -93,7 +93,7 @@ function turnNPC(npcid, targetid)
     end
     local turnamount = math.min(maxturn, NPCS[npcid].turnspeed)*direction;
     debug("turnamount: "..turnamount);
-    SetPlayerAngle((npcangle + turnamount)%360);
+    SetPlayerAngle(npcid, (npcangle + turnamount)%360);
 
     if (turnamount < NPCS[npcid].turnspeed) then
         return true;
