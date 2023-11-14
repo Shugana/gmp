@@ -56,6 +56,10 @@ function turnNPCloop()
     local distance;
     local aggrorange = 3000;
     for npcid, npcdata in pairs(NPCS) do
+        if NPCS[npcid].anitoggle ~= nil then
+            printAni(npcid);
+            return;
+        end
         if NPCS[npcid].follow ~= nil then
             followPlayer(npcid);
             return;
@@ -196,5 +200,27 @@ function followPlayer(npcid)
         if (GetPlayerAnimationName(npcid)  ~= "S_SLEEP") then
             PlayAnimation(npcid, "S_SLEEP");
         end
+    end
+end
+
+ANIHOLDER = {};
+
+function showAni(playerid, params)
+    if NPCS[playerid] == nil then
+        NPCS[playerid] = {
+            anitoggle = true;
+            debug("ani observe on");
+        };
+    else
+        NPCS[playerid] = nil;
+        debug("ani observe off");
+    end
+end
+
+function printAni(playerid, params)
+    local ani = GetPlayerAnimationName(playerid);
+    if ani ~= NPCS[playerid].lastani then
+        NPCS[playerid].lastani = ani;
+        debug("ani changed to: "..ani or "-");
     end
 end

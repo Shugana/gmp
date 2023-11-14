@@ -85,6 +85,11 @@ COMMANDS = {
         func = "unfollow",
         help = "<ID> folgt dir",
         minadminlevel = ADMINRANKS.Support
+    },
+    showani = {
+        func = "showAni",
+        help = "Zeigt dir deine aktuelle Ani an",
+        minadminlevel = ADMINRANKS.Support
     }
 };
 
