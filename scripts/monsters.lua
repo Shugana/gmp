@@ -65,7 +65,7 @@ end
 function monsterAni(npcid, ani)
     local oldani = GetPlayerAnimationName(npcid) or " ";
     if (GetPlayerAnimationName(npcid) ~= ani) then
-        debug("Monsterani ("..npcid.."): "oldani.. " --> "..ani);
+        debug("Monsterani ("..npcid.."): "..oldani.. " --> "..ani);
         PlayAnimation(npcid, ani);
     end
 end
