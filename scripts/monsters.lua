@@ -128,7 +128,9 @@ function lookAtMe(playerid, params)
         sendERRMessage(playerid, "Benutze /look <id>");
         return;
     end
-    SetPlayerAngle(tierid, GetAngleToPlayer(tierid, playerid));
+    local x, _y, z = GetPlayerPos(playerid);
+    --SetPlayerAngle(tierid, GetAngleToPlayer(tierid, playerid));
+    TurnPlayerTo(tierid, x, z);
     sendINFOMessage(playerid, "Tier "..tierid.."schaut dich an!")
 end
 

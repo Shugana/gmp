@@ -5,6 +5,8 @@ FONTS = {
     sequelbig = "Font_Old_20_White.tga"
 };
 
+-- Virtual Pixels for Draws / Texts: 0-8192
+
 function createButton(playerid, text, startx, starty, sizex, sizey, r, g, b, func, args)
     createText(playerid, text, startx, starty, sizex, sizey, r, g, b);
     table.insert(PLAYERS[playerid].menu.buttons, {
