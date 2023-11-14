@@ -139,6 +139,5 @@ function moveMonster(playerid, params)
         return;
     end
     PlayAnimation(tierid, "S_RUN");
-    SetPlayerAngle(tierid, GetAngleToPlayer(tierid, playerid));
     sendINFOMessage(playerid, "Tier "..tierid.." sollte sich bewegen!")
 end
