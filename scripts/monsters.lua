@@ -56,6 +56,10 @@ function turnNPCloop()
     local distance;
     local aggrorange = 3000;
     for npcid, npcdata in pairs(NPCS) do
+        if NPCS[npcid].follow ~= nil then
+            followPlayer(npcid);
+            return;
+        end
         targetPlayer = nil;
         mindist = NPCS[npcid].aggrorange;
         for playerid, playerdata in pairs(PLAYERS) do
@@ -149,4 +153,48 @@ function playAni(playerid, params)
         return;
     end
     PlayAnimation(targetid, animation);
+end
+
+function follow(playerid, params)
+    local result, tierid = sscanf(params, "d");
+    if (result ~= 1) then
+        sendERRMessage(playerid, "Benutze /follow <id>");
+        return;
+    end
+    NPC[tierid].follow = playerid;
+end
+
+function unfollow(playerid, params)
+    local result, tierid = sscanf(params, "d");
+    if (result ~= 1) then
+        sendERRMessage(playerid, "Benutze /unfollow <id>");
+        return;
+    end
+    NPC[tierid].follow = nil;
+end
+
+function followPlayer(npcid)
+    local distance = {
+        current = nil
+        slow = 1000,
+        arrived = 100
+    }
+    local playerid = NPCS[npcid].follow;
+    
+    SetPlayerAngle(npcid, GetAngleToPlayer(npcid, playerid));
+    
+    distance.current = GetDistancePlayers(npcid, playerid);
+    if distance.current > distance.slow then
+        if (GetPlayerAnimationName(npcid)  ~= "S_FISTRUNL") then
+            PlayAnimation(npcid, "S_FISTRUNL");
+        end
+    else if distance.current > distance.arrived then
+        if (GetPlayerAnimationName(npcid)  ~= "S_FISTWALKL") then
+            PlayAnimation(npcid, "S_FISTWALKL");
+        end
+    else
+        if (GetPlayerAnimationName(npcid)  ~= "S_SLEEP") then
+            PlayAnimation(npcid, "S_SLEEP");
+        end
+    end
 end

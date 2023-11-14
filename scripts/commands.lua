@@ -75,6 +75,16 @@ COMMANDS = {
         func = "playAni",
         help = "Ziel macht Animation",
         minadminlevel = ADMINRANKS.Support
+    },
+    follow = {
+        func = "follow",
+        help = "<ID> folgt dir",
+        minadminlevel = ADMINRANKS.Support
+    },
+    unfollow = {
+        func = "unfollow",
+        help = "<ID> folgt dir",
+        minadminlevel = ADMINRANKS.Support
     }
 };
 
