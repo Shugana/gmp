@@ -79,6 +79,7 @@ function monsterWarn(npcid)
         if (NPCS[npcid].warnings >= NPCS[npcid].warntime) then
             NPCS[npcid].state = NPCSTATES.approach.id;
         end
+        PlayAnimation(npcid, "T_WARN");
         monsterAni(npcid, "T_WARN");
         monsterTurn(npcid, targetPlayer);
     else
@@ -147,7 +148,7 @@ end
 
 function monsterAttack(npcid)
     monsterTurn(npcid, NPCS[npcid].target);
-    NPCS[npcid].delay = (NPCS[npcid].delay+1)%5;
+    NPCS[npcid].delay = (NPCS[npcid].delay+1)%math.ceil(NPCS[npcid].warntime/2);
     if (NPCS[npcid].delay ~= 1) then
         return;
     end
@@ -157,14 +158,14 @@ function monsterAttack(npcid)
         NPCS[npcid].target = nil;
         return;
     end
-    local random = math.random(1, 20);
-    if (random == 1) then
+    local random = math.random(1, 30);
+    if (random < 2) then
         monsterAni(npcid, "T_FISTRUNSTRAFEL");
-    elseif (random == 2) then
+    elseif (random < 3) then
         monsterAni(npcid, "T_FISTRUNSTRAFER");
-    elseif (random == 3 or random == 4) then
+    elseif (random < 5) then
         monsterAni(npcid, "T_FISTWALKSTRAFEL");
-    elseif (random == 5 or random == 6) then
+    elseif (random < 7) then
         monsterAni(npcid, "T_FISTWALKSTRAFER");
     elseif (random < 10) then
         monsterAni(npcid, "T_FISTATTACKMOVE");
