@@ -63,10 +63,10 @@ function NPCloop()
 end
 
 function monsterAni(npcid, ani)
-    local oldani = GetPlayerAnimationName(npcid) or " ";
-    if (GetPlayerAnimationName(npcid) ~= ani) then
-        debug("Monsterani ("..npcid.."): "..oldani.. " --> "..ani);
+    if (NPCS[npcid].lastani ~= ani) then
+        debug("Monsterani ("..npcid.."): "..NPCS[npcid].lastani.. " --> "..ani);
         PlayAnimation(npcid, ani);
+        NPCS[npcid].lastani = ani;
     end
 end
 
