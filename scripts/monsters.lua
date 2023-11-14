@@ -63,8 +63,9 @@ function NPCloop()
 end
 
 function monsterAni(npcid, ani)
+    local oldani = GetPlayerAnimationName(npcid) or " ";
     if (GetPlayerAnimationName(npcid) ~= ani) then
-        debug("Monsterani ("..npcid..") = "..ani);
+        debug("Monsterani ("..npcid.."): "oldani.. " --> "..ani);
         PlayAnimation(npcid, ani);
     end
 end
@@ -73,7 +74,7 @@ function monsterWarn(npcid)
     local targetPlayer = monsterGetClosestAggro(npcid);
     if (targetPlayer ~= nil) then
         NPCS[npcid].warnings = NPCS[npcid].warnings + 1;
-        if (NPCS[npcid].warntime >= NPCS[npcid].warnings) then
+        if (NPCS[npcid].warnings >= NPCS[npcid].warntime) then
             NPCS[npcid].state = NPCSTATES.approach.id;
         end
         monsterAni(npcid, "T_WARN");
