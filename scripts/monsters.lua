@@ -20,7 +20,7 @@ function spawnMonster(playerid, params)
         return;
     end
     tier = capitalize(tier);
-    if not(DB_exists("*", "monstertypes", "instance = '"..tier.."'")) then
+    if not(DB_exists("*", "monstertypes", "name = '"..tier.."'")) then
         sendERRMessage(playerid, "Tier '"..tier.."' nicht in der Datenbank");
         return;
     end
