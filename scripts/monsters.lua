@@ -1,5 +1,12 @@
 NPCS = {};
 NPC_ID = 500;
+NPCSTATES = {
+    idle = 0,
+    turn = 1,
+    warn = 2,
+    follow = 3,
+    attack = 4
+}
 
 function spawnMonster(playerid, params)
     local result, tier = sscanf(params, "s");
@@ -32,7 +39,67 @@ function spawnMonster(playerid, params)
 
         SetPlayerWorld(npc, GetPlayerWorld(playerid));
         SetPlayerPos(npc, GetPlayerPos(playerid));
+
+        NPCS[npcid] = {
+            warnings = 0,
+            target = nil,
+            turnspeed = 10
+        }
     end
+end
+
+function turnNPCloop()
+    local targetPlayer;
+    local mindist;
+    local distance;
+    local aggrorange = 3000;
+    for npcid, npcdata in pairs(NPCS) do
+        targetPlayer = nil;
+        mindist = nil;
+        for playerid, playerdata in pairs(PLAYERS) do
+            distance = GetDistancePlayers(npcid, playerid);
+            if (distance < aggrorange) and (mindist == nil or distance < mindist) then
+                mindist = distance;
+                targetPlayer = playerid;
+            end
+        end
+        if (targetPlayer ~= nil) then
+            if (turnNPC(npcid, targetPlayer)) then
+                warn(npcid); 
+            end
+        end
+    end
+end
+
+function turnNPC(npcid, targetid)
+    local npcangle = GetPlayerAngle(npcid);
+    local targetangle = GetAngleToPlayer(npcid, targetid);
+
+    local flip = false;
+    local forwards = true;
+    local direction = 1;
+    local maxturn = math.max(npcangle, targetangle) - math.min(npcangle, targetangle);
+
+    if (npcangle > targetangle) then
+        direction = direction * -1;
+    end
+
+    if (maxturn > 180)) then
+        direction = direction * -1;
+    end
+    local turnamount = math.min(maxturn, NPCS[npcid].turnspeed)*direction;
+    SetPlayerAngle((npcangle + turnamount)%360);
+
+    if (turnamount < NPCS[npcid].turnspeed) then
+        return true;
+    else
+        return false;
+    end
+end
+
+function warn(npcid)
+    PlayAnimation(npcid, "T_WARN");
+    NPCS[npcid].warnings = NPCS[npcid].warnings + 1;
 end
 
 function testhit(playerid, params)
