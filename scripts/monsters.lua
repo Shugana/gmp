@@ -27,18 +27,18 @@ function spawnMonster(playerid, params)
             return;
         end
         
-        SetPlayerInstance(npc, response.instance);
+        SetPlayerInstance(npcid, response.instance);
         
-        SetPlayerLevel(npc, 0);
-        SetPlayerStrength(npc, tonumber(response.str));
-        SetPlayerDexterity(npc, tonumber(response.dex));
-        SetPlayerMaxHealth(npc, tonumber(response.hp));
-        SetPlayerHealth(npc, tonumber(response.hp));
-        SetPlayerMaxMana(npc, tonumber(response.mana));
-        SetPlayerMana(npc, tonumber(response.mana));
+        SetPlayerLevel(npcid, 0);
+        SetPlayerStrength(npcid, tonumber(response.str));
+        SetPlayerDexterity(npcid, tonumber(response.dex));
+        SetPlayerMaxHealth(npcid, tonumber(response.hp));
+        SetPlayerHealth(npcid, tonumber(response.hp));
+        SetPlayerMaxMana(npcid, tonumber(response.mana));
+        SetPlayerMana(npcid, tonumber(response.mana));
 
-        SetPlayerWorld(npc, GetPlayerWorld(playerid));
-        SetPlayerPos(npc, GetPlayerPos(playerid));
+        SetPlayerWorld(npcid, GetPlayerWorld(playerid));
+        SetPlayerPos(npcid, GetPlayerPos(playerid));
 
         NPCS[npcid] = {
             warnings = 0,
@@ -58,7 +58,7 @@ function turnNPCloop()
         mindist = nil;
         for playerid, playerdata in pairs(PLAYERS) do
             distance = GetDistancePlayers(npcid, playerid);
-            if (distance < aggrorange) and (mindist == nil or distance < mindist) then
+            if (GetPlayerWorld(npcid) == GetPlayerWorld(playerid)) and (distance < aggrorange) and (mindist == nil or distance < mindist) then
                 mindist = distance;
                 targetPlayer = playerid;
             end

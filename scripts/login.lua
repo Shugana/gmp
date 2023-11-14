@@ -1,5 +1,4 @@
 function OnPlayerConnect(playerid)
-    SendMessageToAll(255,255,255, playerid.." connected");
     SpawnPlayer(playerid);
     if (playerid > NPC_ID) then
         return;
