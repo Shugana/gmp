@@ -178,7 +178,7 @@ function followPlayer(npcid)
         current = nil,
         slow = 1000,
         arrived = 100
-    }
+    };
     local playerid = NPCS[npcid].follow;
     
     SetPlayerAngle(npcid, GetAngleToPlayer(npcid, playerid));
@@ -188,7 +188,7 @@ function followPlayer(npcid)
         if (GetPlayerAnimationName(npcid)  ~= "S_FISTRUNL") then
             PlayAnimation(npcid, "S_FISTRUNL");
         end
-    else if distance.current > distance.arrived then
+    elseif distance.current > distance.arrived then
         if (GetPlayerAnimationName(npcid)  ~= "S_FISTWALKL") then
             PlayAnimation(npcid, "S_FISTWALKL");
         end
