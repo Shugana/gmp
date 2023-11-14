@@ -1,5 +1,5 @@
 TIMERS = {}
 
 function startTimers()
-    TIMERS.npcs = SetTimer("turnNPCloop", 100, 1);
+    TIMERS.npcs = SetTimer("NPCloop", 100, 1);
 end

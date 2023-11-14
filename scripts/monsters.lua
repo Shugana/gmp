@@ -1,11 +1,10 @@
 NPCS = {};
 NPC_ID = 500;
 NPCSTATES = {
-    idle = 0,
-    turn = 1,
-    warn = 2,
-    follow = 3,
-    attack = 4
+    idle = {id=1, func="monsterWarn"},
+    approach = {id=2, func="monsterApproach"},
+    attack = {id=3, func="monsterAttack"},
+    follow = {id=4, func="monsterFollow"}
 }
 
 function spawnMonster(playerid, params)
@@ -41,52 +40,65 @@ function spawnMonster(playerid, params)
         SetPlayerPos(npcid, GetPlayerPos(playerid));
 
         NPCS[npcid] = {
+            state = NPCSTATES.idle.id,
             warnings = 0,
-            target = nil,
             turnspeed = tonumber(response.turnspeed),
-            turning = 0,
-            aggrorange = tonumber(response.aggrorange)
+            aggrorange = tonumber(response.aggrorange),
+            runrange = tonumber(response.runrange),
+            attackrange = tonumber(response.attackrange),
+            warntime = tonumber(response.warntime)
         };
     end
 end
 
-function turnNPCloop()
-    local targetPlayer;
-    local mindist;
+function NPCloop()
     local distance;
-    local aggrorange = 3000;
-    for npcid, npcdata in pairs(NPCS) do
-        if NPCS[npcid].anitoggle ~= nil then
-            printAni(npcid);
-            return;
+    for npcid, npc in pairs(NPCS) do
+        _G[NPCSTATES[npc.state].func](npcid);
+    end
+end
+
+function monsterAni(npcid, ani)
+    if (GetPlayerAnimationName(npcid) ~= ani) then
+        debug("Monsterani ("..npcid..") = "..ani);
+        PlayAnimation(npcid, ani);
+    end
+end
+
+function monsterWarn(npcid)
+    local targetPlayer = monsterGetClosestAggro(npcid);
+    if (targetPlayer ~= nil) then
+        NPCS[npcid].warnings = NPCS[npcid].warnings + 1;
+        if (NPCS[npcid].warntime >= NPCS[npcid].warnings) then
+            NPCS[npcid].state = NPCSTATES.approach.id;
         end
-        if NPCS[npcid].follow ~= nil then
-            followPlayer(npcid);
-            return;
-        end
-        targetPlayer = nil;
-        mindist = NPCS[npcid].aggrorange;
-        for playerid, playerdata in pairs(PLAYERS) do
-            distance = GetDistancePlayers(npcid, playerid);
-            if (GetPlayerWorld(npcid) == GetPlayerWorld(playerid)) and (distance < aggrorange) and (distance < mindist) then
-                mindist = distance;
-                targetPlayer = playerid;
-            end
-        end
-        if (targetPlayer ~= nil) then
-            if (turnNPC(npcid, targetPlayer)) then
-                warn(npcid); 
-            end
+        monsterAni(npcid, "T_WARN");
+        monsterTurn(npcid, targetPlayer);
+    else
+        NPCS[npcid].warnings = math.max(0, NPCS[npcid].warnings - 1);
+        if NPCS[npcid].warnings > 0 then
+            monsterAni(npcid, "T_STAND")
+        else
+            monsterAni(npcid, "T_SLEEP");
         end
     end
 end
 
-function turnNPC(npcid, targetid)
-    NPCS[npcid].turning = (NPCS[npcid].turning+1)%NPCS[npcid].turnspeed;
-    if NPCS[npcid].turning ~= 0 then
-        return false;
+function monsterGetClosestAggro(npcid)
+    local distance;
+    local mindist = NPCS[npcid].aggrorange;
+    local targetPlayer;
+    for playerid, _playerdata in pairs(PLAYERS) do
+        distance = GetDistancePlayers(npcid, playerid);
+        if (GetPlayerHealth(playerid) > 0) and (GetPlayerWorld(npcid) == GetPlayerWorld(playerid)) and (distance < mindist) then
+            mindist = distance;
+            targetPlayer = playerid;
+        end
     end
-    debug("turning "..npcid.." to "..targetid.. "up to "..NPCS[npcid].turnspeed.."°");
+    return targetPlayer;
+end
+
+function monsterTurn(npcid, targetid)
     local npcangle = GetPlayerAngle(npcid);
     local targetangle = GetAngleToPlayer(npcid, targetid);
 
@@ -96,25 +108,64 @@ function turnNPC(npcid, targetid)
     if (npcangle > targetangle) then
         direction = direction * -1;
     end
-
     if (maxturn > 180) then
         direction = direction * -1;
     end
 
-    if (maxturn > 0) then
-        SetPlayerAngle(npcid, (npcangle + direction)%360);
-    end
-    if (maxturn < NPCS[npcid].turnspeed) then
-        return true;
-    else
-        return false;
+    local turnamount = direction * math.min(NPCS[npcid].turnspeed, maxturn);
+
+    if (maxturn > 0 and (turnamount*direction) >= (NPCS[npcid].turnspeed/2)) then
+        SetPlayerAngle(npcid, (npcangle + turnamount)%360);
     end
 end
 
-function warn(npcid)
-    debug(npcid.." warning");
-    PlayAnimation(npcid, "T_WARN");
-    NPCS[npcid].warnings = NPCS[npcid].warnings + 1;
+function monsterApproach(npcid)
+    local playerid = monsterGetClosestAggro(npcid);
+    if playerid == nil then
+        NPCS[npcid].state = NPCSTATES.idle.id;
+        return;
+    end
+    monsterTurn(npcid, playerid);
+    
+    local distance = GetDistancePlayers(npcid, playerid);
+    if distance < NPCS[npcid].attackrange then
+        NPCS[npcid].state = NPCSTATES.attack.id;
+        NPCS[npcid].target = playerid;
+    elseif distance < NPCS[npcid].runrange then
+        monsterAni(npcid, "S_FISTRUNL");
+    else
+        monsterAni(npcid, "S_FISTWALKL");
+    end
+end
+
+function monsterAttack(npcid)
+    monsterTurn(npcid, NPCS[npcid].target);
+    local distance = GetDistancePlayers(npcid, NPCS[npcid].target);
+    if distance > NPCS[npcid].attackrange then
+        NPCS[npcid].state = NPCSTATES.approach.id;
+        NPCS[npcid].target = nil;
+        return;
+    end
+    local random = math.random(1, 20);
+    if (random == 1) then
+        monsterAni(npcid, "T_FISTRUNSTRAFEL");
+    elseif (random == 2) then
+        monsterAni(npcid, "T_FISTRUNSTRAFER");
+    elseif (random == 3 or random == 4) then
+        monsterAni(npcid, "T_FISTWALKSTRAFEL");
+    elseif (random == 5 or random == 6) then
+        monsterAni(npcid, "T_FISTWALKSTRAFER");
+    elseif (random < 10) then
+        monsterAni(npcid, "T_FISTATTACKMOVE");
+    elseif (random < 11) then
+        monsterAni(npcid, "T_FISTPARADEJUMPB");
+    else
+        monsterAni(npcid, "S_FISTATTACK");
+    end
+end
+
+function monsterFollow(npcid)
+    monsterTurn(npcid, playerid);
 end
 
 function testhit(playerid, params)
@@ -202,8 +253,6 @@ function followPlayer(npcid)
         end
     end
 end
-
-ANIHOLDER = {};
 
 function showAni(playerid, params)
     if NPCS[playerid] == nil then
