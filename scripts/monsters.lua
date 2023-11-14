@@ -50,7 +50,8 @@ function spawnMonster(playerid, params)
             aggrorange = tonumber(response.aggrorange),
             runrange = tonumber(response.runrange),
             attackrange = tonumber(response.attackrange),
-            warntime = tonumber(response.warntime)
+            warntime = tonumber(response.warntime),
+            lastani = "NULL"
         };
     end
 end
@@ -64,7 +65,7 @@ end
 
 function monsterAni(npcid, ani)
     if (NPCS[npcid].lastani ~= ani) then
-        debug("Monsterani ("..npcid.."): "..NPCS[npcid].lastani or "NULL".. " --> "..ani);
+        debug("Monsterani ("..npcid.."): "..NPCS[npcid].lastani.." --> "..ani);
         PlayAnimation(npcid, ani);
         NPCS[npcid].lastani = ani;
     end
