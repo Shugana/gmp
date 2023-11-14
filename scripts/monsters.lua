@@ -161,7 +161,7 @@ function follow(playerid, params)
         sendERRMessage(playerid, "Benutze /follow <id>");
         return;
     end
-    NPC[tierid].follow = playerid;
+    NPCS[tierid].follow = playerid;
 end
 
 function unfollow(playerid, params)
@@ -170,7 +170,7 @@ function unfollow(playerid, params)
         sendERRMessage(playerid, "Benutze /unfollow <id>");
         return;
     end
-    NPC[tierid].follow = nil;
+    NPCS[tierid].follow = nil;
 end
 
 function followPlayer(npcid)
