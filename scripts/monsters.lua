@@ -28,7 +28,7 @@ function spawnMonsterOnPlayer(playerid, params)
 end
 
 function spawnMonster(instance, world, x, y, z)
-    local responses = DB_select("*", "monsters", "name = '"..tier.."'");
+    local responses = DB_select("*", "monsters", "name = '"..instance.."'");
     for _key, response in pairs(responses) do
         local npcid = CreateNPC(response.name);
         if (npcid == -1) then
