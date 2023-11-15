@@ -9,6 +9,7 @@ require("scripts/itemhandling");
 require("scripts/login");
 require("scripts/menus");
 require("scripts/characters");
+require("scripts/crafting");
 require("scripts/monsters");
 require("scripts/monsterspawns");
 require("scripts/onserverworldtime");
@@ -23,7 +24,7 @@ function OnGamemodeInit()
     EnableChat(0);
     math.randomseed(os.time());
     ConnectDB();
-    setupTimedraw();
+    initServerdraws();
     spawnItemsOnServerInit();
     spawnMonstersOnServerInit();
     startTimers();

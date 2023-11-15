@@ -90,6 +90,11 @@ COMMANDS = {
         func = "showAni",
         help = "Zeigt dir deine aktuelle Ani an",
         minadminlevel = ADMINRANKS.Support
+    },
+    testtimer = {
+        func = "testWorktimer",
+        help = "Testet Craftingtimer - Angabe in ms (1000 ms = 1 Sekunde)",
+        minadminlevel = ADMINRANKS.Spieler
     }
 };
 
