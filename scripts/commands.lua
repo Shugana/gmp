@@ -52,8 +52,8 @@ COMMANDS = {
         minadminlevel = ADMINRANKS.Support
     },
     spawn = {
-        func = "spawnMonster",
-        help = "Spawned on Tier in dein Umfeld",
+        func = "spawnMonsterOnPlayer",
+        help = "Spawned ein Tier in dein Umfeld",
         minadminlevel = ADMINRANKS.Support
     },
     hit = {
@@ -73,7 +73,7 @@ COMMANDS = {
     },
     ani = {
         func = "playAni",
-        help = "Ziel macht Animation",
+        help = "<ID> macht Animation",
         minadminlevel = ADMINRANKS.Support
     },
     follow = {
@@ -83,7 +83,7 @@ COMMANDS = {
     },
     unfollow = {
         func = "unfollow",
-        help = "<ID> folgt dir",
+        help = "<ID> folgt dir nicht mehr",
         minadminlevel = ADMINRANKS.Support
     },
     showani = {

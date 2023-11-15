@@ -13,7 +13,7 @@ NPCSTATES = {
     [5] = {id=5, func="monsterShowAni"}
 }
 
-function spawnMonster(playerid, params)
+function spawnMonsterOnPlayer(playerid, params)
     local result, tier = sscanf(params, "s");
     if (result ~= 1) then
         sendERRMessage(playerid, "Benutze /spawn <Tiername>");
@@ -24,11 +24,14 @@ function spawnMonster(playerid, params)
         sendERRMessage(playerid, "Tier '"..tier.."' nicht in der Datenbank");
         return;
     end
+    spawnMonster(tier, GetPlayerWorld(playerid), GetPlayerPos(playerid));
+end
+
+function spawnMonster(instance, world, x, y, z)
     local responses = DB_select("*", "monsters", "name = '"..tier.."'");
     for _key, response in pairs(responses) do
         local npcid = CreateNPC(response.name);
         if (npcid == -1) then
-            sendERRMessage(playerid, "NPC erstellen fehlgeschlagen");
             return;
         end
         
@@ -42,8 +45,8 @@ function spawnMonster(playerid, params)
         SetPlayerMaxMana(npcid, tonumber(response.mana));
         SetPlayerMana(npcid, tonumber(response.mana));
 
-        SetPlayerWorld(npcid, GetPlayerWorld(playerid));
-        SetPlayerPos(npcid, GetPlayerPos(playerid));
+        SetPlayerWorld(npcid, world);
+        SetPlayerPos(npcid, x, y, z);
 
         NPCS[npcid] = {
             state = NPCSTATES.idle.id,
@@ -56,7 +59,9 @@ function spawnMonster(playerid, params)
             lastani = "NULL",
             delay = 0
         };
+        return npcid;
     end
+    return -1;
 end
 
 function NPCloop()

@@ -6,7 +6,12 @@ SERVERDRAWS = {
     }
 }
 
-SPAWNTICKS = 0;
+SPAWNTICKS = {
+    items = 0,
+    itemsmax = 30,
+    monsters = 0,
+    monstersmax = 180
+};
 
 function setupTimedraw()
     SERVERDRAWS.time.id = CreateDraw(SERVERDRAWS.time.pos.x, SERVERDRAWS.time.pos.y, "IG: 00:00 Uhr || RL: 00:00 Uhr", FONTS.sequel, SERVERDRAWS.time.color.r, SERVERDRAWS.time.color.g, SERVERDRAWS.time.color.b);

@@ -23,6 +23,7 @@ function OnGamemodeInit()
     math.randomseed(os.time());
     ConnectDB();
     setupTimedraw();
-    spawnOnServerInit();
+    spawnItemsOnServerInit();
+    spawnMonstersOnServerInit();
     startTimers();
 end

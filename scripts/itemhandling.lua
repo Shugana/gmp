@@ -90,9 +90,9 @@ function loadInventory(playerid)
     end
 end
 
-function respawnTick()
-    SPAWNTICKS = (SPAWNTICKS+1)%25;
-    if (SPAWNTICKS == 24) then
+function respawnTickItems()
+    SPAWNTICKS.items = (SPAWNTICKS.items+1)%SPAWNTICKS.itemsmax;
+    if (SPAWNTICKS == 1) then
         local responses = DB_select(
             "items.instance AS instance, item_spawns.id as id, item_spawns.x AS x, item_spawns.y AS y, item_spawns.z AS z, item_spawns.world AS world",
             "items, item_spawns",
@@ -107,7 +107,7 @@ function respawnTick()
     end
 end
 
-function spawnOnServerInit()
+function spawnItemsOnServerInit()
     local responses = DB_select(
         "items.instance AS instance, item_spawns.id as id, item_spawns.x AS x, item_spawns.y AS y, item_spawns.z AS z, item_spawns.world AS world",
         "items, item_spawns",
