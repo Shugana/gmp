@@ -20,11 +20,11 @@ function spawnMonster(playerid, params)
         return;
     end
     tier = capitalize(tier);
-    if not(DB_exists("*", "monstertypes", "name = '"..tier.."'")) then
+    if not(DB_exists("*", "monsters", "name = '"..tier.."'")) then
         sendERRMessage(playerid, "Tier '"..tier.."' nicht in der Datenbank");
         return;
     end
-    local responses = DB_select("*", "monstertypes", "name = '"..tier.."'");
+    local responses = DB_select("*", "monsters", "name = '"..tier.."'");
     for _key, response in pairs(responses) do
         local npcid = CreateNPC(response.name);
         if (npcid == -1) then
