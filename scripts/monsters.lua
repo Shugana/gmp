@@ -73,7 +73,7 @@ end
 
 function monsterAni(npcid, ani)
     if (NPCS[npcid].lastani ~= ani) then
-        debug("Monsterani ("..npcid.."): "..NPCS[npcid].lastani.." --> "..ani);
+        --debug("Monsterani ("..npcid.."): "..NPCS[npcid].lastani.." --> "..ani);
         PlayAnimation(npcid, ani);
         NPCS[npcid].lastani = ani;
     end
@@ -253,11 +253,11 @@ function showAni(playerid, params)
     if NPCS[playerid] == nil then
         NPCS[playerid] = {
             anitoggle = true;
-            debug("ani observe on");
+            --debug("ani observe on");
         };
     else
         NPCS[playerid] = nil;
-        debug("ani observe off");
+        --debug("ani observe off");
     end
 end
 
@@ -265,6 +265,6 @@ function monsterShowAni(playerid)
     local ani = GetPlayerAnimationName(playerid);
     if ani ~= NPCS[playerid].lastani then
         NPCS[playerid].lastani = ani;
-        debug("ani changed to: "..ani or "-");
+        --debug("ani changed to: "..ani or "-");
     end
 end

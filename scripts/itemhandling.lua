@@ -48,7 +48,6 @@ end
 
 function OnPlayerTakeItem(playerid, itemid, iteminstance, amount, x, y, z, worldName)
     if (itemid < 0) then
-        sendERRMessage(playerid, "itemid "..itemid.." below 0");
         return;
     end
     DB_update("item_spawns", {spawned=0}, "id="..WORLDITEMS[itemid]);
