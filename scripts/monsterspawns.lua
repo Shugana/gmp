@@ -19,7 +19,6 @@ end
 function respawnTickMonsters()
     handleDeadMonsters();
     SPAWNTICKS.monsters = (SPAWNTICKS.monsters+1)%SPAWNTICKS.monstersmax;
-    debug("Monsterticks "..SPAWNTICKS.monsters);
     if (SPAWNTICKS.monsters == 1) then
         local responses = DB_select(
             "monsters.name AS name, monster_spawns.id as id, monster_spawns.x AS x, monster_spawns.y AS y, monster_spawns.z AS z, monster_spawns.world AS world",

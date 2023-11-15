@@ -91,7 +91,6 @@ end
 
 function respawnTickItems()
     SPAWNTICKS.items = (SPAWNTICKS.items+1)%SPAWNTICKS.itemsmax;
-    debug("Itemticks "..SPAWNTICKS.items);
     if (SPAWNTICKS.items == 1) then
         local responses = DB_select(
             "items.instance AS instance, item_spawns.id as id, item_spawns.x AS x, item_spawns.y AS y, item_spawns.z AS z, item_spawns.world AS world",
