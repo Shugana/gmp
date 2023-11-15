@@ -1,5 +1,5 @@
 function CraftingLoop()
-    for playerid, playerdata in pairs(PLAYERS[playerid]) do
+    for playerid, playerdata in pairs(PLAYERS) do
         if (playerdata.crafting ~= nil) then
             craftingTick(playerid);
         end
