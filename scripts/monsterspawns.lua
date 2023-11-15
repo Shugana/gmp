@@ -38,9 +38,9 @@ end
 
 function spawnMonstersOnServerInit()
     local responses = DB_select(
-        "items.instance AS instance, item_spawns.id as id, item_spawns.x AS x, item_spawns.y AS y, item_spawns.z AS z, item_spawns.world AS world",
-        "items, item_spawns",
-        "items.id = item_spawns.itemid AND item_spawns.spawned=1"
+        "monsters.instance AS instance, monster_spawns.id as id, monster_spawns.x AS x, monster_spawns.y AS y, monster_spawns.z AS z, monster_spawns.world AS world",
+        "monsters, monster_spawns",
+        "monsters.id = monster_spawns.monsterid AND monster_spawns.spawned=1"
     );
     for _key, response in pairs(responses) do
         local monsterid = spawnMonster(response.instance, world, response.x, response.y, response.z);
