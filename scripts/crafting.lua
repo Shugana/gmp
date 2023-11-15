@@ -1,4 +1,5 @@
 function CraftingLoop()
+    debug("CraftingLoop");
     for playerid, playerdata in pairs(PLAYERS) do
         if (playerdata.crafting ~= nil) then
             craftingTick(playerid);
