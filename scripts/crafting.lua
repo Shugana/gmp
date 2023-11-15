@@ -27,7 +27,7 @@ function craftingStart(playerid, name, duration, finishFunc, options, animation)
 end
 
 function craftingTick(playerid);
-    debug("Crafting Progress "..PLAYERS[playerid].working.progress.." / "..PLAYERS[playerid.working.duration)
+    debug("Crafting Progress "..PLAYERS[playerid].working.progress.." / "..PLAYERS[playerid].working.duration)
     PLAYERS[playerid].working.progress = PLAYERS[playerid].working.progress + 1;
     if (PLAYERS[playerid].working.progressbar ~= nil) then
         DestroyTexture(PLAYERS[playerid].working.progressbar);
@@ -44,7 +44,7 @@ function craftingTick(playerid);
         PlayAnimation(playerid, PLAYERS[playerid].working.animation);
     end
     ShowTexture(playerid, PLAYERS[playerid].working.progressbar);
-    if PLAYERS[playerid].working.progress >= PLAYERS[playerid.working.duration] then
+    if PLAYERS[playerid].working.progress >= PLAYERS[playerid].working.duration] then
         craftingFinish(playerid);
     end
 end
