@@ -27,7 +27,6 @@ function craftingStart(playerid, name, duration, finishFunc, options, animation)
 end
 
 function craftingTick(playerid);
-    debug("Crafting Progress "..PLAYERS[playerid].working.progress.." / "..PLAYERS[playerid].working.duration)
     PLAYERS[playerid].working.progress = PLAYERS[playerid].working.progress + 1;
     if (PLAYERS[playerid].working.progressbar ~= nil) then
         DestroyTexture(PLAYERS[playerid].working.progressbar);
@@ -56,10 +55,10 @@ end
 
 function craftingStop(playerid)
     HideTexture(playerid, SERVERDRAWS.craftingbackground.id);
-    if (PLAYERS[playerid].crafting.progressbar ~= nil) then
-        DestroyTexture(PLAYERS[playerid].crafting.progressbar);
+    if (PLAYERS[playerid].working.progressbar ~= nil) then
+        DestroyTexture(PLAYERS[playerid].working.progressbar);
     end
-    PLAYERS[playerid].crafting = nil;
+    PLAYERS[playerid].working = nil;
 end
 
 function canWork(playerid)
