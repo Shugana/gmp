@@ -27,6 +27,7 @@ function craftingStart(playerid, name, duration, finishFunc, options, animation)
 end
 
 function craftingTick(playerid);
+    debug("Crafting Progress "..PLAYERS[playerid].working.progress.." / "..PLAYERS[playerid.working.duration)
     PLAYERS[playerid].working.progress = PLAYERS[playerid].working.progress + 1;
     if (PLAYERS[playerid].working.progressbar ~= nil) then
         DestroyTexture(PLAYERS[playerid].working.progressbar);
