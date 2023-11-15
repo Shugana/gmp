@@ -17,7 +17,7 @@ function handleDeadMonsters()
 end
 
 function respawnTickMonsters()
-    function handleDeadMonsters();
+    handleDeadMonsters();
     SPAWNTICKS.monsters = (SPAWNTICKS.monsters+1)%SPAWNTICKS.monstersmax;
     if (SPAWNTICKS.monsters == 1) then
         local responses = DB_select(
