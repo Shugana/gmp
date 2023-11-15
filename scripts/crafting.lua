@@ -14,7 +14,7 @@ function craftingStart(playerid, name, duration, finishFunc, options, animation)
     end
     local totalticks = math.ceil(duration/100);
     local totaltime = totalticks/10;
-    Player[playerid].working = {
+    PLAYERS[playerid].working = {
         duration = totalticks,
         progress = 0,
         progressbar = nil,
@@ -49,7 +49,7 @@ function craftingTick(playerid);
 end
 
 function craftingFinish(playerid)
-    _G[Player[playerid].working.finishFunc](playerid);
+    _G[PLAYERS[playerid].working.finishFunc](playerid);
     craftingStop(playerid);
 end    
 
