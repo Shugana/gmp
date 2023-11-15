@@ -74,7 +74,7 @@ function testWorktimer(playerid, params)
         sendERRMessage(playerid, "Benutze /testtimer <Zeit in ms> (1000 ms = 1 Sekunde)");
         return;
     end
-    craftingStart(playerid, "Test-Timer", duration, "testFinishWork", {}, nil);
+    craftingStart(playerid, "Test-Timer", time, "testFinishWork", {}, nil);
 end
 
 function testFinishWork(playerid);
