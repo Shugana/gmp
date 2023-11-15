@@ -69,7 +69,7 @@ function canWork(playerid)
 end
 
 function testWorktimer(playerid, params)
-    local result, time = sscanf(params, "sd");
+    local result, time = sscanf(params, "d");
     if (result ~= 1) then
         sendERRMessage(playerid, "Benutze /testtimer <Zeit in ms> (1000 ms = 1 Sekunde)");
         return;
