@@ -44,7 +44,7 @@ function craftingTick(playerid);
         PlayAnimation(playerid, PLAYERS[playerid].working.animation);
     end
     ShowTexture(playerid, PLAYERS[playerid].working.progressbar);
-    if PLAYERS[playerid].working.progress >= PLAYERS[playerid].working.duration] then
+    if (PLAYERS[playerid].working.progress >= PLAYERS[playerid].working.duration) then
         craftingFinish(playerid);
     end
 end
