@@ -114,6 +114,10 @@ function monsterGetClosestAggro(npcid)
 end
 
 function monsterTurn(npcid, targetid)
+    if (GetPlayerHealth(npcid) < 1) then
+        return;
+    end
+        
     local npcangle = GetPlayerAngle(npcid);
     local targetangle = GetAngleToPlayer(npcid, targetid);
 
