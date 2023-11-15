@@ -27,7 +27,7 @@ function respawnTickMonsters()
             "monsters.id = monster_spawns.monsterid AND monster_spawns.spawned=0"
         );
         for _key, response in pairs(responses) do
-            local monsterid = spawnMonster(response.name, world, response.x, response.y, response.z);
+            local monsterid = spawnMonster(response.name, response.world, response.x, response.y, response.z);
             if (monsterid < 0) then
                 return;
             end
@@ -44,7 +44,7 @@ function spawnMonstersOnServerInit()
         "monsters.id = monster_spawns.monsterid AND monster_spawns.spawned=1"
     );
     for _key, response in pairs(responses) do
-        local monsterid = spawnMonster(response.name, world, response.x, response.y, response.z);
+        local monsterid = spawnMonster(response.name, response.world, response.x, response.y, response.z);
         if (monsterid < 0) then
             DB_update("monster_spawns", {spawned=0}, "id="..response.id);
             return;
