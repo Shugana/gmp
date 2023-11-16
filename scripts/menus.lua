@@ -92,7 +92,7 @@ end
 function createClickableTexture(playerid, graphic, startx, starty, sizex, sizey, func, args)
     startx, starty = convertToPixel(startx, starty);
     sizex, sizey = convertToPixel(sizex, sizey);
-    local texture = CreateTexture(startX, startY, startx+sizex, starty+sizey, "DATA\\TEXTURES\\DESKTOP\\SKORIP\\SKO_R_"..graphic);
+    local texture = CreateTexture(startx, starty, startx+sizex, starty+sizey, "DATA\\TEXTURES\\DESKTOP\\SKORIP\\SKO_R_"..graphic);
     ShowTexture(playerid, texture);
     table.insert(PLAYERS[playerid].menu.textures, texture);
 
