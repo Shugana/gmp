@@ -114,11 +114,7 @@ function craftChosen(playerid, args)
         end
         sendINFOMessage(playerid, ingredient.name..": "..available.." / "..ingredient.amount);
     end
-    --sendINFOMessage(playerid, args.opt.." angeklickt, woohoooooo!");
-    testCraftmenu(playerid, nil);
     createClickableTexture(playerid, args.graphic, 700, 200, 400, 400, "craft", {name=args.name, recipe=args.recipe, duration=args.duration});
-
-
 end
 
 function craft(playerid, args)
