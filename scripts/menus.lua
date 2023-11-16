@@ -116,9 +116,9 @@ function testCraftmenu(playerid, params)
     setupMenu(playerid, true);
 
     createClickableTexture(playerid, "ITPO_MANA_01_3DS.TGA", 200, 200, 200, 200, "testClicked", {opt="Manaessenz",graphic="ITPO_MANA_01_3DS.TGA"});
-    createClickableTexture(playerid, "ITPO_MANA_02_3DS.TGA", 400, 200, 200, 200, "testClicked", {opt="Manaessenz",graphic="ITPO_MANA_02_3DS.TGA"});
-    createClickableTexture(playerid, "ITPO_HEALTH_01_3DS.TGA", 200, 400, 200, 200, "testClicked", {opt="Manaessenz",graphic="ITPO_HEALTH_01_3DS.TGA"});
-    createClickableTexture(playerid, "ITPO_HEALTH_02_3DS.TGA", 400, 400, 200, 200, "testClicked", {opt="Manaessenz",graphic="ITPO_HEALTH_02_3DS.TGA"});
+    createClickableTexture(playerid, "ITPO_MANA_02_3DS.TGA", 400, 200, 200, 200, "testClicked", {opt="Manaextrakt",graphic="ITPO_MANA_02_3DS.TGA"});
+    createClickableTexture(playerid, "ITPO_HEALTH_01_3DS.TGA", 200, 400, 200, 200, "testClicked", {opt="Heilessenz",graphic="ITPO_HEALTH_01_3DS.TGA"});
+    createClickableTexture(playerid, "ITPO_HEALTH_02_3DS.TGA", 400, 400, 200, 200, "testClicked", {opt="Heilextrakt",graphic="ITPO_HEALTH_02_3DS.TGA"});
 end
 
 function testClicked(playerid, args)
@@ -130,12 +130,10 @@ function testClicked(playerid, args)
 end
 
 function crafting(playerid, args)
-    FreezePlayer(playerid, 1);
     sendINFOMessage(playerid, "Crafting begonnen");
     craftingStart(playerid, args.opt, 10000, "craftingdone", {name=args.opt}, nil);
 end
 
 function craftingdone(playerid)
-    FreezePlayer(playerid, 0);
     sendERRMessage(playerid, "Test. Noch keine Items ("..PLAYERS[playerid].working.options.name..") erstellt und auch kein Material verbraucht.");
 end

@@ -54,6 +54,9 @@ function craftingFinish(playerid)
 end    
 
 function craftingStop(playerid)
+    if PLAYERS[playerid].working == nil then
+        return;
+    end
     HideTexture(playerid, SERVERDRAWS.craftingbackground.id);
     if (PLAYERS[playerid].working.progressbar ~= nil) then
         DestroyTexture(PLAYERS[playerid].working.progressbar);
