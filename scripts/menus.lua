@@ -34,7 +34,6 @@ function createText(playerid, text, startx, starty, sizex, sizey, r, g, b)
     sizex, sizey = convertToPixel(sizex, sizey);
     local texture = CreateTexture(startx, starty, startx+sizex, starty+sizey, "DATA\\TEXTURES\\DESKTOP\\SKORIP\\MENU_INGAME.TGA")
     table.insert(PLAYERS[playerid].menu.textures, texture);
-    ShowPlayerDraw(playerid, text);   
     ShowTexture(playerid, texture);
 end
 
@@ -43,8 +42,9 @@ function createPlaintext(playerid, text, startx, starty, r, g, b)
     r = r or 255;
     g = g or 255;
     b = b or 255;
-    local text = CreatePlayerDraw(playerid, startx, starty, text, FONTS.standard, r, g, b);
-    table.insert(PLAYERS[playerid].menu.texts, text);
+    local draw = CreatePlayerDraw(playerid, startx, starty, text, FONTS.standard, r, g, b);
+    ShowPlayerDraw(playerid, draw);   
+    table.insert(PLAYERS[playerid].menu.texts, draw);
 end
 
 function clearMenu(playerid)
