@@ -22,7 +22,7 @@ function OnGamemodeInit()
     EnableNickname(0);
     EnableExitGame(0);
     EnableChat(0);
-    Enable_OnPlayerKey(1);
+    --Enable_OnPlayerKey(1);
     math.randomseed(os.time());
     ConnectDB();
     initServerdraws();

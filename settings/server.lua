@@ -62,6 +62,7 @@ function OnPlayerTriggerMob(playerid, scheme, objectName, trigger)
     debug("Triggered Mobsi - playerid: "..playerid..", scheme: "..scheme..", objectName: "..objectName..", trigger: "..trigger);
     if (trigger == 1) then
         FreezePlayer(playerid, 1);
+        SetPlayerEnable_OnPlayerKey(playerid, 1)
         PLAYERS[playerid].frozen = "mobsi";
         testCraftmenu(playerid, nil);
     end
@@ -71,6 +72,7 @@ function OnPlayerKey(playerid, keyDown, keyUp)
     if (keyDown == KEY_BACK or keyDown == KEY_S) and PLAYERS[playerid] ~= nil and PLAYERS[playerid].frozen == "mobsi" then
         craftingStop(playerid);
         clearMenu(playerid);
+        SetPlayerEnable_OnPlayerKey(playerid, 0);
         FreezePlayer(playerid, 0);
     end
 end
