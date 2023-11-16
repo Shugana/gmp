@@ -86,7 +86,7 @@ function craftMenu(playerid, mobsi)
     for _key, response in pairs(responses) do
         createClickableTexture(playerid, response.graphic, start.x, start.y+row*size, size, size,
             "craftChosen", {mobsi="mobsi",recipe=response.id, name=response.name, graphic=response.graphic, duration=response.crafttime});
-        createButton(playerid, response.name, start.x+size, start.y+row*size, size*7, size, 255, 255, 255,
+        createButton(playerid, response.name, start.x+size, start.y+row*size+2, size*7, size, 255, 255, 255,
             "craftChosen", {mobsi="mobsi",recipe=response.id, name=response.name, graphic=response.graphic, duration=response.crafttime});
         row = row + 1;
     end
@@ -94,7 +94,7 @@ end
 
 function craftChosen(playerid, args)
     local size = -30;
-    local start = {x=725, y=575};
+    local start = {x=725, y=545};
     local row = 0;
     local r, g, b;
     craftMenu(playerid, args.mobsi);
@@ -116,7 +116,7 @@ function craftChosen(playerid, args)
         else
             r, g, b = 0, 255, 152;
         end
-        createPlaintext(playerid, ingredient.name..": "..available.." / "..ingredient.amount, start.x, start.y+size*row+5, r, g, b);
+        createPlaintext(playerid, ingredient.name..": "..available.." / "..ingredient.amount, start.x, start.y+size*row, r, g, b);
         row = row + 1;
     end
     createClickableTexture(playerid, args.graphic, 700, 200, 400, 400, "craft", {name=args.name, recipe=args.recipe, duration=args.duration, mobsi=args.mobsi});
