@@ -111,7 +111,7 @@ function craftChosen(playerid, args)
         for _key, item in pairs(items) do
             available = tonumber(item.amount);
         end
-        if (available < ingredient.amount) then
+        if (available < tonumber(ingredient.amount)) then
             r, g, b = 196, 30, 58;
         else
             r, g, b = 0, 255, 152;
