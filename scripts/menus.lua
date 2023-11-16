@@ -90,38 +90,32 @@ end
 
 function testCraftmenu(playerid, params)
     setupMenu(playerid, true);
-    local startX, startY = convertToPixel(500,500);
-    local sizeX, sizeY = convertToPixel(300,300);
-    createButton(playerid, "", startX, startY, sizeX, sizeY, 0, 0, 0, "testClicked", {opt="Manaessenz"})
-    local startX, startY = convertToPixel(522,522);
-    local endX, endY = convertToPixel(778,778);
+
+    local startX, startY = convertToPixel(200,200);
+    local sizeX, sizeY = convertToPixel(200,200);
+    createButton(playerid, "", startX, startY, sizeX, sizeY, 0, 0, 0, "testClicked", {opt="Manaessenz",graphic="SKO_R_ITPO_MANA_01_3DS.TGA"})
+    local endX, endY = convertToPixel(400,400);
     local texture = CreateTexture(startX, startY, endX, endY, "DATA\\TEXTURES\\DESKTOP\\SKORIP\\SKO_R_ITPO_MANA_01_3DS.TGA");
     ShowTexture(playerid, texture);
     table.insert(PLAYERS[playerid].menu.textures, texture);
     
-    local startX, startY = convertToPixel(800,500);
-    local sizeX, sizeY = convertToPixel(300,300);
-    createButton(playerid, "", startX, startY, sizeX, sizeY, 0, 0, 0, "testClicked", {opt="Manaextrakt"})
-    local startX, startY = convertToPixel(822,522);
-    local endX, endY = convertToPixel(1078,778);
+    local startX, startY = convertToPixel(400,200);
+    createButton(playerid, "", startX, startY, sizeX, sizeY, 0, 0, 0, "testClicked", {opt="Manaextrakt",graphic="SKO_R_ITPO_MANA_02_3DS.TGA"})
+    local endX, endY = convertToPixel(600,400);
     local texture = CreateTexture(startX, startY, endX, endY, "DATA\\TEXTURES\\DESKTOP\\SKORIP\\SKO_R_ITPO_MANA_02_3DS.TGA");
     ShowTexture(playerid, texture);
     table.insert(PLAYERS[playerid].menu.textures, texture);
 
-    local startX, startY = convertToPixel(500,800);
-    local sizeX, sizeY = convertToPixel(300,300);
-    createButton(playerid, "", startX, startY, sizeX, sizeY, 0, 0, 0, "testClicked", {opt="Heilessenz"})
-    local startX, startY = convertToPixel(522,822);
+    local startX, startY = convertToPixel(200,400);
+    createButton(playerid, "", startX, startY, sizeX, sizeY, 0, 0, 0, "testClicked", {opt="Heilessenz",graphic="SKO_R_ITPO_HEALTH_01_3DS.TGA"})
     local endX, endY = convertToPixel(778,1078);
     local texture = CreateTexture(startX, startY, endX, endY, "DATA\\TEXTURES\\DESKTOP\\SKORIP\\SKO_R_ITPO_HEALTH_01_3DS.TGA");
     ShowTexture(playerid, texture);
     table.insert(PLAYERS[playerid].menu.textures, texture);
 
-    local startX, startY = convertToPixel(800,800);
-    local sizeX, sizeY = convertToPixel(300,300);
-    createButton(playerid, "", startX, startY, sizeX, sizeY, 0, 0, 0, "testClicked", {opt="Heilextrakt"})
-    local startX, startY = convertToPixel(822,822);
-    local endX, endY = convertToPixel(1078,1078);
+    local startX, startY = convertToPixel(400,400);
+    createButton(playerid, "", startX, startY, sizeX, sizeY, 0, 0, 0, "testClicked", {opt="Heilextrakt",graphic="SKO_R_ITPO_HEALTH_02_3DS.TGA"})
+    local endX, endY = convertToPixel(600,600);
     local texture = CreateTexture(startX, startY, endX, endY, "DATA\\TEXTURES\\DESKTOP\\SKORIP\\SKO_R_ITPO_HEALTH_02_3DS.TGA");
     ShowTexture(playerid, texture);
     table.insert(PLAYERS[playerid].menu.textures, texture);
@@ -130,4 +124,13 @@ end
 
 function testClicked(playerid, args)
     sendINFOMessage(playerid, args.opt.." angeklickt, woohoooooo!");
+    testCraftmenu(playerid, nil);
+
+    local startX, startY = convertToPixel(800,200);
+    local sizeX, sizeY = convertToPixel(600,600);
+    createButton(playerid, "", startX, startY, sizeX, sizeY, 0, 0, 0, "testClicked", {opt="Manaessenz",graphic="SKO_R_ITPO_MANA_01_3DS.TGA"})
+    local endX, endY = convertToPixel(1400,800);
+    local texture = CreateTexture(startX, startY, endX, endY, "DATA\\TEXTURES\\DESKTOP\\SKORIP\\"..args.graphic);
+    ShowTexture(playerid, texture);
+    table.insert(PLAYERS[playerid].menu.textures, texture);
 end
