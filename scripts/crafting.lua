@@ -125,7 +125,7 @@ function craftChosen(playerid, args)
         else
             r, g, b = 0, 255, 152;
         end
-        createClickableTexture(playerid, item.graphic, start.x, start.y+size*row, size, size,
+        createClickableTexture(playerid, ingredient.graphic, start.x, start.y+size*row, size, size,
             "craft", {name=args.name, recipe=args.recipe, duration=args.duration, mobsi=args.mobsi});
         createText(playerid, ingredient.name..": "..available.." / "..ingredient.amount, start.x+size, start.y+size*row, 400-size, size, r, g, b);
         row = row + 1;
