@@ -135,7 +135,7 @@ function crafting(playerid, args)
     craftingStart(playerid, args.opt, 10000, "craftingdone", {name=args.opt}, nil);
 end
 
-function craftingdone(playerid, args)
+function craftingdone(playerid)
     FreezePlayer(playerid, 0);
-    sendERRMessage(playerid, "Test. Noch keine Items ("..args.name..") erstellt oder verbraucht.");
+    sendERRMessage(playerid, "Test. Noch keine Items ("..PLAYERS[playerid].working.options.name..") erstellt und auch kein Material verbraucht.");
 end
