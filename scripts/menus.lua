@@ -80,6 +80,6 @@ function gotButton(button, pos_x, pos_y)
 end
 
 function testCraftmenu(playerid, params)
-    local texture = CreateTexture(1000, 1000, 4000, 4000, "DATA\\TEXTURES\\_COMPILED\\MENU_INGAME-C.TEX")
+    local texture = CreateTexture(1000, 1000, 4000, 4000, "DATA\\TEXTURES\\_COMPILED\\MENU_INGAME-C.TGA")
     ShowTexture(playerid, texture);
 end
