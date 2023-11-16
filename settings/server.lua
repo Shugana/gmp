@@ -59,12 +59,12 @@ function initServerdraws()
 end
 
 function OnPlayerTriggerMob(playerid, scheme, objectName, trigger)
-    debug("Triggered Mobsi - playerid: "..playerid..", scheme: "..scheme..", objectName: "..objectName..", trigger: "..trigger);
+    --debug("Triggered Mobsi - playerid: "..playerid..", scheme: "..scheme..", objectName: "..objectName..", trigger: "..trigger);
     if (trigger == 1) then
         FreezePlayer(playerid, 1);
         SetPlayerEnable_OnPlayerKey(playerid, 1)
         PLAYERS[playerid].frozen = "mobsi";
-        testCraftmenu(playerid, nil);
+        craftMenu(playerid, scheme);
     end
 end
 

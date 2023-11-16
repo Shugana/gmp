@@ -71,7 +71,6 @@ function canWork(playerid)
     return true; -- for now... later: check hunger, check illness, etc.
 end
 
-
 function craftMenu(playerid, mobsi)
     setupMenu(playerid, true);
     local size = 50;
