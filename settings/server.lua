@@ -50,7 +50,7 @@ function initServerdraws()
         "LAB",
         "",
         "NEWWORLD\\KHORINIS.ZEN",
-        -876
+        -876,
         -66,
         -4251,
         "objectname"
