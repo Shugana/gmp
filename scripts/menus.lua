@@ -92,7 +92,13 @@ end
 function createClickableTexture(playerid, graphic, startx, starty, sizex, sizey, func, args)
     startx, starty = convertToPixel(startx, starty);
     sizex, sizey = convertToPixel(sizex, sizey);
-    local texture = CreateTexture(startx, starty, startx+sizex, starty+sizey, "DATA\\TEXTURES\\DESKTOP\\SKORIP\\SKO_R_"..graphic);
+    local texture;
+
+    texture = CreateTexture(startx, starty, startx+sizex, starty+sizey, "DATA\\TEXTURES\\DESKTOP\\SKORIP\\MENU_INGAME.TGA")
+    table.insert(PLAYERS[playerid].menu.textures, texture);
+    ShowTexture(playerid, texture);
+
+    texture = CreateTexture(startx, starty, startx+sizex, starty+sizey, "DATA\\TEXTURES\\DESKTOP\\SKORIP\\SKO_R_"..graphic);
     ShowTexture(playerid, texture);
     table.insert(PLAYERS[playerid].menu.textures, texture);
 
@@ -111,7 +117,7 @@ function testCraftmenu(playerid, params)
 
     createClickableTexture(playerid, "ITPO_MANA_01_3DS.TGA", 200, 200, 200, 200, "testClicked", {opt="Manaessenz",graphic="ITPO_MANA_01_3DS.TGA"});
     createClickableTexture(playerid, "ITPO_MANA_02_3DS.TGA", 400, 200, 200, 200, "testClicked", {opt="Manaessenz",graphic="ITPO_MANA_02_3DS.TGA"});
-    createClickableTexture(playerid, "ITPO_HEALTH_01_3DS.TGA", 400, 200, 200, 200, "testClicked", {opt="Manaessenz",graphic="ITPO_HEALTH_01_3DS.TGA"});
+    createClickableTexture(playerid, "ITPO_HEALTH_01_3DS.TGA", 200, 400, 200, 200, "testClicked", {opt="Manaessenz",graphic="ITPO_HEALTH_01_3DS.TGA"});
     createClickableTexture(playerid, "ITPO_HEALTH_02_3DS.TGA", 400, 400, 200, 200, "testClicked", {opt="Manaessenz",graphic="ITPO_HEALTH_02_3DS.TGA"});
 end
 
@@ -124,7 +130,7 @@ function testClicked(playerid, args)
 end
 
 function crafting(playerid, args)
-    sendINFOMessage("Crafting begonnen");
+    sendINFOMessage(playerid, "Crafting begonnen");
     craftingStart(playerid, args.opt, 10000, "craftingdone", {name=args.opt}, nil);
 end
 
