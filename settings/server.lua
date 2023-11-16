@@ -68,7 +68,6 @@ function OnPlayerTriggerMob(playerid, scheme, objectName, trigger)
 end
 
 function OnPlayerKey(playerid, keyDown, keyUp)
-    debug("Tastatureingabe von "..playerid..", Taste: "..keyDown..", rauf/runter: "..keyUp);
     if (keyDown == KEY_BACK or keyDown == KEY_S) and PLAYERS[playerid] ~= nil and PLAYERS[playerid].frozen == "mobsi" then
         craftingStop(playerid);
         clearMenu(playerid);
