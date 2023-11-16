@@ -114,7 +114,7 @@ function craftChosen(playerid, args)
         end
         sendINFOMessage(playerid, ingredient.name..": "..available.." / "..ingredient.amount);
     end
-    createClickableTexture(playerid, args.graphic, 700, 200, 400, 400, "craft", {name=args.name, recipe=args.recipe, duration=args.duration});
+    createClickableTexture(playerid, args.graphic, 700, 200, 400, 400, "craft", {name=args.name, recipe=args.recipe, duration=args.duration, mobsi=args.mobsi});
 end
 
 function craft(playerid, args)
@@ -123,6 +123,7 @@ end
 
 function craftCreated(playerid)
     sendERRMessage(playerid, "Test. Noch keine Items ("..PLAYERS[playerid].working.options.name.." ("..PLAYERS[playerid].working.options.recipe..")) erstellt und auch kein Material verbraucht.");
+    craftMenu(playerid, PLAYERS[playerid].working.options.mobsi);
 end
 
 
