@@ -74,7 +74,9 @@ end
 function craftMenu(playerid, mobsi)
     setupMenu(playerid, true);
     local size = 50;
-    local start = {x=200, y=200};
+    local start = {x=1100, y=200};
+
+    local column = 0;
     local row = 0;
 
     local responses = DB_select(
@@ -84,11 +86,15 @@ function craftMenu(playerid, mobsi)
         "AND craft_results.itemid = items.id AND characters.id = "..PLAYERS[playerid].character
     );
     for _key, response in pairs(responses) do
-        createClickableTexture(playerid, response.graphic, start.x, start.y+row*size, size, size,
+        createClickableTexture(playerid, response.graphic, start.x+column*8*size, start.y+row*size, size, size,
             "craftChosen", {mobsi="mobsi",recipe=response.id, name=response.name, graphic=response.graphic, duration=response.crafttime});
-        createButton(playerid, response.name, start.x+size, start.y+row*size+2, size*7, size, 255, 255, 255,
+        createButton(playerid, response.name, start.x+(8*column+1)*size, start.y+row*size+7, size*7, size, 255, 255, 255,
             "craftChosen", {mobsi="mobsi",recipe=response.id, name=response.name, graphic=response.graphic, duration=response.crafttime});
-        row = row + 1;
+        column = column + 1;
+        if column > 1 then
+            column = 0;
+            row = row + 1;
+        end
     end
 end
 
