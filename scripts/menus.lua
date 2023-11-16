@@ -16,6 +16,8 @@ end
 
 function createButton(playerid, text, startx, starty, sizex, sizey, r, g, b, func, args)
     createText(playerid, text, startx, starty, sizex, sizey, r, g, b);
+    startx, starty = convertToPixel(startx, starty);
+    sizex, sizey = convertToPixel(sizex, sizey);
     table.insert(PLAYERS[playerid].menu.buttons, {
         x_min = startx,
         x_max = startx+sizex,
@@ -27,17 +29,22 @@ function createButton(playerid, text, startx, starty, sizex, sizey, r, g, b, fun
 end
 
 function createText(playerid, text, startx, starty, sizex, sizey, r, g, b)
-    r = r or 255;
-    g = g or 255;
-    b = b or 255;
-    local text = CreatePlayerDraw(playerid, startx+50, starty+50, text, FONTS.standard, r, g, b);
-    table.insert(PLAYERS[playerid].menu.texts, text);
-    --local texture = CreateTexture(startx, starty, startx+sizex, starty+sizey, "Data\\Textures\\Desktop\\nomip\\Menu_Ingame.tga")
+    createPlaintext(playerid, text, startx+12, starty+7, r, g, b);
+    startx, starty = convertToPixel(startx, starty);
+    sizex, sizey = convertToPixel(sizex, sizey);
     local texture = CreateTexture(startx, starty, startx+sizex, starty+sizey, "DATA\\TEXTURES\\DESKTOP\\SKORIP\\MENU_INGAME.TGA")
-    
     table.insert(PLAYERS[playerid].menu.textures, texture);
     ShowPlayerDraw(playerid, text);   
     ShowTexture(playerid, texture);
+end
+
+function createPlaintext(playerid, text, startx, starty, r, g, b)
+    startx, starty = convertToPixel(startx, starty);
+    r = r or 255;
+    g = g or 255;
+    b = b or 255;
+    local text = CreatePlayerDraw(playerid, startx, starty, text, FONTS.standard, r, g, b);
+    table.insert(PLAYERS[playerid].menu.texts, text);
 end
 
 function clearMenu(playerid)

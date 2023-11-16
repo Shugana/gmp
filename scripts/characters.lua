@@ -84,10 +84,10 @@ end
 function showFacechangeMenu(playerid)
     local func = "alterFace";
 
-    local x_start = 2500;
-    local x_size = 500;
-    local y_start = 500;
-    local y_size = 280;
+    local x_start = 586;
+    local x_size = 117;
+    local y_start = 66;
+    local y_size = 37;
 
     setupMenu(playerid, false);
 

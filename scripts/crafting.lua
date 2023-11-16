@@ -75,9 +75,6 @@ function craftMenu(playerid, mobsi)
     setupMenu(playerid, true);
     local size = 50;
     local start = {x=200, y=200};
-    local columns = 8;
-
-    local column = 0;
     local row = 0;
 
     local responses = DB_select(
@@ -87,17 +84,19 @@ function craftMenu(playerid, mobsi)
         "AND craft_results.itemid = items.id AND characters.id = "..PLAYERS[playerid].character
     );
     for _key, response in pairs(responses) do
-        createClickableTexture(playerid, response.graphic, start.x+column*size, start.y+row*size, size, size,
+        createClickableTexture(playerid, response.graphic, start.x, start.y+row*size, size, size,
             "craftChosen", {mobsi="mobsi",recipe=response.id, name=response.name, graphic=response.graphic, duration=response.crafttime});
-        column = column + 1;
-        if (column > columns) then
-            column = 0;
-            row = row + 1;
-        end
+        createButton(playerid, response.name, start.x+size, start.y+row*size, size*7, size, 255, 255, 255,
+            "craftChosen", {mobsi="mobsi",recipe=response.id, name=response.name, graphic=response.graphic, duration=response.crafttime});
+        row = row + 1;
     end
 end
 
 function craftChosen(playerid, args)
+    local size = 40;
+    local start = {x=750, y=400};
+    local row = 0;
+    local r, g, b;
     craftMenu(playerid, args.mobsi);
     local ingredients = DB_select(
         "items.id, items.name, craft_ingredients.amount",
@@ -112,7 +111,13 @@ function craftChosen(playerid, args)
         for _key, item in pairs(items) do
             available = item.amount;
         end
-        sendINFOMessage(playerid, ingredient.name..": "..available.." / "..ingredient.amount);
+        if (available < ingredient.amount) then
+            r, g, b = 196, 30, 58;
+        else
+            r, g, b = 0, 255, 152;
+        end
+        createPlaintext(playerid, ingredient.name..": "..available.." / "..ingredient.amount, start.x, start.y+size*row, r, g, b);
+        row = row + 1;
     end
     createClickableTexture(playerid, args.graphic, 700, 200, 400, 400, "craft", {name=args.name, recipe=args.recipe, duration=args.duration, mobsi=args.mobsi});
 end
