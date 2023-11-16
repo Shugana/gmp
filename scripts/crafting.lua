@@ -108,7 +108,7 @@ function craftChosen(playerid, args)
     craftMenu(playerid, args.mobsi);
     createPlaintext(playerid, args.name, start.x+25, 225, 255, 255, 255);
     local ingredients = DB_select(
-        "items.id, items.name, craft_ingredients.amount",
+        "items.id, items.name, items.graphic, craft_ingredients.amount",
         "crafts, craft_ingredients, items",
         "crafts.id = craft_ingredients.craftid AND craft_ingredients.itemid = items.id AND crafts.id = "..args.recipe);
     for _key, ingredient in pairs(ingredients) do
@@ -125,7 +125,9 @@ function craftChosen(playerid, args)
         else
             r, g, b = 0, 255, 152;
         end
-        createText(playerid, ingredient.name..": "..available.." / "..ingredient.amount, start.x, start.y+size*row, 400, size, r, g, b);
+        createClickableTexture(playerid, item.graphic, start.x, start.y+size*row, size, size,
+            "craft", {name=args.name, recipe=args.recipe, duration=args.duration, mobsi=args.mobsi});
+        createText(playerid, ingredient.name..": "..available.." / "..ingredient.amount, start.x+size, start.y+size*row, 400-size, size, r, g, b);
         row = row + 1;
     end
     createClickableTexture(playerid, args.graphic, 700, 200, 400, 400, "craft", {name=args.name, recipe=args.recipe, duration=args.duration, mobsi=args.mobsi});
