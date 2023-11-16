@@ -51,15 +51,16 @@ function initServerdraws()
         "",
         "NEWWORLD\\KHORINIS.ZEN",
         -876,
-        -66,
+        -166,
         -4251,
-        "objectname"
+        "Strandlabor"
     );
 
 end
 
 function OnPlayerTriggerMob(playerid, scheme, objectName, trigger)
     debug("Triggered Mobsi - playerid: "..playerid..", scheme: "..scheme..", objectName: "..objectName..", trigger: "..trigger);
+    testCraftmenu(playerid, nil);
 end
 
 function updateGametimeDraw(hour, minute)

@@ -88,49 +88,46 @@ function gotButton(button, pos_x, pos_y)
     return button.x_min <= pos_x and button.x_max >= pos_x and button.y_min <= pos_y and button.y_max >= pos_y;
 end
 
+
+function createClickableTexture(playerid, graphic, startx, starty, sizex, sizey, func, args)
+    startx, starty = convertToPixel(startx, starty);
+    sizex, sizey = convertToPixel(sizex, sizey);
+    local texture = CreateTexture(startX, startY, endX, endY, "DATA\\TEXTURES\\DESKTOP\\SKORIP\\SKO_R_"..graphic);
+    ShowTexture(playerid, texture);
+    table.insert(PLAYERS[playerid].menu.textures, texture);
+
+    table.insert(PLAYERS[playerid].menu.buttons, {
+        x_min = startx,
+        x_max = startx+sizex,
+        y_min = starty,
+        y_max = starty+sizey,
+        func = func,
+        args = args
+    });
+end
+
 function testCraftmenu(playerid, params)
     setupMenu(playerid, true);
 
-    local startX, startY = convertToPixel(200,200);
-    local sizeX, sizeY = convertToPixel(200,200);
-    createButton(playerid, "", startX, startY, sizeX, sizeY, 0, 0, 0, "testClicked", {opt="Manaessenz",graphic="SKO_R_ITPO_MANA_01_3DS.TGA"})
-    local endX, endY = convertToPixel(400,400);
-    local texture = CreateTexture(startX, startY, endX, endY, "DATA\\TEXTURES\\DESKTOP\\SKORIP\\SKO_R_ITPO_MANA_01_3DS.TGA");
-    ShowTexture(playerid, texture);
-    table.insert(PLAYERS[playerid].menu.textures, texture);
-    
-    local startX, startY = convertToPixel(400,200);
-    createButton(playerid, "", startX, startY, sizeX, sizeY, 0, 0, 0, "testClicked", {opt="Manaextrakt",graphic="SKO_R_ITPO_MANA_02_3DS.TGA"})
-    local endX, endY = convertToPixel(600,400);
-    local texture = CreateTexture(startX, startY, endX, endY, "DATA\\TEXTURES\\DESKTOP\\SKORIP\\SKO_R_ITPO_MANA_02_3DS.TGA");
-    ShowTexture(playerid, texture);
-    table.insert(PLAYERS[playerid].menu.textures, texture);
-
-    local startX, startY = convertToPixel(200,400);
-    createButton(playerid, "", startX, startY, sizeX, sizeY, 0, 0, 0, "testClicked", {opt="Heilessenz",graphic="SKO_R_ITPO_HEALTH_01_3DS.TGA"})
-    local endX, endY = convertToPixel(400,600);
-    local texture = CreateTexture(startX, startY, endX, endY, "DATA\\TEXTURES\\DESKTOP\\SKORIP\\SKO_R_ITPO_HEALTH_01_3DS.TGA");
-    ShowTexture(playerid, texture);
-    table.insert(PLAYERS[playerid].menu.textures, texture);
-
-    local startX, startY = convertToPixel(400,400);
-    createButton(playerid, "", startX, startY, sizeX, sizeY, 0, 0, 0, "testClicked", {opt="Heilextrakt",graphic="SKO_R_ITPO_HEALTH_02_3DS.TGA"})
-    local endX, endY = convertToPixel(600,600);
-    local texture = CreateTexture(startX, startY, endX, endY, "DATA\\TEXTURES\\DESKTOP\\SKORIP\\SKO_R_ITPO_HEALTH_02_3DS.TGA");
-    ShowTexture(playerid, texture);
-    table.insert(PLAYERS[playerid].menu.textures, texture);
-
+    createClickableTexture(playerid, "ITPO_MANA_01_3DS.TGA", 200, 200, 200, 200, "testClicked", {opt="Manaessenz",graphic="ITPO_MANA_01_3DS.TGA"});
+    createClickableTexture(playerid, "ITPO_MANA_02_3DS.TGA", 400, 200, 200, 200, "testClicked", {opt="Manaessenz",graphic="ITPO_MANA_02_3DS.TGA"});
+    createClickableTexture(playerid, "ITPO_HEALTH_01_3DS.TGA", 400, 200, 200, 200, "testClicked", {opt="Manaessenz",graphic="ITPO_HEALTH_01_3DS.TGA"});
+    createClickableTexture(playerid, "ITPO_HEALTH_02_3DS.TGA", 400, 400, 200, 200, "testClicked", {opt="Manaessenz",graphic="ITPO_HEALTH_02_3DS.TGA"});
 end
 
 function testClicked(playerid, args)
     --sendINFOMessage(playerid, args.opt.." angeklickt, woohoooooo!");
     testCraftmenu(playerid, nil);
 
-    local startX, startY = convertToPixel(800,200);
-    local sizeX, sizeY = convertToPixel(600,600);
-    createButton(playerid, "", startX, startY, sizeX, sizeY, 0, 0, 0, "testClicked", {opt=args.opt,graphic=args.graphic})
-    local endX, endY = convertToPixel(1400,800);
-    local texture = CreateTexture(startX, startY, endX, endY, "DATA\\TEXTURES\\DESKTOP\\SKORIP\\"..args.graphic);
-    ShowTexture(playerid, texture);
-    table.insert(PLAYERS[playerid].menu.textures, texture);
+    createClickableTexture(playerid, args.graphic, 600, 200, 600, 600, "crafting", {opt=args.opt});
+
+end
+
+function crafting(playerid, args)
+    sendINFOMessage("Crafting begonnen");
+    craftingStart(playerid, args.opt, 10000, "craftingdone", {name=args.opt}, nil);
+end
+
+function craftingdone()
+    sendERRMessage(playerid, "Test. Noch keine Items ("..args.name..") erstellt oder verbraucht.");
 end
