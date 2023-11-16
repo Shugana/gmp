@@ -108,7 +108,7 @@ function testCraftmenu(playerid, params)
 
     local startX, startY = convertToPixel(200,400);
     createButton(playerid, "", startX, startY, sizeX, sizeY, 0, 0, 0, "testClicked", {opt="Heilessenz",graphic="SKO_R_ITPO_HEALTH_01_3DS.TGA"})
-    local endX, endY = convertToPixel(778,1078);
+    local endX, endY = convertToPixel(400,600);
     local texture = CreateTexture(startX, startY, endX, endY, "DATA\\TEXTURES\\DESKTOP\\SKORIP\\SKO_R_ITPO_HEALTH_01_3DS.TGA");
     ShowTexture(playerid, texture);
     table.insert(PLAYERS[playerid].menu.textures, texture);
@@ -123,12 +123,12 @@ function testCraftmenu(playerid, params)
 end
 
 function testClicked(playerid, args)
-    sendINFOMessage(playerid, args.opt.." angeklickt, woohoooooo!");
+    --sendINFOMessage(playerid, args.opt.." angeklickt, woohoooooo!");
     testCraftmenu(playerid, nil);
 
     local startX, startY = convertToPixel(800,200);
     local sizeX, sizeY = convertToPixel(600,600);
-    createButton(playerid, "", startX, startY, sizeX, sizeY, 0, 0, 0, "testClicked", {opt="Manaessenz",graphic="SKO_R_ITPO_MANA_01_3DS.TGA"})
+    createButton(playerid, "", startX, startY, sizeX, sizeY, 0, 0, 0, "testClicked", {opt=args.opt,graphic=args.graphic})
     local endX, endY = convertToPixel(1400,800);
     local texture = CreateTexture(startX, startY, endX, endY, "DATA\\TEXTURES\\DESKTOP\\SKORIP\\"..args.graphic);
     ShowTexture(playerid, texture);
