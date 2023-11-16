@@ -86,7 +86,6 @@ function craftMenu(playerid, mobsi)
         "AND craft_results.itemid = items.id AND characters.id = "..PLAYERS[playerid].character
     );
     for _key, response in pairs(responses) do
-        for _a, _b in pairs({1,2,3,4,5,6,7,8,9,10,11}) do
         createClickableTexture(playerid, response.graphic, start.x+column*8*size, start.y+row*size, size, size,
             "craftChosen", {mobsi="mobsi",recipe=response.id, name=response.name, graphic=response.graphic, duration=response.crafttime});
         createButton(playerid, response.name, start.x+(8*column+1)*size, start.y+row*size+7, size*7, size, 255, 255, 255,
@@ -95,7 +94,6 @@ function craftMenu(playerid, mobsi)
         if column > 1 then
             column = 0;
             row = row + 1;
-        end
         end
     end
 end
