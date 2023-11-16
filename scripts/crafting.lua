@@ -109,7 +109,7 @@ function craftChosen(playerid, args)
             "character_inventory",
             "characterid = "..PLAYERS[playerid].character.." AND itemid = "..ingredient.id);
         for _key, item in pairs(items) do
-            available = item.amount;
+            available = tonumber(item.amount);
         end
         if (available < ingredient.amount) then
             r, g, b = 196, 30, 58;
@@ -120,6 +120,7 @@ function craftChosen(playerid, args)
         row = row + 1;
     end
     createClickableTexture(playerid, args.graphic, 700, 200, 400, 400, "craft", {name=args.name, recipe=args.recipe, duration=args.duration, mobsi=args.mobsi});
+    createPlaintext(playerid, ingredient.name..": "..available.." / "..ingredient.amount, start.x, start.y+size*row, r, g, b);
 end
 
 function craft(playerid, args)
