@@ -75,7 +75,7 @@ end
 function craftMenu(playerid, mobsi)
     setupMenu(playerid, true);
     local size = 50;
-    local start {x=200, y=200};
+    local start = {x=200, y=200};
     local columns = 8;
 
     local column = 0;
