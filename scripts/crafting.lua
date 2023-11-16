@@ -120,7 +120,7 @@ function craftChosen(playerid, args)
         row = row + 1;
     end
     createClickableTexture(playerid, args.graphic, 700, 200, 400, 400, "craft", {name=args.name, recipe=args.recipe, duration=args.duration, mobsi=args.mobsi});
-    createPlaintext(playerid, ingredient.name..": "..available.." / "..ingredient.amount, start.x, start.y+size*row, r, g, b);
+    createPlaintext(playerid, args.name, start.x, start.y+size*-5, 255, 255, 255);
 end
 
 function craft(playerid, args)
