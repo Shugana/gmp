@@ -61,9 +61,9 @@ end
 function OnPlayerTriggerMob(playerid, scheme, objectName, trigger)
     debug("Triggered Mobsi - playerid: "..playerid..", scheme: "..scheme..", objectName: "..objectName..", trigger: "..trigger);
     if (trigger == 1) then
+        FreezePlayer(playerid, 1);
+        PLAYERS[playerid].frozen = "mobsi";
         testCraftmenu(playerid, nil);
-        FreezePlayer(playerid, 0);
-        PLAYERS[playerid].frozen = "mobsi"
     end
 end
 
