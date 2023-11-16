@@ -42,6 +42,24 @@ function initServerdraws()
         SERVERDRAWS.craftingbackground.size.y,
         SERVERDRAWS.craftingbackground.graphic
     );
+
+    Mob.Create(
+        "LAB_PSI.ASC",
+        "mobsiname",
+        OCMOBINTER,
+        "LAB",
+        "",
+        "NEWWORLD\\KHORINIS.ZEN",
+        -876
+        -66,
+        -4251,
+        "objectname"
+    );
+
+end
+
+function OnPlayerTriggerMob(playerid, scheme, objectName, trigger)
+    debug("Triggered Mobsi - playerid: "..playerid..", scheme: "..scheme..", objectName: "..objectName..", trigger: "..trigger);
 end
 
 function updateGametimeDraw(hour, minute)
