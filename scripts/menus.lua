@@ -90,8 +90,12 @@ end
 
 function testCraftmenu(playerid, params)
     setupMenu(playerid, true);
-    createButton(playerid, "", convertToPixel(400,400), convertToPixel(900,900), 0, 0, 0, "testClicked", {})
-    local texture = CreateTexture(convertToPixel(522,522), convertToPixel(778,778), "DATA\\TEXTURES\\DESKTOP\\SKORIP\\SKO_R_ITPO_MANA_01_3DS.TGA");
+    local startX, startY = convertToPixel(400,400);
+    local sizeX, sizeY = convertToPixel(500,500);
+    createButton(playerid, "", startX, startY, sizeX, sizeX, 0, 0, 0, "testClicked", {})
+    local startX, startY = convertToPixel(522,522);
+    local endX, endY = convertToPixel(778,778);
+    local texture = CreateTexture(startX, startY, endX, endY, "DATA\\TEXTURES\\DESKTOP\\SKORIP\\SKO_R_ITPO_MANA_01_3DS.TGA");
     ShowTexture(playerid, texture);
     table.insert(PLAYERS[playerid].menu.textures, texture);
 end
