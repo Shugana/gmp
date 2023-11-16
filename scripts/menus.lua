@@ -130,10 +130,12 @@ function testClicked(playerid, args)
 end
 
 function crafting(playerid, args)
+    FreezePlayer(playerid, 1);
     sendINFOMessage(playerid, "Crafting begonnen");
     craftingStart(playerid, args.opt, 10000, "craftingdone", {name=args.opt}, nil);
 end
 
-function craftingdone()
+function craftingdone(playerid, args)
+    FreezePlayer(playerid, 0);
     sendERRMessage(playerid, "Test. Noch keine Items ("..args.name..") erstellt oder verbraucht.");
 end
