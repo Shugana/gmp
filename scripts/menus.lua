@@ -78,3 +78,8 @@ end
 function gotButton(button, pos_x, pos_y)
     return button.x_min <= pos_x and button.x_max >= pos_x and button.y_min <= pos_y and button.y_max >= pos_y;
 end
+
+function testCraftmenu(playerid, params)
+    local texture = CreateTexture(1000, 1000, 4000, 4000, "DATA\\TEXTURES\\_COMPILED\\MENU_INGAME-C.TEX")
+    ShowTexture(playerid, texture);
+end

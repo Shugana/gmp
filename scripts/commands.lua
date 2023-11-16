@@ -95,6 +95,11 @@ COMMANDS = {
         func = "testWorktimer",
         help = "Testet Craftingtimer - Angabe in ms (1000 ms = 1 Sekunde)",
         minadminlevel = ADMINRANKS.Spieler
+    },
+    testcraftmenu = {
+        func = "testCraftmenu",
+        help = "Zeigt ein Menühintergrund",
+        minadminlevel = ADMINRANKS.Spieler
     }
 };
 
