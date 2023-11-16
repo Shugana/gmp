@@ -71,6 +71,78 @@ function canWork(playerid)
     return true; -- for now... later: check hunger, check illness, etc.
 end
 
+
+function craftMenu(playerid, mobsi)
+    setupMenu(playerid, true);
+    local size = 50;
+    local start {x=200, y=200};
+    local columns = 8;
+
+    local column = 0;
+    local row = 0;
+
+    local responses = DB_select(
+        "crafts.id AS id, items.instance, items.graphic, crafts.name, crafts.duration",
+        "characters, character_crafts, crafts, craft_results, items",
+        "characters.id = character_crafts.characterid AND character_crafts.craftid = crafts.id AND crafts.id = craft_results.craftid "..
+        "AND craft_results.itemid = items.id AND characters.id = "..PLAYERS[playerid].character
+    );
+    for _key, response in pairs(responses) do
+        createClickableTexture(playerid, response.graphic, start.x+column*size, start.y+row*size, size, size,
+            "craftChosen", {mobsi="mobsi",recipe=response.id, name=response.name, graphic=response.graphic, duration=response.duration});
+        column = column + 1;
+        if (column > columns) then
+            column = 0;
+            row = row + 1;
+        end
+    end
+end
+
+function craftChosen(playerid, args)
+    craftMenu(playerid, args.mobsi);
+    local ingredients = DB_select(
+        "items.id, items.name, craft_ingredients.amount",
+        "crafts, craft_ingredients, items",
+        "crafts.id = craft_ingredients.craftid AND craft_ingredients.itemid = items.id AND crafts.id = "..args.recipe);
+    for _key, ingredient in pairs(ingredients) do
+        local available = 0;
+        local items = DB_select(
+            "*",
+            "character_inventory",
+            "characterid = "..PLAYERS[playerid].character.." AND itemid = "..ingredient.id);
+        for _key, item in pairs(items) do
+            available = item.amount;
+        end
+        sendINFOMessage(playerid, ingredient.name..": "..available.." / "..ingredient.amount);
+    end
+    --sendINFOMessage(playerid, args.opt.." angeklickt, woohoooooo!");
+    testCraftmenu(playerid, nil);
+    createClickableTexture(playerid, args.graphic, 700, 200, 400, 400, "craft", {name=args.name, recipe=args.recipe, duration=args.duration});
+
+
+end
+
+function craft(playerid, args)
+    craftingStart(playerid, args.name, args.duration, "craftCreated", {name=args.name, recipe=args.recipe}, nil);
+end
+
+function craftCreated(playerid)
+    sendERRMessage(playerid, "Test. Noch keine Items ("..PLAYERS[playerid].working.options.name.." ("..PLAYERS[playerid].working.options.recipe..")) erstellt und auch kein Material verbraucht.");
+end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 function testWorktimer(playerid, params)
     local result, time = sscanf(params, "d");
     if (result ~= 1) then
