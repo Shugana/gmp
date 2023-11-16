@@ -25,7 +25,9 @@ function createText(playerid, text, startx, starty, sizex, sizey, r, g, b)
     b = b or 255;
     local text = CreatePlayerDraw(playerid, startx+50, starty+50, text, FONTS.standard, r, g, b);
     table.insert(PLAYERS[playerid].menu.texts, text);
-    local texture = CreateTexture(startx, starty, startx+sizex, starty+sizey, "Data\\Textures\\Desktop\\nomip\\Menu_Ingame.tga")
+    --local texture = CreateTexture(startx, starty, startx+sizex, starty+sizey, "Data\\Textures\\Desktop\\nomip\\Menu_Ingame.tga")
+    local texture = CreateTexture(startx, starty, startx+sizex, starty+sizey, "DATA\\TEXTURES\\DESKTOP\\SKORIP\\MENU_INGAME.TGA")
+    
     table.insert(PLAYERS[playerid].menu.textures, texture);
     ShowPlayerDraw(playerid, text);   
     ShowTexture(playerid, texture);
@@ -80,6 +82,8 @@ function gotButton(button, pos_x, pos_y)
 end
 
 function testCraftmenu(playerid, params)
-    local texture = CreateTexture(1000, 1000, 4000, 4000, "DATA\\TEXTURES\\DESKTOP\\SKORIP\\MENU_INGAME.TGA")
+    local texture = CreateTexture(1000, 1000, 4000, 4000, "DATA\\TEXTURES\\DESKTOP\\SKORIP\\MENU_INGAME.TGA");
+    ShowTexture(playerid, texture);
+    local texture = CreateTexture(2000, 2000, 3000, 3000, "DATA\\TEXTURES\\DESKTOP\\SKORIP\\SKO_R_ITPO_MANA_01_3DS.TGA");
     ShowTexture(playerid, texture);
 end
