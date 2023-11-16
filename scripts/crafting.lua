@@ -94,7 +94,7 @@ end
 
 function craftChosen(playerid, args)
     local size = 30;
-    local start = {x=725, y=500};
+    local start = {x=725, y=400};
     local row = 0;
     local r, g, b;
     craftMenu(playerid, args.mobsi);
@@ -116,7 +116,7 @@ function craftChosen(playerid, args)
         else
             r, g, b = 0, 255, 152;
         end
-        createPlaintext(playerid, ingredient.name..": "..available.." / "..ingredient.amount, start.x, start.y+size*row+2, r, g, b);
+        createPlaintext(playerid, ingredient.name..": "..available.." / "..ingredient.amount, start.x, start.y+size*row+5, r, g, b);
         row = row + 1;
     end
     createClickableTexture(playerid, args.graphic, 700, 200, 400, 400, "craft", {name=args.name, recipe=args.recipe, duration=args.duration, mobsi=args.mobsi});
