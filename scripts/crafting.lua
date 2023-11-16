@@ -94,7 +94,7 @@ end
 
 function craftChosen(playerid, args)
     local size = -30;
-    local start = {x=725, y=545};
+    local start = {x=725, y=555};
     local row = 0;
     local r, g, b;
     craftMenu(playerid, args.mobsi);
