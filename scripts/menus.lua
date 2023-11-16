@@ -7,6 +7,13 @@ FONTS = {
 
 -- Virtual Pixels for Draws / Texts: 0-8192
 
+function convertToPixel(x, y)
+    local sourceX = 1920;
+    local sourceY = 1080;
+    local TargetMax = 8192;
+    return math.floor(x/sourceX*TargetMax+0.5),math.floor(y/sourceY*TargetMax+0.5);
+end
+
 function createButton(playerid, text, startx, starty, sizex, sizey, r, g, b, func, args)
     createText(playerid, text, startx, starty, sizex, sizey, r, g, b);
     table.insert(PLAYERS[playerid].menu.buttons, {
@@ -82,8 +89,13 @@ function gotButton(button, pos_x, pos_y)
 end
 
 function testCraftmenu(playerid, params)
-    local texture = CreateTexture(1000, 1000, 4000, 4000, "DATA\\TEXTURES\\DESKTOP\\SKORIP\\MENU_INGAME.TGA");
+    setupMenu(playerid, true);
+    createButton(playerid, "", convertToPixel(400,400), convertToPixel(900,900), 0, 0, 0, "testClicked", {})
+    local texture = CreateTexture(convertToPixel(522,522), convertToPixel(778,778), "DATA\\TEXTURES\\DESKTOP\\SKORIP\\SKO_R_ITPO_MANA_01_3DS.TGA");
     ShowTexture(playerid, texture);
-    local texture = CreateTexture(2000, 2000, 3000, 3000, "DATA\\TEXTURES\\DESKTOP\\SKORIP\\SKO_R_ITPO_MANA_01_3DS.TGA");
-    ShowTexture(playerid, texture);
+    table.insert(PLAYERS[playerid].menu.textures, texture);
+end
+
+function testClicked(playerid, args)
+    sendINFOMessage(playerid, "Manaessenz angeklickt, woohoooooo!");
 end
