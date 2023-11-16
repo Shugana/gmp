@@ -81,14 +81,14 @@ function craftMenu(playerid, mobsi)
     local row = 0;
 
     local responses = DB_select(
-        "crafts.id AS id, items.instance, items.graphic, crafts.name, crafts.duration",
+        "crafts.id AS id, items.instance, items.graphic, crafts.name, crafts.crafttime",
         "characters, character_crafts, crafts, craft_results, items",
         "characters.id = character_crafts.characterid AND character_crafts.craftid = crafts.id AND crafts.id = craft_results.craftid "..
         "AND craft_results.itemid = items.id AND characters.id = "..PLAYERS[playerid].character
     );
     for _key, response in pairs(responses) do
         createClickableTexture(playerid, response.graphic, start.x+column*size, start.y+row*size, size, size,
-            "craftChosen", {mobsi="mobsi",recipe=response.id, name=response.name, graphic=response.graphic, duration=response.duration});
+            "craftChosen", {mobsi="mobsi",recipe=response.id, name=response.name, graphic=response.graphic, duration=response.crafttime});
         column = column + 1;
         if (column > columns) then
             column = 0;
