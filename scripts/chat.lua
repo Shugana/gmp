@@ -1,8 +1,8 @@
 function chat(playerid, text)
-    sendChatToArea(playerid, 2000, GetPlayerName(playerid)..": "..text, {r=255, g=255, b=255});
+    sendChatToArea(playerid, "", 2000, GetPlayerName(playerid)..": "..text, {r=255, g=255, b=255});
 end
 
-function sendChatToArea(playerid, range, text, colors);
+function sendChatToArea(playerid, command, range, text, colors);
     if PLAYERS[playerid].character == nil then
         return;
     end
@@ -26,5 +26,6 @@ function sendChatToArea(playerid, range, text, colors);
         end
     end
     local listeners = table.concat(hearrange, ", ");
-    log("chat", PLAYERS[playerid].character.." ("..listeners..") "..text);
+    local logtext = GetPlayerName(playerid).."("..PLAYERS[playerid].character..") "..command.." > ("..listeners..") "..text;
+    log("chat", logtext);
 end
