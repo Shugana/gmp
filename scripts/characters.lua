@@ -190,6 +190,7 @@ function newCharacter(playerid, params)
         return;
     end
     switchCharakter(playerid, params);
+    createStats(playerid);
     facechange(playerid);
 end
 
@@ -232,10 +233,12 @@ function switchCharacterById(playerid, characterid)
         DB_update("account_autologins", {characterid=response.id}, "accountid = "..PLAYERS[playerid].account);
         clearMenu(playerid);
         savePosition(playerid);
+        saveStats(playerid);
         PLAYERS[playerid].character = response.id;
         ClearInventory (playerid);
         loadFace(playerid);
         loadPosition(playerid);
+        loadStats(playerid);
         loadInventory(playerid);
         sendINFOMessage(playerid, "Erfolgreich auf Charakter '"..response.name.."' gewechselt.");
         return;
@@ -280,6 +283,7 @@ function loadFace(playerid)
         sendERRMessage(playerid, "Face Laden fehlgeschlagen.");
         return;
     end
+    SetPlayerInstance(playerid, "PC_HERO");
     local responses = DB_select("*", "characters", "accountid = "..PLAYERS[playerid].account.." AND id = "..PLAYERS[playerid].character);
     for _key, response in pairs(responses) do
         PLAYERS[playerid].character = response.id;
