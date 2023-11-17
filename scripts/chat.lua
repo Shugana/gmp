@@ -1,5 +1,5 @@
 function chat(playerid, text)
-    sendChatToArea(playerid, 2000, getPlayerName(playerid)..": "..text, {r=255, g=255, b=255});
+    sendChatToArea(playerid, 2000, GetPlayerName(playerid)..": "..text, {r=255, g=255, b=255});
 end
 
 function sendChatToArea(playerid, range, text, colors);
@@ -17,7 +17,7 @@ function sendChatToArea(playerid, range, text, colors);
         end
         distance = GetDistancePlayers(playerid, audienceid);
         if (distance < range) then
-            table.insert(hearrange, getPlayerName(audienceid).."("..PLAYERS[audienceid].character..")");
+            table.insert(hearrange, GetPlayerName(audienceid).."("..PLAYERS[audienceid].character..")");
             if (distance < range/2) then
                 SendPlayerMessage(audienceid, colors.r, colors.g, colors.b, text);
             else
