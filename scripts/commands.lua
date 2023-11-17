@@ -121,6 +121,6 @@ function OnPlayerCommandText(playerid, text)
         end
         _G[COMMANDS[command].func](playerid, params or "");
     else
-        sendINFOMessage(playerid, "chat "..text);
+        chat(playerid, text);
     end
 end

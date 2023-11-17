@@ -2,6 +2,7 @@ require("settings/db");
 require("settings/server");
 
 require("scripts/db");
+require("scripts/logging");
 require("scripts/accounts");
 require("scripts/commands");
 require("scripts/utility");
