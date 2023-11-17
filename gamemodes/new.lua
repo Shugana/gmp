@@ -5,6 +5,7 @@ require("scripts/db");
 require("scripts/logging");
 require("scripts/accounts");
 require("scripts/commands");
+require("scripts/chat");
 require("scripts/utility");
 require("scripts/itemhandling");
 require("scripts/login");
