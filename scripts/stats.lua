@@ -6,7 +6,7 @@ function loadStats(playerid)
     if PLAYERS[playerid] == nil or PLAYERS[playerid].character == nil then
         return;
     end
-    local responses = DB_select("*", "character_stats", "character.id = "..PLAYERS[playerid].character);
+    local responses = DB_select("*", "character_stats", "characterid = "..PLAYERS[playerid].character);
     for _key, response in pairs(responses) do
         local lvl = math.floor(tonumber(response.xp)/XPPERLEVEL);
         SetPlayerLearnPoints(playerid, tonumber(response.lp));
@@ -31,7 +31,7 @@ function createStats(playerid)
     if PLAYERS[playerid] == nil or PLAYERS[playerid].character == nil then
         return;
     end
-    DB_insert("stats", {characterid=PLAYERS[playerid].character});
+    DB_insert("character_stats", {characterid=PLAYERS[playerid].character});
 end
 
 function saveStats(playerid)
@@ -40,5 +40,5 @@ function saveStats(playerid)
     end
     local mana = GetPlayerMana(playerid);
     local hp = GetPlayerHealth(playerid);
-    DB_update("stats", {hp=hp, mana=mana}, "characterid = "..PLAYERS[playerid].character);
+    DB_update("character_stats", {hp=hp, mana=mana}, "characterid = "..PLAYERS[playerid].character);
 end
