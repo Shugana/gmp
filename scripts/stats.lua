@@ -31,7 +31,7 @@ function createStats(playerid)
     if PLAYERS[playerid] == nil or PLAYERS[playerid].character == nil then
         return;
     end
-    ("stats", {characterid=PLAYERS[playerid].character});
+    DB_insert("stats", {characterid=PLAYERS[playerid].character});
 end
 
 function saveStats(playerid)
