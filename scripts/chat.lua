@@ -11,7 +11,7 @@ function sendChatToArea(playerid, range, text, colors);
     colors.rfar = math.floor(colors.r/2);
     colors.gfar = math.floor(colors.g/2);
     colors.bfar = math.floor(colors.b/2);
-    for audienceid, _playerdata in pairs PLAYERS do
+    for audienceid, _playerdata in pairs(PLAYERS) do
         if PLAYERS[audienceid] == nil or PLAYERS[audienceid].character == nil or GetPlayerWorld(playerid) ~= GetPlayerWorld(audienceid) then
             break;
         end
