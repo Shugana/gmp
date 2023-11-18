@@ -147,22 +147,22 @@ COMMANDS = {
         minadminlevel = ADMINRANKS.Spieler
     },
     shout = {
-        func = "chatu",
+        func = "chatshout",
         help = "Schreit etwas",
         minadminlevel = ADMINRANKS.Spieler
     },
     shoutme = {
-        func = "chatume",
+        func = "chatshoutme",
         help = "Schreibt ein Emote, etwas das dein Charakter tut in hoher Reichweite",
         minadminlevel = ADMINRANKS.Spieler
     },
     shoutms = {
-        func = "chatums",
+        func = "chatshoutms",
         help = "Schreibt einen Satz beginnend mit deinem Charakter im Genitiv in hoher Reichweite",
         minadminlevel = ADMINRANKS.Spieler
     },
     ['shout/'] = {
-        func = "chatuooc",
+        func = "chatshoutooc",
         help = "Schreibt OOC Chat in hoher Reichweite",
         minadminlevel = ADMINRANKS.Spieler
     }
