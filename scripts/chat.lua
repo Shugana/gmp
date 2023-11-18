@@ -87,6 +87,7 @@ function pm(playerid, params)
     local result, name, text = sscanf(params, "ss");
     if (result == 1) then
         name = capitalize(name);
+        msg = text;
         for recipientid, _ in pairs(PLAYERS) do
             if (GetPlayerName(recipientid) == name) then
                 targetid = recipientid;
