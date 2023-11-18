@@ -175,6 +175,11 @@ COMMANDS = {
         func = "report",
         help = "Schreibt einen Report. Dies können Supporter und Admins lesen",
         minadminlevel = ADMINRANKS.Spieler
+    },
+    tp = {
+        func = "CMD_TeleportToPlayer",
+        help = "Teleport <ID1> zu <ID2>",
+        minadminlevel = ADMINRANKS.Support
     }
 };
 
@@ -198,4 +203,20 @@ function OnPlayerCommandText(playerid, text)
     else
         chat(playerid, text);
     end
+end
+
+function CMD_TeleportToPlayer(playerid, params)
+	local result, fromid, toid = sscanf(params, "dd");
+	if result == 1 then
+        local x,y,z = GetPlayerPos(toid);
+        if not(GetPlayerWorld(fromid) == GetPlayerWorld(toid)) then
+            SetPlayerWorld(fromid, GetPlayerWorld(toid));
+        end
+        SendPlayerMessage(fromid, 255,250,200, string.format("%s teleportiert zu: %s", fromid, toid));
+        SetPlayerPos(fromid, x + 50, y, z);
+        local servermsg = string.format("(Server): Teleport von ID: %s zu ID: %s", fromid, toid);
+        SendPlayerMessage(playerid, 255,250,200, servermsg);
+	else
+		sendERRMessage(playerid, "Benutze: /teleport <id> <id>");
+	end
 end
