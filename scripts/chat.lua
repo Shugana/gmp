@@ -78,12 +78,6 @@ function pm(playerid, params)
     local sender = GetPlayerName(playerid);
     local targetname = "?";
     local msg;
-    local result, id, text = sscanf(params, "ds");
-    if (result == 1) then
-        targetid = id;
-        msg = text;
-        targetname = GetPlayerName(id);
-    end
     local result, name, text = sscanf(params, "ss");
     if (result == 1) then
         targetname = capitalize(name);
@@ -94,6 +88,12 @@ function pm(playerid, params)
                 break;
             end
         end
+    end
+    local result, id, text = sscanf(params, "ds");
+    if (result == 1) then
+        targetid = id;
+        msg = text;
+        targetname = GetPlayerName(id);
     end
     if PLAYERS[targetid] == nil then
         sendERRMessage(playerid, "Spieler "..targetname.." ("..targetid..") ist nicht online");
