@@ -8,9 +8,7 @@ NPCSTATES = {
     attack = {id=3, func="monsterAttack"},
     [3] = {id=3, func="monsterAttack"},
     follow = {id=4, func="monsterFollow"},
-    [4] = {id=4, func="monsterFollow"},
-    showanis = {id=5, func="monsterShowAni"},
-    [5] = {id=5, func="monsterShowAni"}
+    [4] = {id=4, func="monsterFollow"}
 }
 
 function spawnMonsterOnPlayer(playerid, params)
@@ -251,24 +249,4 @@ function unfollow(playerid, params)
     end
     NPCS[tierid].state = NPCSTATES.idle.id;
     NPCS[tierid].followid = nil;
-end
-
-function showAni(playerid, params)
-    if NPCS[playerid] == nil then
-        NPCS[playerid] = {
-            anitoggle = true;
-            --debug("ani observe on");
-        };
-    else
-        NPCS[playerid] = nil;
-        --debug("ani observe off");
-    end
-end
-
-function monsterShowAni(playerid)
-    local ani = GetPlayerAnimationName(playerid);
-    if ani ~= NPCS[playerid].lastani then
-        NPCS[playerid].lastani = ani;
-        --debug("ani changed to: "..ani or "-");
-    end
 end

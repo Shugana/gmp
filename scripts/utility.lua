@@ -63,3 +63,15 @@ end
 function debug(text)
     SendMessageToAll(255, 0, 0, "Debug - "..text);
 end
+
+function showAni(playerid, params)
+    if NPCS[playerid] == nil then
+        NPCS[playerid] = {
+            anitoggle = true;
+            --debug("ani observe on");
+        };
+    else
+        NPCS[playerid] = nil;
+        --debug("ani observe off");
+    end
+end
