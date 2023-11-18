@@ -91,9 +91,79 @@ COMMANDS = {
         help = "Zeigt dir deine aktuelle Ani an",
         minadminlevel = ADMINRANKS.Support
     },
-    testtimer = {
-        func = "testWorktimer",
-        help = "Testet Craftingtimer - Angabe in ms (1000 ms = 1 Sekunde)",
+    w = {
+        func = "chatw",
+        help = "Flüstert",
+        minadminlevel = ADMINRANKS.Spieler
+    },
+    wme = {
+        func = "chatwme",
+        help = "Schreibt ein Emote, etwas das dein Charakter tut in Flüsterreichweite",
+        minadminlevel = ADMINRANKS.Spieler
+    },
+    wms = {
+        func = "chatwms",
+        help = "Schreibt einen Satz beginnend mit deinem Charakter im Genitiv in Flüsterreichweite",
+        minadminlevel = ADMINRANKS.Spieler
+    },
+    ['w/'] = {
+        func = "chatwooc",
+        help = "Schreibt OOC Chat in Flüsterreichweite",
+        minadminlevel = ADMINRANKS.Spieler
+    },
+    u = {
+        func = "chatu",
+        help = "Spricht halblaut",
+        minadminlevel = ADMINRANKS.Spieler
+    },
+    ume = {
+        func = "chatume",
+        help = "Schreibt ein Emote, etwas das dein Charakter tut in halber Reichweite",
+        minadminlevel = ADMINRANKS.Spieler
+    },
+    ums = {
+        func = "chatums",
+        help = "Schreibt einen Satz beginnend mit deinem Charakter im Genitiv in halber Reichweite",
+        minadminlevel = ADMINRANKS.Spieler
+    },
+    ['u/'] = {
+        func = "chatuooc",
+        help = "Schreibt OOC Chat in halber Reichweite",
+        minadminlevel = ADMINRANKS.Spieler
+    },
+    me = {
+        func = "chatme",
+        help = "Schreibt ein Emote, etwas das dein Charakter tut",
+        minadminlevel = ADMINRANKS.Spieler
+    },
+    ms = {
+        func = "chatms",
+        help = "Schreibt einen Satz beginnend mit deinem Charakter im Genitiv",
+        minadminlevel = ADMINRANKS.Spieler
+    },
+    ['/'] = {
+        func = "chatooc",
+        help = "Schreibt OOC Chat",
+        minadminlevel = ADMINRANKS.Spieler
+    },
+    shout = {
+        func = "chatu",
+        help = "Schreit etwas",
+        minadminlevel = ADMINRANKS.Spieler
+    },
+    shoutme = {
+        func = "chatume",
+        help = "Schreibt ein Emote, etwas das dein Charakter tut in hoher Reichweite",
+        minadminlevel = ADMINRANKS.Spieler
+    },
+    shoutms = {
+        func = "chatums",
+        help = "Schreibt einen Satz beginnend mit deinem Charakter im Genitiv in hoher Reichweite",
+        minadminlevel = ADMINRANKS.Spieler
+    },
+    ['shout/'] = {
+        func = "chatuooc",
+        help = "Schreibt OOC Chat in hoher Reichweite",
         minadminlevel = ADMINRANKS.Spieler
     }
 };

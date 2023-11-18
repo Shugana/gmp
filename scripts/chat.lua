@@ -1,6 +1,79 @@
-function chat(playerid, text)
-    sendChatToArea(playerid, "", 2000, GetPlayerName(playerid)..": "..text, {r=255, g=255, b=255});
+CHATDISTANCES = {
+    whisper = 250,
+    close = 750,
+    normal = 1500,
+    far = 4000
+}
+
+function chatw(playerid, text)
+    sendChatToArea(playerid, "/w", CHATDISTANCES.whisper, GetPlayerName(playerid).." flüstert: "..text, {r=255, g=255, b=255});
 end
+
+function chatwme(playerid, text)
+    sendChatToArea(playerid, "/wme", CHATDISTANCES.whisper, GetPlayerName(playerid).." "..text, {r=255, g=255, b=255});
+end
+
+function chatwms(playerid, text)
+    sendChatToArea(playerid, "/wms", CHATDISTANCES.whisper, GetPlayerName(playerid)..s" "..text, {r=255, g=255, b=255});
+end
+
+function chatwooc(playerid, text)
+    sendChatToArea(playerid, "/w/", CHATDISTANCES.whisper, "OOC - "..GetPlayerName(playerid)..": "..text, {r=0, g=255, b=152});
+end
+
+
+function chatu(playerid, text)
+    sendChatToArea(playerid, "/u", CHATDISTANCES.close, GetPlayerName(playerid).." sagt: "..text, {r=255, g=255, b=255});
+end
+
+function chatume(playerid, text)
+    sendChatToArea(playerid, "/ume", CHATDISTANCES.close, GetPlayerName(playerid).." "..text, {r=255, g=255, b=255});
+end
+
+function chatums(playerid, text)
+    sendChatToArea(playerid, "/ums", CHATDISTANCES.close, GetPlayerName(playerid)..s" "..text, {r=255, g=255, b=255});
+end
+
+function chatuooc(playerid, text)
+    sendChatToArea(playerid, "/u/", CHATDISTANCES.close, "OOC - "..GetPlayerName(playerid)..": "..text, {r=0, g=255, b=152});
+end
+
+
+
+function chat(playerid, text)
+    sendChatToArea(playerid, "", CHATDISTANCES.normal, GetPlayerName(playerid)..": "..text, {r=255, g=255, b=255});
+end
+
+function chatme(playerid, text)
+    sendChatToArea(playerid, "/me", CHATDISTANCES.normal, GetPlayerName(playerid).." "..text, {r=255, g=255, b=255});
+end
+
+function chatms(playerid, text)
+    sendChatToArea(playerid, "/ms", CHATDISTANCES.normal, GetPlayerName(playerid)..s" "..text, {r=255, g=255, b=255});
+end
+
+function chatooc(playerid, text)
+    sendChatToArea(playerid, "//", CHATDISTANCES.normal, "OOC - "..GetPlayerName(playerid)..": "..text, {r=0, g=255, b=152});
+end
+
+
+function chatshout(playerid, text)
+    sendChatToArea(playerid, "/shout", CHATDISTANCES.far, GetPlayerName(playerid).." ruft: "..text, {r=255, g=255, b=255});
+end
+
+function chatshoutme(playerid, text)
+    sendChatToArea(playerid, "/shoutme", CHATDISTANCES.far, GetPlayerName(playerid).." "..text, {r=255, g=255, b=255});
+end
+
+function chatshoutms(playerid, text)
+    sendChatToArea(playerid, "/shoutms", CHATDISTANCES.far, GetPlayerName(playerid)..s" "..text, {r=255, g=255, b=255});
+end
+
+function chatshoutooc(playerid, text)
+    sendChatToArea(playerid, "/shout/", CHATDISTANCES.far, "OOC - "..GetPlayerName(playerid)..": "..text, {r=0, g=255, b=152});
+end
+
+
 
 function sendChatToArea(playerid, command, range, text, colors);
     if PLAYERS[playerid].character == nil then
