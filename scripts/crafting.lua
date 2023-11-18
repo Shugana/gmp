@@ -139,29 +139,3 @@ function craftCreated(playerid)
     sendERRMessage(playerid, "Test. Noch keine Items ("..PLAYERS[playerid].working.options.name.." ("..PLAYERS[playerid].working.options.recipe..")) erstellt und auch kein Material verbraucht.");
     craftMenu(playerid, PLAYERS[playerid].working.options.mobsi);
 end
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-function testWorktimer(playerid, params)
-    local result, time = sscanf(params, "d");
-    if (result ~= 1) then
-        sendERRMessage(playerid, "Benutze /testtimer <Zeit in ms> (1000 ms = 1 Sekunde)");
-        return;
-    end
-    craftingStart(playerid, "Test-Timer", time, "testFinishWork", {}, nil);
-end
-
-function testFinishWork(playerid);
-    sendINFOMessage(playerid, "Test-Timer ist fertig!")
-end
