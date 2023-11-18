@@ -105,7 +105,7 @@ end
 function report(playerid, text)
     local supportersOnline = {};
     for audienceid, _playerdata in pairs(PLAYERS) do
-        if PLAYERS[audienceid] ~= nil and PLAYERS[audienceid].adminlevel >= ADMINRANKS.Support) then
+        if PLAYERS[audienceid] ~= nil and PLAYERS[audienceid].adminlevel >= ADMINRANKS.Support then
             table.insert(supportersOnline, GetPlayerName(audienceid).."("..PLAYERS[audienceid].character..")");
             SendPlayerMessage(audienceid, 135, 136,238, GetPlayerName(playerid).."("..playerid..") meldet:"..text);
         end
