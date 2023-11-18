@@ -73,6 +73,47 @@ function chatshoutooc(playerid, text)
     sendChatToArea(playerid, "/shout/", CHATDISTANCES.far, "OOC - "..GetPlayerName(playerid)..": "..text, {r=0, g=255, b=152});
 end
 
+function pm(playerid, params)
+    local targetid = -1;
+    local sender = GetPlayerName(playerid);
+    local targetname = "?";
+    local msg;
+    local result, id, text = sscanf(params, "ds");
+    if (result == 1) then
+        targetid = id;
+        msg = text;
+        targetname = GetPlayerName(id);
+    end
+    local result, name, text = sscanf(params, "ss");
+    if (result == 1) then
+        name = capitalize(name);
+        for recipientid, _ in pairs(PLAYERS) do
+            if (GetPlayerName(recipientid) == name) then
+                targetid = recipientid;
+                break;
+            end
+        end
+    end
+    if PLAYERS[targetid] == nil then
+        sendERRMessage(playerid, "Spieler "..targetname.." ("..id..") ist nicht online");
+        return;
+    end
+    SendPlayerMessage(playerid, 255, 244, 104, ">> "..targetname.." ("..targetid.."): "..msg);
+    SendPlayerMessage(targetid, 255, 244, 104, sender.." ("..playerid.."): "..msg);
+end
+
+function report(playerid, text)
+    local supportersOnline = {};
+    for audienceid, _playerdata in pairs(PLAYERS) do
+        if PLAYERS[audienceid] ~= nil and PLAYERS[audienceid].adminlevel >= ADMINRANKS.Support) then
+            table.insert(supportersOnline, GetPlayerName(audienceid).."("..PLAYERS[audienceid].character..")");
+            SendPlayerMessage(audienceid, 135, 136,238, GetPlayerName(playerid).."("..playerid..") meldet:"..text);
+        end
+    end
+    local supporters = table.concat(supportersOnline, ", ");
+    local logtext = GetPlayerName(playerid).."("..PLAYERS[playerid].character..") > ("..supporters.."): "..text;
+    log("report", logtext);
+end
 
 
 function sendChatToArea(playerid, command, range, text, colors);
@@ -85,17 +126,16 @@ function sendChatToArea(playerid, command, range, text, colors);
     colors.gfar = math.floor(colors.g/2);
     colors.bfar = math.floor(colors.b/2);
     for audienceid, _playerdata in pairs(PLAYERS) do
-        if PLAYERS[audienceid] == nil or PLAYERS[audienceid].character == nil or GetPlayerWorld(playerid) ~= GetPlayerWorld(audienceid) then
-            break;
-        end
-        distance = GetDistancePlayers(playerid, audienceid);
-        if (distance < range) then
-            table.insert(hearrange, GetPlayerName(audienceid).."("..PLAYERS[audienceid].character..")");
-            if (distance < range/2) then
-                SendPlayerMessage(audienceid, colors.r, colors.g, colors.b, text);
-            else
-                SendPlayerMessage(audienceid, colors.rfar, colors.gfar, colors.bfar, text);
-            end
+        if PLAYERS[audienceid] ~= nil and PLAYERS[audienceid].character ~= nil and GetPlayerWorld(playerid) == GetPlayerWorld(audienceid) then
+            distance = GetDistancePlayers(playerid, audienceid);
+            if (distance < range) then
+                table.insert(hearrange, GetPlayerName(audienceid).."("..PLAYERS[audienceid].character..")");
+                if (distance < range/2) then
+                    SendPlayerMessage(audienceid, colors.r, colors.g, colors.b, text);
+                else
+                    SendPlayerMessage(audienceid, colors.rfar, colors.gfar, colors.bfar, text);
+                end
+            end 
         end
     end
     local listeners = table.concat(hearrange, ", ");

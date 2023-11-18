@@ -165,6 +165,16 @@ COMMANDS = {
         func = "chatshoutooc",
         help = "Schreibt OOC Chat in hoher Reichweite",
         minadminlevel = ADMINRANKS.Spieler
+    },
+    pm = {
+        func = "pm",
+        help = "Schreibt einem Spieler oder einer ID eine private Nachricht. Diese wird NICHT gelogged.",
+        minadminlevel = ADMINRANKS.Spieler
+    },
+    report = {
+        func = "report",
+        help = "Schreibt einen Report. Dies können Supporter und Admins lesen",
+        minadminlevel = ADMINRANKS.Spieler
     }
 };
 
