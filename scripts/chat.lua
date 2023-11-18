@@ -96,7 +96,7 @@ function pm(playerid, params)
         end
     end
     if PLAYERS[targetid] == nil then
-        sendERRMessage(playerid, "Spieler "..targetname.." ("..id..") ist nicht online");
+        sendERRMessage(playerid, "Spieler "..targetname.." ("..targetid..") ist nicht online");
         return;
     end
     SendPlayerMessage(playerid, 255, 244, 104, ">> "..targetname.." ("..targetid.."): "..msg);
