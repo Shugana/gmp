@@ -4,7 +4,7 @@ function tp(playerid, params)
     local resultDD, sourceDD, targetDD = sscanf(params, "dd");
     local resultD, targetD = sscanf(params, "d");
     local resultSS, sourceSS, targetSS = sscanf(params, "ss");
-    local resultSS, targetSS = sscanf(params, "s");
+    local resultS, targetS = sscanf(params, "s");
 
     if (resultDD ~= 1 and resultD ~= 1 and resultSS ~= 1 and resultS ~= 1) then
         sendERRMessage(playerid, "Benutze: /tp [<Quell-ID>] <Ziel-ID>");
@@ -22,12 +22,15 @@ function tp(playerid, params)
         sourcename = GetPlayerName(sourceid);
         targetname = GetPlayerName(targetid);
     elseif (resultSS == 1) then
+        sourceSS = capitalize(sourceSS);
+        targetSS = capitalize(targetSS);
         sourceid = getPlayerIdByName(sourceSS);
         targetid = getPlayerIdByName(targetSS);
         sourcename = sourceSS;
         targetname = targetSS;
     elseif (resultS == 1) then
         sourceid = playerid;
+        targetS = capitalize(targetS);
         targetid = getPlayerIdByName(targetS);
         sourcename = GetPlayerName(sourceid);
         targetname = targetS;
