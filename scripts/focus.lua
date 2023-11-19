@@ -1,6 +1,6 @@
 function OnPlayerFocus(playerid, focusid)
     local text = nil;
-    if (PLAYERS[playerid].focus ~= nil)
+    if (PLAYERS[playerid].focus ~= nil) then
         DestroyPlayerDraw(playerid, PLAYERS[playerid].focus);
         PLAYERS[playerid].focus = nil;
     end
