@@ -16,6 +16,7 @@ require("scripts/crafting")
 require("scripts/teleports");
 require("scripts/monsters");
 require("scripts/monsterspawns");
+require("scripts/focus");
 require("scripts/onserverworldtime");
 require("scripts/timers");
 
