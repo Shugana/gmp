@@ -23,12 +23,12 @@ function tp(playerid, params)
         targetname = GetPlayerName(targetid);
     elseif (resultSS == 1) then
         sourceid = getPlayerIdByName(sourceSS);
-        targetid = getPlayerIdbyName(targetSS);
+        targetid = getPlayerIdByName(targetSS);
         sourcename = sourceSS;
         targetname = targetSS;
     elseif (resultS == 1) then
         sourceid = playerid;
-        targetid = getPlayerIdbyName(targetS);
+        targetid = getPlayerIdByName(targetS);
         sourcename = GetPlayerName(sourceid);
         targetname = targetS;
     end
@@ -43,7 +43,7 @@ function tp(playerid, params)
     end
     SetPlayerPos(sourceid, x, y, z);
     sendINFOMessage(sourceid, sourcename.." ("..sourceid..") teleportiert zu "..targetname.." ("..targetid..")");
-    sendinfoMessage(playerid, sourcename.." ("..sourceid..") teleportiert zu "..targetname.." ("..targetid..")");
+    sendINFOMessage(playerid, sourcename.." ("..sourceid..") teleportiert zu "..targetname.." ("..targetid..")");
     log("tp", sourcename.." ("..PLAYERS[sourceid].character..") teleportiert zu "
         ..targetname.." ("..PLAYERS[targetid].character.."). Auslöser: "..GetPlayerName(playerid).." ("..PLAYERS[playerid].character..")");
 end
