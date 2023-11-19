@@ -12,7 +12,8 @@ require("scripts/login");
 require("scripts/menus");
 require("scripts/characters");
 require("scripts/stats");
-require("scripts/crafting");
+require("scripts/crafting")
+require("scripts/teleports");
 require("scripts/monsters");
 require("scripts/monsterspawns");
 require("scripts/onserverworldtime");
