@@ -75,3 +75,12 @@ function showAni(playerid, params)
         --debug("ani observe off");
     end
 end
+
+function getPlayerIdByName(playerid, name)
+    for targetid, _data in pairs[PLAYERS] do
+        if (GetPlayerName(targetid) == name) then 
+            return targetid;
+        end
+    end
+    return -1
+end
