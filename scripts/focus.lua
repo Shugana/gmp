@@ -7,7 +7,7 @@ function OnPlayerFocus(playerid, focusid)
         debug("old focus text removed");
     end
 
-    if PLAYERS[focusid] == nil and WORLDMONSTERS[focusid] == nil then
+    if PLAYERS[focusid] == nil and NPCS[focusid] == nil then
         debug("focus not a player, not a monster, maybe nothing in focus");
         return;
     end
