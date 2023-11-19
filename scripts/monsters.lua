@@ -62,11 +62,12 @@ function spawnMonster(instance, world, x, y, z)
         for _key, loot in pairs(loots) do
             local rnd = math.random(99);
             if (loot.chance > rnd) then
-            table.insert(NPCS[npcid].loot, {
-                itemid = tonumber(loot.itemid),
-                trophy = tonumber(loot.trophy), 
-                amount = tonumber(loot.amount)
-            });
+                table.insert(NPCS[npcid].loot, {
+                    itemid = tonumber(loot.itemid),
+                    trophy = tonumber(loot.trophy), 
+                    amount = tonumber(loot.amount)
+                });
+            end
         end
         return npcid;
     end
