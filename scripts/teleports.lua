@@ -24,14 +24,14 @@ function tp(playerid, params)
     elseif (resultSS == 1) then
         sourceSS = capitalize(sourceSS);
         targetSS = capitalize(targetSS);
-        sourceid = getPlayerIdByName(sourceSS);
-        targetid = getPlayerIdByName(targetSS);
+        sourceid = getPlayerIdByName(playerid, sourceSS);
+        targetid = getPlayerIdByName(playerid, targetSS);
         sourcename = sourceSS;
         targetname = targetSS;
     elseif (resultS == 1) then
         sourceid = playerid;
         targetS = capitalize(targetS);
-        targetid = getPlayerIdByName(targetS);
+        targetid = getPlayerIdByName(playerid, targetS);
         sourcename = GetPlayerName(sourceid);
         targetname = targetS;
     end

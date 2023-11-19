@@ -82,7 +82,7 @@ function pm(playerid, params)
     if (result == 1) then
         targetname = capitalize(name);
         msg = text;
-        targetid = getPlayerIdByName(targetname);
+        targetid = getPlayerIdByName(playerid, targetname);
     end
     local result, id, text = sscanf(params, "ds");
     if (result == 1) then
