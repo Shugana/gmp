@@ -77,9 +77,7 @@ function showAni(playerid, params)
 end
 
 function getPlayerIdByName(playerid, name)
-    debug("Getplayeridbyname-search: "..name);
     for targetid, _data in pairs(PLAYERS) do
-        debug("Getplayeridbyname-target: "..GetPlayerName(targetid));
         if (GetPlayerName(targetid) == name) then 
             return targetid;
         end
