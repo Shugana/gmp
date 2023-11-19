@@ -12,7 +12,7 @@ function OnPlayerFocus(playerid, focusid)
     text = "Fokus: "..GetPlayerName(focusid).." ("..focusid..")";
     
     if WORLDMONSTERS[focusid] ~= nil then
-        text = text.." \["..WORLDMONSTERS[focusid].."\]";
+        text = text.." {"..WORLDMONSTERS[focusid].."}";
     end
     x, y = convertToPixel(30, 923);
     PLAYERS[playerid].focus = CreatePlayerDraw(playerid, x, y, text, FONTS.sequel, 255, 255, 255);
