@@ -26,22 +26,22 @@ function spawnMonsterOnPlayer(playerid, params)
 end
 
 function spawnMonster(instance, world, x, y, z)
-    local responses = DB_select("*", "monsters", "name = '"..instance.."'");
-    for _key, response in pairs(responses) do
-        local npcid = CreateNPC(response.name);
+    local monsters = DB_select("*", "monsters", "name = '"..instance.."'");
+    for _key, monster in pairs(monsters) do
+        local npcid = CreateNPC(monster.name);
         if (npcid == -1) then
             return;
         end
         
-        SetPlayerInstance(npcid, response.instance);
+        SetPlayerInstance(npcid, monster.instance);
         
         SetPlayerLevel(npcid, 0);
-        SetPlayerStrength(npcid, tonumber(response.str));
-        SetPlayerDexterity(npcid, tonumber(response.dex));
-        SetPlayerMaxHealth(npcid, tonumber(response.hp));
-        SetPlayerHealth(npcid, tonumber(response.hp));
-        SetPlayerMaxMana(npcid, tonumber(response.mana));
-        SetPlayerMana(npcid, tonumber(response.mana));
+        SetPlayerStrength(npcid, tonumber(monster.str));
+        SetPlayerDexterity(npcid, tonumber(monster.dex));
+        SetPlayerMaxHealth(npcid, tonumber(monster.hp));
+        SetPlayerHealth(npcid, tonumber(monster.hp));
+        SetPlayerMaxMana(npcid, tonumber(monster.mana));
+        SetPlayerMana(npcid, tonumber(monster.mana));
 
         SetPlayerWorld(npcid, world);
         SetPlayerPos(npcid, x, y, z);
@@ -49,14 +49,25 @@ function spawnMonster(instance, world, x, y, z)
         NPCS[npcid] = {
             state = NPCSTATES.idle.id,
             warnings = 0,
-            turnspeed = tonumber(response.turnspeed),
-            aggrorange = tonumber(response.aggrorange),
-            runrange = tonumber(response.runrange),
-            attackrange = tonumber(response.attackrange),
-            warntime = tonumber(response.warntime),
+            turnspeed = tonumber(monster.turnspeed),
+            aggrorange = tonumber(monster.aggrorange),
+            runrange = tonumber(monster.runrange),
+            attackrange = tonumber(monster.attackrange),
+            warntime = tonumber(monster.warntime),
             lastani = "NULL",
-            delay = 0
+            delay = 0,
+            loot = {}
         };
+        local loots = DB_select("*", "monster_loot", "monsterid = "..monster.id);
+        for _key, loot in pairs(loots) do
+            local rnd = math.random(99);
+            if (loot.chance > rnd)
+            table.insert(NPCS[npcid].loot, {
+                itemid = tonumber(loot.itemid),
+                trophy = tonumber(loot.trophy), 
+                amount = tonumber(loot.amount)
+            });
+        end
         return npcid;
     end
     return -1;
