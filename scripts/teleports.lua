@@ -36,6 +36,11 @@ function tp(playerid, params)
         targetname = targetS;
     end
 
+    debug(sourceid)
+    debug(targetid)
+    debug(sourcename)
+    debug(targetname)
+
     if PLAYERS[sourceid] == nil or PLAYERS[targetid] == nil then
         sendERRMessage(playerid, "Teleportierender Spieler oder Ziel nicht online");
         return;
