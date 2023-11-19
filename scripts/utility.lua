@@ -77,7 +77,7 @@ function showAni(playerid, params)
 end
 
 function getPlayerIdByName(playerid, name)
-    for targetid, _data in pairs[PLAYERS] do
+    for targetid, _data in pairs(PLAYERS) do
         if (GetPlayerName(targetid) == name) then 
             return targetid;
         end
