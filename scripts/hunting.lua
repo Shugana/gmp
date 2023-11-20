@@ -14,21 +14,44 @@ function huntingMenu(playerid, npcid)
     local hunter = isHunter(playerid);
 
     local items, teaches;
-    
+
+    local icons = 1;
+    local nontrophy = false;
+
+    for _key, loot in pairs (NPCS[npcid].loot) do
+        if (loot.trophy == 0 and nontrophy == false) then
+            nontrophy = true;
+            icons = icons + 1;
+        else
+            icons = icons + 1;
+        end
+    end
+
     setupMenu(playerid, true);
-    local size = 275;
-    local start = {x=math.ceil((1920-((#NPCS[npcid].loot)*size))/2), y=350};
+    local size = 270;
+    local start = {x=math.ceil((1920-(icons*size))/2), y=350};
     local column = 0;
+
+    createPlaintext(playerid, "Alles nehmen", 10+start.x+size*column, 10+start.y, 255,255,255);
+    createClickableTexture(playerid, "SKO_R_FLUFF_HUNTERICON", start.x+column*size, start.y, size, size,
+        "hunting", {npcid = npcid, all=true});
+    column = column+1;
 
     for _key, loot in pairs (NPCS[npcid].loot) do
         items = DB_select("*", "items", "id = "..loot.itemid);
         for _key, item in pairs(items) do
             createPlaintext(playerid, loot.amount.."x "..item.name, 10+start.x+size*column, 10+start.y, 255,255,255);
             createClickableTexture(playerid, item.graphic, start.x+column*size, start.y, size, size,
-                "hunting", {npcid = npcid, amount = tonumber(loot.amount), itemname=item.name, itemid = tonumber(item.id), instance = item.instance});
+                "hunting", {npcid = npcid, amount = tonumber(loot.amount), itemname=item.name, itemid = tonumber(item.id), instance = item.instance, all=false});
             column = column+1;
         end
         --- bar: 256x32
+    end
+    if (nontrophy) then    
+        createPlaintext(playerid, "Durchsuchen", 10+start.x+size*column, 10+start.y, 255,255,255);
+        createClickableTexture(playerid, "SKO_R_FLUFF_BAGICON", start.x+column*size, start.y, size, size,
+            "hunting", {npcid = npcid, plunder=true});
+        column = column+1;
     end
 end
 
@@ -71,9 +94,37 @@ function huntingChosen(playerid, args)
 end
 
 function hunting(playerid, args)
-    local duration = 2500;
+    local duration = 5000;
     if GetDistancePlayers(playerid, args.npcid) > 500 then
         sendERRMessage(playerid, "Dafür bist du zu weit weg.");
+        return;
+    end
+    if (args.all) then
+        duration = 4500; -- get duration of first item available
+        for key, loot in pairs (NPCS[args.npcid].loot) do
+            if (loot.trophy == 1) then
+                local items = DB_select("*", "items", "id = "..loot.itemid);
+                for _key, item in pairs(items) do
+                    createPlaintext(playerid, loot.amount.."x "..item.name, 10+start.x+size*column, 10+start.y, 255,255,255);
+                    createClickableTexture(playerid, item.graphic, start.x+column*size, start.y, size, size,
+                        "hunting", {npcid = npcid, amount = tonumber(loot.amount), itemname=item.name, itemid = tonumber(item.id), instance = item.instance, all=false});
+                    column = column+1;
+                    craftingStart(
+                        playerid,
+                        "Alles: ("..loot.itemname..")",
+                        duration,
+                        "huntingCreated",
+                        {all = true, args.npcid = npcid, amount = tonumber(loot.amount), itemname=item.name, itemid = tonumber(item.id), instance = item.instance},
+                        "T_PLUNDER");
+                    return;
+                end
+            end
+        end
+        return;
+    end
+    if (args.plunder == true) then
+        duration = 7800;
+        craftingStart(playerid, "Dursuchen", duration, "plunderNPC", args, "T_PLUNDER");
         return;
     end
     craftingStart(playerid, "Test "..args.itemname..(" (2.5s)"), duration, "huntingCreated", args, "T_PLUNDER");
@@ -87,14 +138,27 @@ function huntingCreated(playerid)
         if (loot.itemid == args.itemid) then
             NPCS[args.npcid].loot[key].amount = NPCS[args.npcid].loot[key].amount - 1;
             if (NPCS[args.npcid].loot[key].amount < 1) then
+                GiveItemById(playerid, loot.itemid, 1);
                 table.remove(NPCS[args.npcid].loot, key);
-                huntingMenu(playerid, args.npcid)
+                huntingMenu(playerid, args.npcid);
             else
                 PLAYERS[playerid].working.next = {func = "hunting", args=args};
             end
             return;
         end
     end
+end
+
+function plunderNPC(playerid, npcid)
+    for key, loot in pairs (NPCS[args.npcid].loot) do
+        if (loot.trophy == 0) then
+            GiveItemById(playerid, loot.itemid, loot.amount);
+            table.remove(NPCS[args.npcid].loot, key);
+            plunderNPC(playerid, npcid);
+            return;
+        end
+    end
+    huntingMenu(playerid, args.npcid);
 end
 
 function isHunter(playerid)

@@ -67,16 +67,25 @@ function playerGetsItem(playerid, iteminstance, amount)
         sendERRMessage(playerid, "Item mit der iteminstance '"..iteminstance.."' ist nicht in der DB. Melde dies dem Team");
         return;
     end
+    GiveItemById(playerid, itemid, amount);
+end
+
+function GiveItemById(playerid, itemid, amount);
+    if PLAYERS[playerid] == nil or PLAYERS[playerid].character == nil then
+        sendERRMessage(playerid, "Du solltest ein Item bekommen, aber der Server denkt du bist nicht eingelogged. Melde dies mit Datum und Uhrzeit dem Team.")
+        log("bugs", "GiveItemById - playerid: "..playerid..", itemid: "..itemid..", amount: "..amount);
+        return
+    end
     local oldamount = nil;
-    responses = DB_select("*", "character_inventory", "characterid = "..charid.." AND itemid = "..itemid);
+    responses = DB_select("*", "character_inventory", "characterid = "..PLAYERS[playerid].character.." AND itemid = "..itemid);
     for _key, response in pairs(responses) do
         oldamount = tonumber(response.amount);
     end
     if oldamount == nil then
-        DB_insert("character_inventory", {characterid=charid, itemid=itemid, amount=0});
+        DB_insert("character_inventory", {characterid=PLAYERS[playerid].character, itemid=itemid, amount=0});
         oldamount = 0;
     end
-    DB_update("character_inventory", {amount=oldamount+amount}, "characterid = "..charid.." AND itemid = "..itemid);
+    DB_update("character_inventory", {amount=oldamount+amount}, "characterid = "..PLAYERS[playerid].character.." AND itemid = "..itemid);
     sendINFOMessage(playerid, "Du bekommst "..amount.."x "..itemname);
 end
 
