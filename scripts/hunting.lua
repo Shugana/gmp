@@ -150,15 +150,14 @@ function huntingCreated(playerid)
 end
 
 function plunderNPC(playerid, npcid)
-    for key, loot in pairs (NPCS[args.npcid].loot) do
+    for key, loot in pairs (NPCS[npcid].loot) do
         if (loot.trophy == 0) then
             GiveItemById(playerid, loot.itemid, loot.amount);
-            table.remove(NPCS[args.npcid].loot, key);
+            table.remove(NPCS[npcid].loot, key);
             plunderNPC(playerid, npcid);
             return;
         end
     end
-    huntingMenu(playerid, args.npcid);
 end
 
 function isHunter(playerid)
