@@ -74,7 +74,7 @@ function OnPlayerKey(playerid, keyDown, keyUp)
         FreezePlayer(playerid, 0);
     end
     if (keyDown == KEY_F3) then
-        huntingMenu(playerid);
+        huntingCheck(playerid);
     end
 end
 

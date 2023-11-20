@@ -1,4 +1,4 @@
-function huntingMenu(playerid)
+function huntingCheck(playerid)
     debug("hunting check");
     local focusid = GetFocus(playerid);
     if NPCS[focusid] == nil then
@@ -8,44 +8,29 @@ function huntingMenu(playerid)
         sendERRMessage(playerid, "Lebend hätte dein Ziel wohl etwas dagegen...");
         return;
     end
+    huntingMenu(playerid, focusid);
+end
+
+function huntingMenu(playerid, npcid)
     local hunter = isHunter(playerid);
 
     local items, teaches;
     
     setupMenu(playerid, true);
-    local size = 250;
-    local start = {x=300, y=500};
+    local size = 275;
+    local start = {x=270, y=400};
     local column = 0;
-    -- loop through loot here
-    -- check for teach
-    -- show button
-    -- show progress bar
-    -- not learned -> give learn button
-    -- learned --> craft
 
-    for _key, loot in pairs (NPCS[focusid].loot) do
+    for _key, loot in pairs (NPCS[npcid].loot) do
         items = DB_select("*", "items", "id = "..loot.itemid);
         for _key, item in pairs(items) do
             createPlaintext(playerid, loot.amount.."x "..item.name, 10+start.x+size*column, 10+start.y, 255,255,255);
             createClickableTexture(playerid, item.graphic, start.x+column*size, start.y, size, size,
-                "huntingChosen", {debug = 1});
+                "hunting", {npcid = npcid, amount = tonumber(loot.amount), itemname=item.name, itemid = tonumber(item.id), instance = item.instance});
             column = column+1;
         end
+        --- bar: 256x32
     end
-
-    --local responses = DB_select(
-    --    "crafts.id AS id, items.instance, items.graphic, crafts.name, crafts.crafttime",
-    --    "characters, character_crafts, crafts, craft_results, items",
-    --    "characters.id = character_crafts.characterid AND character_crafts.craftid = crafts.id AND crafts.id = craft_results.craftid "..
-    --    "AND craft_results.itemid = items.id AND characters.id = "..PLAYERS[playerid].character
-    --);
-    --for _key, response in pairs(responses) do
-    --    createClickableTexture(playerid, response.graphic, start.x+column*8*size, start.y, size, size,
-    --        "craftChosen", {mobsi="mobsi",recipe=response.id, name=response.name, graphic=response.graphic, duration=response.crafttime});
-    --    createButton(playerid, response.name, start.x+(8*column+1)*size, start.y, size*7, size, 255, 255, 255,
-    --        "craftChosen", {mobsi="mobsi",recipe=response.id, name=response.name, graphic=response.graphic, duration=response.crafttime});
-    --    column = column + 1;
-    --end
 end
 
 function huntingChosen(playerid, args)
@@ -87,12 +72,29 @@ function huntingChosen(playerid, args)
 end
 
 function hunting(playerid, args)
-    craftingStart(playerid, args.name, args.duration, "craftCreated", {name=args.name, recipe=args.recipe}, nil);
+    debug("hunt started");
+    --amount = tonumber(loot.amount), item=item.name, itemid = tonumber(item.id), instance = item.instance}
+    local duration = 10000;
+    craftingStart(playerid, args.item, duration, "huntingCreated", {npcid = args.npcid, amount = args.amount, itemname=args.name, itemid = args.itemid, instance = args.instance}, nil);
 end
 
 function huntingCreated(playerid)
-    sendERRMessage(playerid, "Test. Noch keine Items ("..PLAYERS[playerid].working.options.name.." ("..PLAYERS[playerid].working.options.recipe..")) erstellt und auch kein Material verbraucht.");
-    craftMenu(playerid, PLAYERS[playerid].working.options.mobsi);
+    local args = PLAYERS[playerid].working.options;
+    local amount = 0;
+    debug("hunt complete");
+    GiveItem(playerid, args.instance, 1);
+    for key, loot in pairs (NPCS[args.npcid].loot) do
+        if (loot.itemid == args.id) then
+            NPCS[args.npcid][key].amount = NPCS[args.npcid][key].amount - 1;
+            if (NPCS[args.npcid][key].amount < 1) then
+                table.remove(NPCS[args.npcid], key);
+                huntingMenu(playerid, npcid)
+            else
+                hunting(playerid, args);
+            end
+            return;
+        end
+    end
 end
 
 function isHunter(playerid)
