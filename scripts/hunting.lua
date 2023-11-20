@@ -72,16 +72,17 @@ function huntingChosen(playerid, args)
 end
 
 function hunting(playerid, args)
-    debug("hunt started");
-    --amount = tonumber(loot.amount), item=item.name, itemid = tonumber(item.id), instance = item.instance}
     local duration = 2500;
+    if GetDistancePlayers(playerid, args.npcid) > 500 then
+        sendERRMessage(playerid, "Dafür bist du zu weit weg.");
+        return;
+    end
     craftingStart(playerid, "Test "..args.itemname..(" (2.5s)"), duration, "huntingCreated", args, "T_PLUNDER");
 end
 
 function huntingCreated(playerid)
     local args = PLAYERS[playerid].working.options;
     local amount = 0;
-    debug("hunt complete");
     GiveItem(playerid, args.instance, 1);
     for key, loot in pairs (NPCS[args.npcid].loot) do
         if (loot.itemid == args.itemid) then
