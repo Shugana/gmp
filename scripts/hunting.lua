@@ -84,7 +84,7 @@ end
 
 function isHunter(playerid)
     local responses = DB_select("*", "characters, jobs, character_jobs", "jobs.name = 'Jäger' AND characters.id = character_jobs.characterid AND jobs.id = character_jobs.jobid AND characters.id ="..PLAYERS[playerid].character);
-    for _key, _value in pair(responses) do
+    for _key, _value in pairs(responses) do
         return true;
     end
     return false;
