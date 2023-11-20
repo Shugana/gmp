@@ -71,6 +71,14 @@ function canWork(playerid)
     return true; -- for now... later: check hunger, check illness, etc.
 end
 
+function createJobs(playerid)
+    local characterjobid = DB_insert("character_jobs", {characterid=PLAYERS[playerid].character});
+    if (characterjobid < 0) then
+        sendERRMessage(playerid, "Charakter Berufzuweisung fehlgeschlagen.");
+        return;
+    end
+end
+
 function craftMenu(playerid, mobsi)
     setupMenu(playerid, true);
     local size = 50;

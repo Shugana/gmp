@@ -3,6 +3,8 @@ function OnPlayerConnect(playerid)
     if (playerid > NPC_ID) then
         return;
     end
+
+    SetPlayerEnable_OnPlayerKey(playerid, 1);
     
     SetPlayerWorld(playerid, "NEWWORLD\\ABANDONED.ZEN");
     SetPlayerPos(playerid, 1093, -122, 295);

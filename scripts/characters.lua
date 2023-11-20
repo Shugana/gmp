@@ -191,6 +191,7 @@ function newCharacter(playerid, params)
     end
     switchCharakter(playerid, params);
     createStats(playerid);
+    createJobs(playerid);
     facechange(playerid);
 end
 
