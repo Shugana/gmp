@@ -80,14 +80,11 @@ end
 
 function huntingCreated(playerid)
     local args = PLAYERS[playerid].working.options;
-    for key, value in pairs (args) do
-        debug(value);
-    end
     local amount = 0;
     debug("hunt complete");
     GiveItem(playerid, args.instance, 1);
     for key, loot in pairs (NPCS[args.npcid].loot) do
-        if (loot.itemid == args.id) then
+        if (loot.itemid == args.itemid) then
             NPCS[args.npcid][key].amount = NPCS[args.npcid][key].amount - 1;
             if (NPCS[args.npcid][key].amount < 1) then
                 table.remove(NPCS[args.npcid], key);
