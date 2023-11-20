@@ -57,11 +57,15 @@ function craftingStop(playerid)
     if PLAYERS[playerid].working == nil then
         return;
     end
+    local next = PLAYERS[playerid].working.next;
     HideTexture(playerid, SERVERDRAWS.craftingbackground.id);
     if (PLAYERS[playerid].working.progressbar ~= nil) then
         DestroyTexture(PLAYERS[playerid].working.progressbar);
     end
     PLAYERS[playerid].working = nil;
+    if next ~= nil then
+        _G[next.func](playerid, next.args);
+    end
 end
 
 function canWork(playerid)
