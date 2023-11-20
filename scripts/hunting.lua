@@ -33,23 +33,25 @@ function huntingMenu(playerid, npcid)
     local column = 0;
 
     createPlaintext(playerid, "Alles nehmen", 10+start.x+size*column, 10+start.y, 255,255,255);
-    createClickableTexture(playerid, "SKO_R_FLUFF_HUNTERICON", start.x+column*size, start.y, size, size,
+    createClickableTexture(playerid, "FLUFF_HUNTERICON.TGA", start.x+column*size, start.y, size, size,
         "hunting", {npcid = npcid, all=true});
     column = column+1;
 
     for _key, loot in pairs (NPCS[npcid].loot) do
-        items = DB_select("*", "items", "id = "..loot.itemid);
-        for _key, item in pairs(items) do
-            createPlaintext(playerid, loot.amount.."x "..item.name, 10+start.x+size*column, 10+start.y, 255,255,255);
-            createClickableTexture(playerid, item.graphic, start.x+column*size, start.y, size, size,
-                "hunting", {npcid = npcid, amount = tonumber(loot.amount), itemname=item.name, itemid = tonumber(item.id), instance = item.instance, all=false});
-            column = column+1;
+        if loot.trophy == 1 then
+            items = DB_select("*", "items", "id = "..loot.itemid);
+            for _key, item in pairs(items) do
+                createPlaintext(playerid, loot.amount.."x "..item.name, 10+start.x+size*column, 10+start.y, 255,255,255);
+                createClickableTexture(playerid, item.graphic, start.x+column*size, start.y, size, size,
+                    "hunting", {npcid = npcid, amount = tonumber(loot.amount), itemname=item.name, itemid = tonumber(item.id), instance = item.instance, all=false});
+                column = column+1;
+            end
         end
         --- bar: 256x32
     end
     if (nontrophy) then    
         createPlaintext(playerid, "Durchsuchen", 10+start.x+size*column, 10+start.y, 255,255,255);
-        createClickableTexture(playerid, "SKO_R_FLUFF_BAGICON", start.x+column*size, start.y, size, size,
+        createClickableTexture(playerid, "FLUFF_BAGICON.TGA", start.x+column*size, start.y, size, size,
             "hunting", {npcid = npcid, plunder=true});
         column = column+1;
     end
