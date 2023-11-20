@@ -91,7 +91,6 @@ function freeze(playerid, reason)
     end
     PLAYERS[playerid].freezes[reason] = true;
     FreezePlayer(playerid, 1);
-PLAYERS[playerid].freezes
 end
 
 function unfreeze(playerid, reason)
