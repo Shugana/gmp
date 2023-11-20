@@ -74,8 +74,8 @@ end
 function hunting(playerid, args)
     debug("hunt started");
     --amount = tonumber(loot.amount), item=item.name, itemid = tonumber(item.id), instance = item.instance}
-    local duration = 10000;
-    craftingStart(playerid, args.itemname, duration, "huntingCreated", args, nil);
+    local duration = 2500;
+    craftingStart(playerid, "Test "..args.itemname..(" (2.5s)"), duration, "huntingCreated", args, "T_PLUNDER");
 end
 
 function huntingCreated(playerid)

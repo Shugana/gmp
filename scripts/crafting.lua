@@ -7,6 +7,7 @@ function CraftingLoop()
 end
 
 function craftingStart(playerid, name, duration, finishFunc, options, animation)
+    freeze(playerid, "crafting");
     duration = math.max(duration, 1);
     if not(canWork(playerid)) then
         sendERRMessage(playerid, "Du bist gerade nicht fit genug, um zu arbeiten.");
@@ -63,6 +64,7 @@ function craftingStop(playerid)
         DestroyTexture(PLAYERS[playerid].working.progressbar);
     end
     PLAYERS[playerid].working = nil;
+    unfreeze(playerid, "crafting");
     if next ~= nil then
         _G[next.func](playerid, next.args);
     end

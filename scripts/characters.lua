@@ -77,7 +77,7 @@ function setupFacechange(playerid)
     };
     
     ShowChat(playerid, 0);
-    FreezePlayer(playerid, 1);
+    freeze(playerid, "facechange");
     showFacechangeMenu(playerid);
 end
 
@@ -164,7 +164,7 @@ function saveFacechange(playerid, args)
     PLAYERS[playerid].facechange = nil;
     clearMenu(playerid);
     ShowChat(playerid, 1);
-    FreezePlayer(playerid, 0);
+    unfreeze(playerid, "facechange");
     sendINFOMessage(playerid, "Face erfolgreich gespeichert");
 end
 

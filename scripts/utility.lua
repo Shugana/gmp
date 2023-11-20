@@ -84,3 +84,24 @@ function getPlayerIdByName(playerid, name)
     end
     return -1
 end
+
+function freeze(playerid, reason)
+    if PLAYERS[playerid].freezes == nil then
+        PLAYERS[playerid].freezes = {};
+    end
+    PLAYERS[playerid].freezes[reason] = true;
+    FreezePlayer(playerid, 1);
+PLAYERS[playerid].freezes
+end
+
+function unfreeze(playerid, reason)
+    if PLAYERS[playerid].freezes == nil then
+        FreezePlayer(playerid, 0);
+        return;
+    end
+    PLAYERS[playerid].freezes[reason] = nil;
+    for key, value in pairs(#PLAYERS[playerid].freezes) do
+        return;
+    end
+    FreezePlayer(playerid, 0);
+end

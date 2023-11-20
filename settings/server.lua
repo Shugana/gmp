@@ -61,17 +61,33 @@ end
 function OnPlayerTriggerMob(playerid, scheme, objectName, trigger)
     --debug("Triggered Mobsi - playerid: "..playerid..", scheme: "..scheme..", objectName: "..objectName..", trigger: "..trigger);
     if (trigger == 1) then
-        FreezePlayer(playerid, 1);
-        PLAYERS[playerid].frozen = "mobsi";
+        freeze(playerid, "mobsi");
         craftMenu(playerid, scheme);
     end
 end
 
 function OnPlayerKey(playerid, keyDown, keyUp)
-    if (keyDown == KEY_BACK or keyDown == KEY_S) and PLAYERS[playerid] ~= nil and PLAYERS[playerid].frozen == "mobsi" then
-        craftingStop(playerid);
-        clearMenu(playerid);
-        FreezePlayer(playerid, 0);
+    if (keyDown == KEY_BACK or keyDown == KEY_S) 
+            and PLAYERS[playerid] ~= nil
+            and PLAYERS[playerid].freezes ~= nil then
+        if PLAYERS[playerid].freezes.mobsi ~= nil then
+            clearMenu(playerid);
+            unfreeze(playerid, "mobsi");
+
+        end
+        if PLAYERS[playerid].freezes.crafting ~= nil then
+            clearMenu(playerid);
+            craftingStop(playerid);
+            unfreeze(playerid, "crafting");
+        end
+    end
+    if (keyDown == KEY_BACK or keyDown == KEY_S) 
+        and PLAYERS[playerid] ~= nil
+        and PLAYERS[playerid].freezes ~= nil
+        and PLAYERS[playerid].freezes.cr == "mobsi" then
+    craftingStop(playerid);
+    clearMenu(playerid);
+    unfreeze(playerid, "mobsi");
     end
     if (keyDown == KEY_F3) then
         huntingCheck(playerid);
