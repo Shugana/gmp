@@ -24,21 +24,20 @@ function huntingMenu(playerid)
         debug(loot.trophy);
         debug(loot.amount);
     end
-    return;
 
-    local responses = DB_select(
-        "crafts.id AS id, items.instance, items.graphic, crafts.name, crafts.crafttime",
-        "characters, character_crafts, crafts, craft_results, items",
-        "characters.id = character_crafts.characterid AND character_crafts.craftid = crafts.id AND crafts.id = craft_results.craftid "..
-        "AND craft_results.itemid = items.id AND characters.id = "..PLAYERS[playerid].character
-    );
-    for _key, response in pairs(responses) do
-        createClickableTexture(playerid, response.graphic, start.x+column*8*size, start.y, size, size,
-            "craftChosen", {mobsi="mobsi",recipe=response.id, name=response.name, graphic=response.graphic, duration=response.crafttime});
-        createButton(playerid, response.name, start.x+(8*column+1)*size, start.y, size*7, size, 255, 255, 255,
-            "craftChosen", {mobsi="mobsi",recipe=response.id, name=response.name, graphic=response.graphic, duration=response.crafttime});
-        column = column + 1;
-    end
+    --local responses = DB_select(
+    --    "crafts.id AS id, items.instance, items.graphic, crafts.name, crafts.crafttime",
+    --    "characters, character_crafts, crafts, craft_results, items",
+    --    "characters.id = character_crafts.characterid AND character_crafts.craftid = crafts.id AND crafts.id = craft_results.craftid "..
+    --    "AND craft_results.itemid = items.id AND characters.id = "..PLAYERS[playerid].character
+    --);
+    --for _key, response in pairs(responses) do
+    --    createClickableTexture(playerid, response.graphic, start.x+column*8*size, start.y, size, size,
+    --        "craftChosen", {mobsi="mobsi",recipe=response.id, name=response.name, graphic=response.graphic, duration=response.crafttime});
+    --    createButton(playerid, response.name, start.x+(8*column+1)*size, start.y, size*7, size, 255, 255, 255,
+    --        "craftChosen", {mobsi="mobsi",recipe=response.id, name=response.name, graphic=response.graphic, duration=response.crafttime});
+    --    column = column + 1;
+    --end
 end
 
 function huntingChosen(playerid, args)
