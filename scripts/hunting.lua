@@ -24,7 +24,7 @@ function huntingMenu(playerid)
     -- learned --> craft
 
     for _key, loot in pairs (NPCS[focusid].loot) do
-        items = DB_select("*", "items", "itemid = "..loot.itemid);
+        items = DB_select("*", "items", "id = "..loot.itemid);
         for _key, item in pairs(items) do
             createPlaintext(playerid, loot.amount.."x "..item.name, 10+start.x+size*column, 10+start.y, 255,255,255);
             createClickableTexture(playerid, item.graphic, start.x+column*size, start.y, size, size,
