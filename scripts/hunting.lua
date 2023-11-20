@@ -80,6 +80,9 @@ end
 
 function huntingCreated(playerid)
     local args = PLAYERS[playerid].working.options;
+    for key, value in pairs (args) do
+        debug(value);
+    end
     local amount = 0;
     debug("hunt complete");
     GiveItem(playerid, args.instance, 1);
