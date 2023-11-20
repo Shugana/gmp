@@ -19,9 +19,11 @@ function huntingMenu(playerid, npcid)
     local nontrophy = false;
 
     for _key, loot in pairs (NPCS[npcid].loot) do
-        if (loot.trophy == 0 and nontrophy == false) then
+        if loot.trophy == 0 then
+            if nontrophy == false then  
+                icons = icons + 1;
+            end
             nontrophy = true;
-            icons = icons + 1;
         else
             icons = icons + 1;
         end
