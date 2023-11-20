@@ -14,7 +14,7 @@ function huntingMenu(playerid)
     
     setupMenu(playerid, true);
     local size = 250;
-    local start = {x=300, y=300};
+    local start = {x=300, y=500};
     local column = 0;
     -- loop through loot here
     -- check for teach
@@ -29,6 +29,7 @@ function huntingMenu(playerid)
             createPlaintext(playerid, loot.amount.."x "..item.name, 10+start.x+size*column, 10+start.y, 255,255,255);
             createClickableTexture(playerid, item.graphic, start.x+column*size, start.y, size, size,
                 "huntingChosen", {debug = 1});
+            column = column+1;
         end
     end
 
