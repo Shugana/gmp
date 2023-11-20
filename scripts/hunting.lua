@@ -107,10 +107,6 @@ function hunting(playerid, args)
             if (loot.trophy == 1) then
                 local items = DB_select("*", "items", "id = "..loot.itemid);
                 for _key, item in pairs(items) do
-                    createPlaintext(playerid, loot.amount.."x "..item.name, 10+start.x+size*column, 10+start.y, 255,255,255);
-                    createClickableTexture(playerid, item.graphic, start.x+column*size, start.y, size, size,
-                        "hunting", {npcid = npcid, amount = tonumber(loot.amount), itemname=item.name, itemid = tonumber(item.id), instance = item.instance, all=false});
-                    column = column+1;
                     craftingStart(
                         playerid,
                         "Alles: ("..loot.itemname..")",
