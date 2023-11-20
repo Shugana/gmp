@@ -135,17 +135,15 @@ function huntingCreated(playerid)
     for key, loot in pairs (NPCS[args.npcid].loot) do
         if (loot.itemid == args.itemid) then
             NPCS[args.npcid].loot[key].amount = NPCS[args.npcid].loot[key].amount - 1;
+            GiveItemById(playerid, loot.itemid, 1);
             if (NPCS[args.npcid].loot[key].amount < 1) then
-                GiveItemById(playerid, loot.itemid, 1);
                 table.remove(NPCS[args.npcid].loot, key);
-                if (args.all == true) then
-                    PLAYERS[playerid].working.next = {func = "hunting", args=args};
-                else
-                    huntingMenu(playerid, args.npcid);
-                end
-            else
-                PLAYERS[playerid].working.next = {func = "hunting", args=args};
             end
+            if (args.all == true or NPCS[args.npcid].loot[key].amount > 0)
+                PLAYERS[playerid].working.next = {func = "hunting", args=args};
+                return;
+            end
+            huntingMenu(playerid, args.npcid);
             return;
         end
     end
