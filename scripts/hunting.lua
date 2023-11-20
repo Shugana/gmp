@@ -109,7 +109,7 @@ function hunting(playerid, args)
                 for _key, item in pairs(items) do
                     craftingStart(
                         playerid,
-                        "Alles: ("..loot.itemname..")",
+                        "Alles: ("..item.name..")",
                         duration,
                         "huntingCreated",
                         {all = true, npcid = args.npcid, amount = tonumber(loot.amount), itemname=item.name, itemid = tonumber(item.id), instance = item.instance},
