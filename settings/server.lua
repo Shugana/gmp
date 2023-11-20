@@ -68,14 +68,12 @@ function OnPlayerTriggerMob(playerid, scheme, objectName, trigger)
 end
 
 function OnPlayerKey(playerid, keyDown, keyUp)
-    debug ("Tastendruck");
     if (keyDown == KEY_BACK or keyDown == KEY_S) and PLAYERS[playerid] ~= nil and PLAYERS[playerid].frozen == "mobsi" then
         craftingStop(playerid);
         clearMenu(playerid);
         FreezePlayer(playerid, 0);
     end
     if (keyDown == KEY_F3) then
-        debug ("F3");
         huntingMenu(playerid);
     end
 end
