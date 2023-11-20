@@ -1,5 +1,4 @@
 function huntingCheck(playerid)
-    debug("hunting check");
     local focusid = GetFocus(playerid);
     if NPCS[focusid] == nil then
         return;
