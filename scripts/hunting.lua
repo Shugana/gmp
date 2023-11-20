@@ -114,7 +114,7 @@ function hunting(playerid, args)
                         "Alles: ("..loot.itemname..")",
                         duration,
                         "huntingCreated",
-                        {all = true, args.npcid = npcid, amount = tonumber(loot.amount), itemname=item.name, itemid = tonumber(item.id), instance = item.instance},
+                        {all = true, npcid = args.npcid, amount = tonumber(loot.amount), itemname=item.name, itemid = tonumber(item.id), instance = item.instance},
                         "T_PLUNDER");
                     return;
                 end
