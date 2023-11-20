@@ -138,7 +138,11 @@ function huntingCreated(playerid)
             if (NPCS[args.npcid].loot[key].amount < 1) then
                 GiveItemById(playerid, loot.itemid, 1);
                 table.remove(NPCS[args.npcid].loot, key);
-                huntingMenu(playerid, args.npcid);
+                if (args.all == true) then
+                    PLAYERS[playerid].working.next = {func = "hunting", args=args};
+                else
+                    huntingMenu(playerid, args.npcid);
+                end
             else
                 PLAYERS[playerid].working.next = {func = "hunting", args=args};
             end
