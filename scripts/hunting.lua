@@ -12,7 +12,7 @@ function huntingMenu(playerid)
 
     local items, teaches;
     
-    --setupMenu(playerid, true);
+    setupMenu(playerid, true);
     local size = 250;
     local start = {x=300, y=300};
     local column = 0;
