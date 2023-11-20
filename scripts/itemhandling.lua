@@ -78,7 +78,7 @@ function GiveItemById(playerid, itemid, amount);
     end
     local oldamount = nil;
     local itemname = "NULL";
-    responses = DB_select("items.name, character_inventory.amount", ", items, character_inventory", "items.id = character_inventory.itemid AND characterid = "..PLAYERS[playerid].character.." AND itemid = "..itemid);
+    responses = DB_select("items.name, character_inventory.amount", "items, character_inventory", "items.id = character_inventory.itemid AND characterid = "..PLAYERS[playerid].character.." AND itemid = "..itemid);
     for _key, response in pairs(responses) do
         oldamount = tonumber(response.amount);
         itemname = response.name;
