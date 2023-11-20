@@ -14,7 +14,7 @@ function chatwme(playerid, text)
 end
 
 function chatwms(playerid, text)
-    sendChatToArea(playerid, "/wms", CHATDISTANCES.whisper, GetPlayerName(playerid)..s" "..text, {r=255, g=255, b=255});
+    sendChatToArea(playerid, "/wms", CHATDISTANCES.whisper, GetPlayerName(playerid).."s "..text, {r=255, g=255, b=255});
 end
 
 function chatwooc(playerid, text)
@@ -31,7 +31,7 @@ function chatume(playerid, text)
 end
 
 function chatums(playerid, text)
-    sendChatToArea(playerid, "/ums", CHATDISTANCES.close, GetPlayerName(playerid)..s" "..text, {r=255, g=255, b=255});
+    sendChatToArea(playerid, "/ums", CHATDISTANCES.close, GetPlayerName(playerid).."s "..text, {r=255, g=255, b=255});
 end
 
 function chatuooc(playerid, text)
@@ -49,7 +49,7 @@ function chatme(playerid, text)
 end
 
 function chatms(playerid, text)
-    sendChatToArea(playerid, "/ms", CHATDISTANCES.normal, GetPlayerName(playerid)..s" "..text, {r=255, g=255, b=255});
+    sendChatToArea(playerid, "/ms", CHATDISTANCES.normal, GetPlayerName(playerid).."s "..text, {r=255, g=255, b=255});
 end
 
 function chatooc(playerid, text)
@@ -66,7 +66,7 @@ function chatshoutme(playerid, text)
 end
 
 function chatshoutms(playerid, text)
-    sendChatToArea(playerid, "/shoutms", CHATDISTANCES.far, GetPlayerName(playerid)..s" "..text, {r=255, g=255, b=255});
+    sendChatToArea(playerid, "/shoutms", CHATDISTANCES.far, GetPlayerName(playerid).."s "..text, {r=255, g=255, b=255});
 end
 
 function chatshoutooc(playerid, text)
@@ -103,7 +103,7 @@ function report(playerid, text)
     for audienceid, _playerdata in pairs(PLAYERS) do
         if PLAYERS[audienceid] ~= nil and PLAYERS[audienceid].adminlevel >= ADMINRANKS.Support then
             table.insert(supportersOnline, GetPlayerName(audienceid).."("..PLAYERS[audienceid].character..")");
-            SendPlayerMessage(audienceid, 135, 136,238, GetPlayerName(playerid).."("..playerid..") meldet:"..text);
+            SendPlayerMessage(audienceid, 135, 136,238, GetPlayerName(playerid).."("..playerid..") meldet: "..text);
         end
     end
     local supporters = table.concat(supportersOnline, ", ");
