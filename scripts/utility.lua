@@ -99,7 +99,7 @@ function unfreeze(playerid, reason)
         return;
     end
     PLAYERS[playerid].freezes[reason] = nil;
-    for key, value in pairs(#PLAYERS[playerid].freezes) do
+    for key, value in pairs(PLAYERS[playerid].freezes) do
         return;
     end
     FreezePlayer(playerid, 0);
