@@ -18,7 +18,7 @@ function huntingMenu(playerid, npcid)
     
     setupMenu(playerid, true);
     local size = 275;
-    local start = {x=math.ceil(1920-((#NPCS[npcid].loot)*size)/2), y=350};
+    local start = {x=math.ceil((1920-((#NPCS[npcid].loot)*size))/2), y=350};
     local column = 0;
 
     for _key, loot in pairs (NPCS[npcid].loot) do
@@ -75,7 +75,7 @@ function hunting(playerid, args)
     debug("hunt started");
     --amount = tonumber(loot.amount), item=item.name, itemid = tonumber(item.id), instance = item.instance}
     local duration = 10000;
-    craftingStart(playerid, args.itemname, duration, "huntingCreated", {npcid = args.npcid, amount = args.amount, itemname=args.name, itemid = args.itemid, instance = args.instance}, nil);
+    craftingStart(playerid, args.itemname, duration, "huntingCreated", args, nil);
 end
 
 function huntingCreated(playerid)
