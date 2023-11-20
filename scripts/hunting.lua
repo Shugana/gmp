@@ -4,14 +4,18 @@ function huntingMenu(playerid)
     if NPCS[focusid] == nil then
         return;
     end
+    if GetPlayerHealth(focusid) > 0 then
+        sendERRMessage(playerid, "Lebend hätte dein Ziel wohl etwas dagegen...");
+        return;
+    end
+    local hunter = isHunter(playerid);
+
+    local items, teaches;
+    
     --setupMenu(playerid, true);
     local size = 250;
     local start = {x=300, y=300};
-
     local column = 0;
-
-    local hunter = isHunter(playerid);
-
     -- loop through loot here
     -- check for teach
     -- show button
@@ -20,9 +24,12 @@ function huntingMenu(playerid)
     -- learned --> craft
 
     for _key, loot in pairs (NPCS[focusid].loot) do
-        debug(loot.itemid);
-        debug(loot.trophy);
-        debug(loot.amount);
+        items = DB_select("*", "items", "itemid = "..loot.itemid);
+        for _key, item in pairs(items) do
+            createPlaintext(playerid, loot.amount.."x "..item.name, 10+start.x+size*column, 10+start.y, 255,255,255);
+            createClickableTexture(playerid, item.graphic, start.x+column*size, start.y, size, size,
+                "huntingChosen", {debug = 1});
+        end
     end
 
     --local responses = DB_select(
@@ -41,6 +48,11 @@ function huntingMenu(playerid)
 end
 
 function huntingChosen(playerid, args)
+    if (args.debug == 1) then
+        sendERRMessage(playerid, "Geklickt");
+        huntingMenu(playerid);
+        return;
+    end
     local size = 40;
     local start = {x=700, y=600};
     local row = 0;
