@@ -1,9 +1,10 @@
-function huntingMenu(playerid, mobsi)
+function huntingMenu(playerid)
+    debug("hunting check");
     local focusid = GetFocus(playerid);
     if NPCS[focusid] == nil then
         return;
     end
-    setupMenu(playerid, true);
+    --setupMenu(playerid, true);
     local size = 250;
     local start = {x=300, y=300};
 
