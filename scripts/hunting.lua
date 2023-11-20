@@ -139,7 +139,7 @@ function huntingCreated(playerid)
             if (NPCS[args.npcid].loot[key].amount < 1) then
                 table.remove(NPCS[args.npcid].loot, key);
             end
-            if (args.all == true or NPCS[args.npcid].loot[key].amount > 0)
+            if (args.all == true or NPCS[args.npcid].loot[key].amount > 0) then
                 PLAYERS[playerid].working.next = {func = "hunting", args=args};
                 return;
             end
