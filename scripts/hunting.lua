@@ -85,8 +85,8 @@ function huntingCreated(playerid)
     GiveItem(playerid, args.instance, 1);
     for key, loot in pairs (NPCS[args.npcid].loot) do
         if (loot.itemid == args.itemid) then
-            NPCS[args.npcid][key].amount = NPCS[args.npcid][key].amount - 1;
-            if (NPCS[args.npcid][key].amount < 1) then
+            NPCS[args.npcid].loot[key].amount = NPCS[args.npcid].loot[key].amount - 1;
+            if (NPCS[args.npcid].loot[key].amount < 1) then
                 table.remove(NPCS[args.npcid], key);
                 huntingMenu(playerid, npcid)
             else
