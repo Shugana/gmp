@@ -152,7 +152,7 @@ function huntingCreated(playerid)
 end
 
 function plunderNPC(playerid)
-    local npcid = args.options.npcid;
+    local npcid = PLAYERS[playerid].working.options.npcid;
     for key, loot in pairs (NPCS[npcid].loot) do
         if (loot.trophy == 0) then
             GiveItemById(playerid, loot.itemid, loot.amount);
