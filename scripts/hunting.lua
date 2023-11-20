@@ -18,7 +18,7 @@ function huntingMenu(playerid, npcid)
     
     setupMenu(playerid, true);
     local size = 275;
-    local start = {x=math.ceil(1920-((#NPCS[npcid].loot)*size))/2), y=350};
+    local start = {x=math.ceil(1920-((#NPCS[npcid].loot)*size)/2), y=350};
     local column = 0;
 
     for _key, loot in pairs (NPCS[npcid].loot) do
