@@ -77,20 +77,21 @@ function GiveItemById(playerid, itemid, amount);
         return
     end
     local oldamount = nil;
-    local itemname = "NULL";
-    local instance = "NULL";
-    responses = DB_select("items.instance, items.name, character_inventory.amount", "items, character_inventory", "items.id = character_inventory.itemid AND characterid = "..PLAYERS[playerid].character.." AND itemid = "..itemid);
-    for _key, response in pairs(responses) do
-        oldamount = tonumber(response.amount);
-        itemname = response.name;
+    local items = DB_select("*", "items", "id = "..itemid);
+    for _key, item in pairs(items) do
+        local inventories = DB_select("*", "character_inventory", "characterid = "..PLAYERS[playerid].character.." AND itemid = "..itemid);
+        for _key, inventory in pairs(inventories) do
+            oldamount = tonumber(response.amount);
+        end
+        if oldamount == nil then
+            DB_insert("character_inventory", {characterid=PLAYERS[playerid].character, itemid=itemid, amount=amount});
+        else
+            DB_update("character_inventory", {amount=oldamount+amount}, "characterid = "..PLAYERS[playerid].character.." AND itemid = "..itemid);
+        end
+        GiveItem(playerid, instance, amount);
+        sendINFOMessage(playerid, "Du bekommst "..amount.."x "..item.name);
+        return;
     end
-    if oldamount == nil then
-        DB_insert("character_inventory", {characterid=PLAYERS[playerid].character, itemid=itemid, amount=0});
-        oldamount = 0;
-    end
-    DB_update("character_inventory", {amount=oldamount+amount}, "characterid = "..PLAYERS[playerid].character.." AND itemid = "..itemid);
-    GiveItem(playerid, instance ,amount);
-    sendINFOMessage(playerid, "Du bekommst "..amount.."x "..itemname);
 end
 
 function loadInventory(playerid)
