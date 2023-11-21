@@ -54,7 +54,7 @@ end
 function useGoto(playerid, params)
     local result, place = sscanf(params, "s");
     if result ~= 1 then
-        sendERRMessage("Du musst einen Ort angeben, zu dem du möchtest.");
+        sendERRMessage(playerid, "Du musst einen Ort angeben, zu dem du möchtest.");
         return;
     end
     place = capitalize(place);
@@ -73,13 +73,13 @@ function useGoto(playerid, params)
         table.insert(places, "'"..response.name.."'");
     end
     local placesstring = places.concat(", ");
-    sendERRMessage("Ort '"..place.."' nicht gefunden. Versuche einen der folgenden Orte: "..placesstring);
+    sendERRMessage(playerid, "Ort '"..place.."' nicht gefunden. Versuche einen der folgenden Orte: "..placesstring);
 end
 
 function createGoto(playerid, params)
     local result, place = sscanf(params, "s");    
     if result ~= 1 then
-        sendERRMessage("Du musst dem Ort einen Namen geben.");
+        sendERRMessage(playerid, "Du musst dem Ort einen Namen geben.");
         return;
     end
     place = capitalize(place);
@@ -92,5 +92,5 @@ function createGoto(playerid, params)
     local angle = GetPlayerAngle(playerid);
     local world = GetPlayerWorld(playerid);
     DB_insert("teleports", {name=place, x=x, y=y, z=z, angle=angle, world=world});
-    sendINFOMessage("Ort gespeichert als '"..place.."', benutze /goto um wieder hierher zu kommen.");
+    sendINFOMessage(playerid, "Ort gespeichert als '"..place.."', benutze /goto um wieder hierher zu kommen.");
 end
