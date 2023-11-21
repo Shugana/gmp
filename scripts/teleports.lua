@@ -51,7 +51,7 @@ function tp(playerid, params)
         ..targetname.." ("..PLAYERS[targetid].character.."). Auslöser: "..GetPlayerName(playerid).." ("..PLAYERS[playerid].character..")");
 end
 
-function goto(playerid, params)
+function useGoto(playerid, params)
     local result, place = sscanf(params, "s");
     if result ~= 1 then
         sendERRMessage("Du musst einen Ort angeben, zu dem du möchtest.");
@@ -76,7 +76,7 @@ function goto(playerid, params)
     sendERRMessage("Ort '"..place.."' nicht gefunden. Versuche einen der folgenden Orte: "..placesstring);
 end
 
-function newgoto(playerid, params)
+function createGoto(playerid, params)
     local result, place = sscanf(params, "s");    
     if result ~= 1 then
         sendERRMessage("Du musst dem Ort einen Namen geben.");

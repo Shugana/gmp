@@ -182,12 +182,12 @@ COMMANDS = {
         minadminlevel = ADMINRANKS.Support
     },
     ["goto"] = {
-        func = "goto",
+        func = "useGoto",
         help = "Teleport dich zu einem Ort mit Namen",
         minadminlevel = ADMINRANKS.Support
     },
     newgoto = {
-        func = "newgoto",
+        func = "createGoto",
         help = "Speichert einen neuen Ort für /goto in der DB",
         minadminlevel = ADMINRANKS.Support
     }
