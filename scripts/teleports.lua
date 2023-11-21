@@ -58,7 +58,7 @@ function useGoto(playerid, params)
         return;
     end
     place = capitalize(place);
-    local responses = DB_select("*", "teleports", "name = "..place);
+    local responses = DB_select("*", "teleports", "name = '"..place.."'");
     for _key, response in pairs(responses) do
         if (GetPlayerWorld(playerid) ~= response.world) then
             SetPlayerWorld(playerid, response.world);
@@ -83,7 +83,7 @@ function createGoto(playerid, params)
         return;
     end
     place = capitalize(place);
-    local responses = DB_select("*", "teleports", "name = "..place);
+    local responses = DB_select("*", "teleports", "name = '"..place.."'");
     for _key, response in pairs(responses) do
         sendERRMessage(playerid, "Der Name '"..place.."' ist bereits vergeben. Versuche etwas anderes");
         return;
