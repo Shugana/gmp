@@ -181,10 +181,15 @@ COMMANDS = {
         help = "Teleportere <ID1> zu <ID2>. Gibst du nur eine ID an, wirst du zu der ID teleportiert",
         minadminlevel = ADMINRANKS.Support
     },
-    showloot = {
-        func = "showloot",
-        help = "Zeigt den Loot den ein Monster noch hat an - Diese Funktion wird wieder entfernt",
-        minadminlevel = ADMINRANKS.Spieler
+    ["goto"] = {
+        func = "goto",
+        help = "Teleport dich zu einem Ort mit Namen",
+        minadminlevel = ADMINRANKS.Support
+    },
+    newgoto = {
+        func = "newgoto",
+        help = "Speichert einen neuen Ort für /goto in der DB",
+        minadminlevel = ADMINRANKS.Support
     }
 };
 
@@ -207,17 +212,5 @@ function OnPlayerCommandText(playerid, text)
         _G[COMMANDS[command].func](playerid, params or "");
     else
         chat(playerid, text);
-    end
-end
-
-function showloot(playerid, params)
-    local focusid = GetFocus(playerid);
-    if (NPCS[focusid] == nil or NPCS[focusid].loot == nil) then
-        sendERRMessage(playerid, "Kein Ziel im Fokus oder kein Loot mehr da");
-        return;
-    end
-    for _key, loot in pairs(NPCS[focusid].loot) do
-        sendINFOMessage(playerid, "itemid "..loot.itemid);
-        sendINFOMessage(playerid, "anzahl "..loot.amount);
     end
 end

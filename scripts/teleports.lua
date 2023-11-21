@@ -50,3 +50,47 @@ function tp(playerid, params)
     log("tp", sourcename.." ("..PLAYERS[sourceid].character..") teleportiert zu "
         ..targetname.." ("..PLAYERS[targetid].character.."). Auslöser: "..GetPlayerName(playerid).." ("..PLAYERS[playerid].character..")");
 end
+
+function goto(playerid, params)
+    local result, place = sscanf(params, "s");
+    if result ~= 1 then
+        sendERRMessage("Du musst einen Ort angeben, zu dem du möchtest.");
+        return;
+    end
+    place = capitalize(place);
+    local responses = DB_select("*", "teleports", "name = "..place);
+    for _key, response in pairs(responses) do
+        if (GetPlayerWorld(playerid) ~= response.world) then
+            SetPlayerWorld(playerid, response.world);
+        end
+        SetPlayerPos(playerid, response.x, response.y, response.z);
+        SetPlayerAngle(playerid, response.angle);
+        return;
+    end
+    local places = {};
+    responses = DB_select("*", "teleports", "1");
+    for _key, response in pairs(responses) do
+        table.insert(places, "'"..response.name.."'");
+    end
+    local placesstring = places.concat(", ");
+    sendERRMessage("Ort '"..place.."' nicht gefunden. Versuche einen der folgenden Orte: "..placesstring);
+end
+
+function newgoto(playerid, params)
+    local result, place = sscanf(params, "s");    
+    if result ~= 1 then
+        sendERRMessage("Du musst dem Ort einen Namen geben.");
+        return;
+    end
+    place = capitalize(place);
+    local responses = DB_select("*", "teleports", "name = "..place);
+    for _key, response in pairs(responses) do
+        sendERRMessage(playerid, "Der Name '"..place.."' ist bereits vergeben. Versuche etwas anderes");
+        return;
+    end
+    local x, y, z = GetPlayerPos(playerid);
+    local angle = GetPlayerAngle(playerid);
+    local world = GetPlayerWorld(playerid);
+    DB_insert("teleports", {name=place, x=x, y=y, z=z, angle=angle, world=world});
+    sendINFOMessage("Ort gespeichert als '"..place.."', benutze /goto um wieder hierher zu kommen.");
+end
