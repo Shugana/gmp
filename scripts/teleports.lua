@@ -72,7 +72,7 @@ function useGoto(playerid, params)
     for _key, response in pairs(responses) do
         table.insert(places, "'"..response.name.."'");
     end
-    local placesstring = places.concat(", ");
+    local placesstring = table.concat(places ", ");
     sendERRMessage(playerid, "Ort '"..place.."' nicht gefunden. Versuche einen der folgenden Orte: "..placesstring);
 end
 
