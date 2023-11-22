@@ -1,5 +1,5 @@
 function teachsimulator(playerid, params)
-    local result, lp = sscanf("d");
+    local result, lp = sscanf(params, "d");
     if (result ~= 1) then
         sendERRMessage(playerid, "Du musst eine Zahl eingeben");
     end
