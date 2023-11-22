@@ -80,7 +80,7 @@ function getNextTeachCost(playerid)
             bow = tonumber(response.bow),
             crossbow = tonumber(response.crossbow),
             maxmana = tonumber(response.maxmana),
-            lp = lp
+            lp = tonumber(response.lp)
         };
     end
     return {
@@ -91,7 +91,8 @@ function getNextTeachCost(playerid)
         twohanded = 0,
         bow = 0,
         crossbow = 0,
-        maxmana = 0
+        maxmana = 0,
+        lp = 0
     };
 end
 
