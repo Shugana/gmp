@@ -53,7 +53,7 @@ function teachmenu(playerid)
             createText(playerid, "Armbrust - maximum - 100", start.x, start.y+6*size.y, size.x, size.y, 196, 30, 58);
         end
     else
-        createButton(playerid, "Nicht genügend Lernpunkte.", start.x, start.y+0*size.y, size.x, size.y*7, 0, 255, 152, "clearMenu", {});
+        createButton(playerid, "Nicht genügend Lernpunkte.", start.x, start.y+0*size.y, size.x, size.y*7, 196, 30, 58, "clearMenu", {});
     end
 end
 
@@ -73,7 +73,7 @@ function getNextTeachCost(playerid)
     local responses = DB_select("id, (maxmana+str+dex+onehanded+twohanded+bow+crossbow) as totalstats, str, dex, onehanded, twohanded, bow, crossbow, maxmana","character_stats","characterid = "..PLAYERS[playerid].character);
     for key_, response in pairs(responses) do
         return {
-            cost = math.max(1, math.floor((tonumber(response.totalstats)-10)/10)),
+            cost = math.max(1, math.ceil((tonumber(response.totalstats)-9)/10)),
             str = tonumber(response.str),
             dex = tonumber(response.dex),
             onehanded = tonumber(response.onehanded),
