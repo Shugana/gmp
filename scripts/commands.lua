@@ -106,7 +106,7 @@ COMMANDS = {
         help = "Schreibt einen Satz beginnend mit deinem Charakter im Genitiv in Flüsterreichweite",
         minadminlevel = ADMINRANKS.Spieler
     },
-    ['w/'] = {
+    ['/w'] = {
         func = "chatwooc",
         help = "Schreibt OOC Chat in Flüsterreichweite",
         minadminlevel = ADMINRANKS.Spieler
@@ -126,7 +126,7 @@ COMMANDS = {
         help = "Schreibt einen Satz beginnend mit deinem Charakter im Genitiv in halber Reichweite",
         minadminlevel = ADMINRANKS.Spieler
     },
-    ['u/'] = {
+    ['/u'] = {
         func = "chatuooc",
         help = "Schreibt OOC Chat in halber Reichweite",
         minadminlevel = ADMINRANKS.Spieler
@@ -161,7 +161,7 @@ COMMANDS = {
         help = "Schreibt einen Satz beginnend mit deinem Charakter im Genitiv in hoher Reichweite",
         minadminlevel = ADMINRANKS.Spieler
     },
-    ['shout/'] = {
+    ['/shout'] = {
         func = "chatshoutooc",
         help = "Schreibt OOC Chat in hoher Reichweite",
         minadminlevel = ADMINRANKS.Spieler
