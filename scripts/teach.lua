@@ -68,7 +68,7 @@ end
 
 function getNextTeachCost(playerid)
     local responses = DB_select("id, (maxmana+str+dex+onehanded+twohanded+bow+crossbow) as totalstats, str, dex, onehanded, twohanded, bow, crossbow, maxmana","character_stats","characterid = "..PLAYERS[playerid].character);
-    for key_, response in pair(responses) do
+    for key_, response in pairs(responses) do
         return {
             cost = math.max(1, math.floor((tonumber(response.totalstats)-10)/10)),
             str = tonumber(response.str),
