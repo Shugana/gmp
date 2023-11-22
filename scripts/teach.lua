@@ -2,6 +2,7 @@ function teachsimulator(playerid, params)
     local result, lp = sscanf(params, "d");
     if (result ~= 1) then
         sendERRMessage(playerid, "Du musst eine Zahl eingeben");
+        return;
     end
     lp = math.max(0, lp);
     
@@ -16,7 +17,6 @@ function teachsimulator(playerid, params)
         bow=0,
         crossbow=0
     }, "characterid = "..PLAYERS[playerid].character);
-    local str, dex, mana, onehanded, twohanded, bow, crossbow;
     sendINFOMessage(playerid, "Deine Stats wurden zurückgesetzt für den Teach-Simulator. Deine LP wurden auf "..lp".. gesetzt.");
     teachmenu(playerid);
 end
