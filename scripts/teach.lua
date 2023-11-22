@@ -94,3 +94,16 @@ function getNextTeachCost(playerid)
         maxmana = 0
     };
 end
+
+
+
+function PlaySound(playerid, sound)
+	local x, y, z = GetPlayerPos(playerid)
+	for listener, _ in pairs(PLAYERS) do
+		if PLAYERS[listener] then
+            if GetDistancePlayers(playerid, listener) < 1000 then
+                PlayPlayerSound3D(listener, sound, x, y, z, 1000)
+            end
+		end
+	end
+end
