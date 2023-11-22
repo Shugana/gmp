@@ -43,7 +43,7 @@ function teachmenu(playerid)
             createText(playerid, "Zweihand - maximum - 100", start.x, start.y+4*size.y, size.x, size.y, 196, 30, 58);
         end
         if (teachcosts.bow < 100) then
-            createButton(playerid, "Bogen "..teachcosts.bow.." -> "..(teachcosts.bow+1).." ("..teachcosts.cost..")", start.x, start.y+5*size.y, size.x, size.y, 0, 255, 152, "teach", {stat = "bow", cost = teachcosts.cost, lp=lp, oldstat=teachcosts.bow);
+            createButton(playerid, "Bogen "..teachcosts.bow.." -> "..(teachcosts.bow+1).." ("..teachcosts.cost..")", start.x, start.y+5*size.y, size.x, size.y, 0, 255, 152, "teach", {stat = "bow", cost = teachcosts.cost, lp=lp, oldstat=teachcosts.bow});
         else
             createText(playerid, "Bogen - maximum - 100", start.x, start.y+5*size.y, size.x, size.y, 196, 30, 58);
         end
