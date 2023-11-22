@@ -28,7 +28,7 @@ function teachmenu(playerid)
     local start = {x=500, y=350};
     local teachcosts = getNextTeachCost(playerid);
     local lp = GetPlayerLearnPoints(playerid);
-    if (lp >= cost) then
+    if (lp >= teachcosts.cost) then
         createButton(playerid, "Stärke "..teachcosts.str.." -> "..(teachcosts.str+1).." ("..teachcosts.cost..")", start.x, start.y+0*size.y, size.x, size.y, 0, 255, 152, "teach", {stat = "str", cost = teachcosts.cost, lp=lp, oldstat=teachcosts.str});
         createButton(playerid, "Geschick "..teachcosts.dex.." -> "..(teachcosts.dex+1).." ("..teachcosts.cost..")", start.x, start.y+1*size.y, size.x, size.y, 0, 255, 152, "teach", {stat = "dex", cost = teachcosts.cost, lp=lp, oldstat=teachcosts.dex});
         createButton(playerid, "Mana "..teachcosts.maxmana.." -> "..(teachcosts.maxmana+1).." ("..teachcosts.maxmana..")", start.x, start.y+2*size.y, size.x, size.y, 0, 255, 152, "teach", {stat = "maxmana", cost = teachcosts.cost, lp=lp, oldstat=teachcosts.maxmana});
@@ -53,9 +53,8 @@ function teachmenu(playerid)
             createText(playerid, "Armbrust - maximum - 100", start.x, start.y+6*size.y, size.x, size.y, 196, 30, 58);
         end
     else
-        createText(playerid, text, startx, starty, sizex, sizey, r, g, b)
+        createButton(playerid, "Nicht genügend Lernpunkte.", start.x, start.y+0*size.y, size.x, size.y*7, 0, 255, 152, "clearMenu", {});
     end
-
 end
 
 function teach(playerid, args)
