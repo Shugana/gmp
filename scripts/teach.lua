@@ -30,7 +30,7 @@ function teachmenu(playerid)
     if (teachcosts.lp >= teachcosts.cost) then
         createButton(playerid, "Stärke "..teachcosts.str.." -> "..(teachcosts.str+1).." ("..teachcosts.cost..")", start.x, start.y+0*size.y, size.x, size.y, 0, 255, 152, "teach", {stat = "str", cost = teachcosts.cost, lp=teachcosts.lp, oldstat=teachcosts.str});
         createButton(playerid, "Geschick "..teachcosts.dex.." -> "..(teachcosts.dex+1).." ("..teachcosts.cost..")", start.x, start.y+1*size.y, size.x, size.y, 0, 255, 152, "teach", {stat = "dex", cost = teachcosts.cost, lp=teachcosts.lp, oldstat=teachcosts.dex});
-        createButton(playerid, "Mana "..teachcosts.maxmana.." -> "..(teachcosts.maxmana+1).." ("..teachcosts.maxmana..")", start.x, start.y+2*size.y, size.x, size.y, 0, 255, 152, "teach", {stat = "maxmana", cost = teachcosts.cost, lp=teachcosts.lp, oldstat=teachcosts.maxmana});
+        createButton(playerid, "Mana "..teachcosts.maxmana.." -> "..(teachcosts.maxmana+1).." ("..teachcosts.cost..")", start.x, start.y+2*size.y, size.x, size.y, 0, 255, 152, "teach", {stat = "maxmana", cost = teachcosts.cost, lp=teachcosts.lp, oldstat=teachcosts.maxmana});
         if (teachcosts.onehanded < 100) then
             createButton(playerid, "Einhand "..teachcosts.onehanded.." -> "..(teachcosts.onehanded+1).." ("..teachcosts.cost..")", start.x, start.y+3*size.y, size.x, size.y, 0, 255, 152, "teach", {stat = "onehanded", cost = teachcosts.cost, lp=teachcosts.lp, oldstat=teachcosts.onehanded});
         else
