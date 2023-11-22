@@ -17,7 +17,7 @@ function teachsimulator(playerid, params)
         crossbow=0
     }, "characterid = "..PLAYERS[playerid].character);
     local str, dex, mana, onehanded, twohanded, bow, crossbow;
-    sendINFOMessage(playerid, "Deine Stats wurden zurückgesetzt für den Teach-Simulator. Deine LP wurden auf "..lp".. gesetzt.);
+    sendINFOMessage(playerid, "Deine Stats wurden zurückgesetzt für den Teach-Simulator. Deine LP wurden auf "..lp".. gesetzt.");
     teachmenu(playerid);
 end
 
