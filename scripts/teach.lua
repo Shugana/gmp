@@ -24,7 +24,7 @@ end
 function teachmenu(playerid)
     loadStats(playerid);
     setupMenu(playerid, true);
-    local size = {x=250, y=50};
+    local size = {x=450, y=50};
     local start = {x=500, y=350};
     local teachcosts = getNextTeachCost(playerid);
     local lp = GetPlayerLearnPoints(playerid);
@@ -57,11 +57,15 @@ function teachmenu(playerid)
     end
 end
 
+
+LEVELUPSOUND = CreateSound("LEVELUP.WAV");
+
 function teach(playerid, args)
     DB_update("stats", {
         [args.stat]=args.oldstat+1,
         lp = args.lp-args.cost
-    }, condition);
+    }, "characterid = "..PLAYERS[playerid].character);
+    PlaySound(playerid, LEVELUPSOUND);
     teachmenu(playerid);
 end
 
