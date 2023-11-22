@@ -61,7 +61,7 @@ end
 LEVELUPSOUND = CreateSound("LEVELUP.WAV");
 
 function teach(playerid, args)
-    DB_update("stats", {
+    DB_update("character_stats", {
         [args.stat]=args.oldstat+1,
         lp = args.lp-args.cost
     }, "characterid = "..PLAYERS[playerid].character);
