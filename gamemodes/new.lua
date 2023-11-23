@@ -20,6 +20,7 @@ require("scripts/monsterspawns");
 require("scripts/focus");
 require("scripts/teach");
 require("scripts/onserverworldtime");
+require("scripts/buffs");
 require("scripts/timers");
 
 
