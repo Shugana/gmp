@@ -1,5 +1,5 @@
 function BuffsLoop()
-    for playerid, _playerdata in pairs (PLAYERS[playerid]) do
+    for playerid, _playerdata in pairs (PLAYERS) do
         BuffsPlayer(playerid);
     end
 end
