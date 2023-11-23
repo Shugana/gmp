@@ -37,7 +37,7 @@ function teachmenu(playerid)
             cost = cost*2;
         end
         if (cost > teachcosts.lp) then
-            createButton(playerid, stat.." "..teachcosts[stat].." -> "..(teachcosts[stat]+1).." ("..cost..")", start.x, start.y+0*size.y, size.x, size.y, 196, 30, 58, "clearMenu", {});
+            createButton(playerid, stat.." "..teachcosts[stat].." -> "..(teachcosts[stat]+1).." ("..cost..")", start.x, start.y+key*size.y, size.x, size.y, 196, 30, 58, "clearMenu", {});
         else
             if (teachcosts[stat] > 99 and (stat == "onehanded" or stat == "twohanded" or stat == "bow" or stat == "crossbow")) then
                 createText(playerid, stat.." auf Maximum (100)", start.x, start.y+key*size.y, size.x, size.y, 196, 30, 58)
