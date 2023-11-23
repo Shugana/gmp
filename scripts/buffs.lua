@@ -10,7 +10,7 @@ function BuffsPlayer(playerid)
     end
     for key, buff in pairs(PLAYERS[playerid].buffs) do
         if PLAYERS[playerid].buffs[key].current ~= nil then
-            DestroyTexture(playerid, PLAYERS[playerid][key].current);
+            DestroyTexture(playerid, PLAYERS[playerid].buff[key].current);
         end
         PLAYERS[playerid].buffs[key].value = PLAYERS[playerid].buffs[key].value+1;
         local goal = math.ceil(PLAYERS[playerid].buffs[key].value / PLAYERS[playerid].buffs[key].target);
