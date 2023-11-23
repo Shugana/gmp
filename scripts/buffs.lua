@@ -48,7 +48,7 @@ function bufftest(playerid, params)
 end
 
 function OnPlayerUseItem(playerid, itemInstance, amount, hand)
-    if (itemInstance == "ITPO_HEALTH_01")
+    if (itemInstance == "ITPO_HEALTH_01") then
         local startx, starty = convertToPixel(800, 300);
         local sizex, sizey = convertToPixel(128, 128);
         local newbuff = {
