@@ -195,6 +195,11 @@ COMMANDS = {
         func = "teachsimulator",
         help = "Gibts dir ein Menü zum Probeweise LP verteilen",
         minadminlevel = ADMINRANKS.Spieler
+    },
+    bufftest = {
+        func = "bufftest",
+        help = "Zeigt eine Bufftextur an (Test)",
+        minadminlevel = ADMINRANKS.Spieler
     }
 };
 
