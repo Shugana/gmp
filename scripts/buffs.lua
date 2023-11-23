@@ -28,6 +28,9 @@ function BuffsPlayer(playerid)
         ShowTexture(playerid, PLAYERS[playerid].buffs[key].current);
         PLAYERS[playerid].buffs[key].background = CreateTexture(startx+key*sizex, starty, startx+key*sizex+sizex, starty+sizey, PLAYERS[playerid].buffs[key].bgtexture);
         ShowTexture(playerid, PLAYERS[playerid].buffs[key].background);
+        if PLAYERS[playerid].buffs[key].effect ~= nil then
+            _G[PLAYERS[playerid].buffs[key].effect.func](playerid, key);
+        end
     end
 end
 
@@ -54,13 +57,39 @@ function OnPlayerUseItem(playerid, itemInstance, amount, hand)
         local newbuff = {
             bgtexture = "DATA\\TEXTURES\\DESKTOP\\SKORIP\\SKO_R_ITPO_HEALTH_01_3DS.TGA",
             current = nil,
-            target = 200,
-            value = 0
+            target = 1200,
+            value = 0,
+            effect = {
+                func = "healOverTime",
+                args = {
+                    targethp = 25,
+                    healed = 0
+                }
+            }
         }
         if (PLAYERS[playerid].buffs == nil) then
             PLAYERS[playerid].buffs = {};
         end
-
         table.insert(PLAYERS[playerid].buffs, newbuff);
     end
+end
+
+function healOverTime(playerid, buffnumber)
+    local maxhp = GetPlayerMaxHealth(playerid);
+    local hp = GetPlayerHealth(playerid);
+
+    local healtotal = math.ceil(maxhp * PLAYERS[playerid].buffs[buffnumber].effect.args.targethp / 100);
+
+    local progress = PLAYERS[playerid].buffs[buffnumber].value / PLAYERS[playerid].buffs[buffnumber].target;
+
+    local healestimaged = math.ceil(healtotal * progress);
+    local healdone = math.ceil(maxhp * PLAYERS[playerid].buffs[buffnumber].effect.args.healed);
+
+    local thisheal = healestimated - healdone;
+
+    if (thisheal < 1) then
+        return;
+    end
+    SetPlayerHealth(playerid, math.min(hp+thisheal, maxhp));
+    PLAYERS[playerid].buffs[buffnumber].effect.args.healed = healdone;
 end
