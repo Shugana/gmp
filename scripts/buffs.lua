@@ -63,3 +63,4 @@ function OnPlayerUseItem(playerid, itemInstance, amount, hand)
 
         table.insert(PLAYERS[playerid].buffs, newbuff);
     end
+end
