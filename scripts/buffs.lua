@@ -52,13 +52,13 @@ end
 
 function OnPlayerUseItem(playerid, itemInstance, amount, hand)
     if (itemInstance == "ITPO_HEALTH_01") then
-        (playerid, 25, "DATA\\TEXTURES\\DESKTOP\\SKORIP\\SKO_R_ITPO_HEALTH_01_3DS.TGA", 1200)
+        healOverTime(playerid, 25, "DATA\\TEXTURES\\DESKTOP\\SKORIP\\SKO_R_ITPO_HEALTH_01_3DS.TGA", 1200);
     end
     if (itemInstance == "ITPO_HEALTH_02") then
-        (playerid, 50, "DATA\\TEXTURES\\DESKTOP\\SKORIP\\SKO_R_ITPO_HEALTH_02_3DS.TGA", 600)
+        healOverTime(playerid, 50, "DATA\\TEXTURES\\DESKTOP\\SKORIP\\SKO_R_ITPO_HEALTH_02_3DS.TGA", 600);
     end
     if (itemInstance == "ITPO_HEALTH_03") then
-        (playerid, 100, "DATA\\TEXTURES\\DESKTOP\\SKORIP\\SKO_R_ITPO_HEALTH_03_3DS.TGA", 300)
+        healOverTime(playerid, 100, "DATA\\TEXTURES\\DESKTOP\\SKORIP\\SKO_R_ITPO_HEALTH_03_3DS.TGA", 300);
     end
     
 end
