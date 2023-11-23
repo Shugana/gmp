@@ -16,6 +16,7 @@ function BuffsPlayer(playerid)
         local goal = math.ceil(PLAYERS[playerid].buffs[key].value / PLAYERS[playerid].buffs[key].target);
         local startx, starty = convertToPixel(800, 300);
         local sizex, sizey = convertToPixel(128, 128);
+        debug (PLAYERS[playerid].buffs[key].value.." / "..PLAYERS[playerid].buffs[key].target.." = "..goal);
         
         PLAYERS[playerid].buffs[key].current = CreateTexture(startx, starty, startx+sizex, starty+sizey, "DATA\\TEXTURES\\DESKTOP\\SKORIP\\BUFFS_"..goal..".TGA");
         ShowTexture(playerid, PLAYERS[playerid].buffs[key].current);
