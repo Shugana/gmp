@@ -42,7 +42,7 @@ function teachmenu(playerid)
             if (teachcosts[stat] > 99 and (stat == "onehanded" or stat == "twohanded" or stat == "bow" or stat == "crossbow")) then
                 createText(playerid, stat.." auf Maximum (100)", start.x, start.y+key*size.y, size.x, size.y, 196, 30, 58)
             else
-                createButton(playerid, "Stärke "..teachcosts[stat].." -> "..(teachcosts[stat]+1).." ("..cost..")", start.x, start.y+key*size.y, size.x, size.y, 0, 255, 152, "teach", {stat = stat, cost = cost, lp=teachcosts.lp, oldstat=teachcosts[stat]});
+                createButton(playerid, stat.." "..teachcosts[stat].." -> "..(teachcosts[stat]+1).." ("..cost..")", start.x, start.y+key*size.y, size.x, size.y, 0, 255, 152, "teach", {stat = stat, cost = cost, lp=teachcosts.lp, oldstat=teachcosts[stat]});
             end
         end
     end
