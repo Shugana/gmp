@@ -17,6 +17,7 @@ function BuffsPlayer(playerid)
         if (goal > 100) then
             DestroyTexture(playerid, PLAYERS[playerid].buffs[key].background);
             PLAYERS[playerid].buffs[key] = nil;
+            debug("buff finished");
             return;
         end
         local startx, starty = convertToPixel(800, 300);
@@ -44,4 +45,5 @@ function bufftest(playerid, params)
     table.insert(PLAYERS[playerid].buffs, newbuff);
     ShowTexture(playerid, newbuff.background);
     ShowTexture(playerid, newbuff.current);
+    debug("buff initiated");
 end
