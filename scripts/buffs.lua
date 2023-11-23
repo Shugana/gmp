@@ -13,7 +13,7 @@ function BuffsPlayer(playerid)
             DestroyTexture(playerid, PLAYERS[playerid].buffs[key].current);
         end
         PLAYERS[playerid].buffs[key].value = PLAYERS[playerid].buffs[key].value+1;
-        local goal = math.ceil(PLAYERS[playerid].buffs[key].value / PLAYERS[playerid].buffs[key].target);
+        local goal = math.ceil(PLAYERS[playerid].buffs[key].value / PLAYERS[playerid].buffs[key].target * 100);
         local startx, starty = convertToPixel(800, 300);
         local sizex, sizey = convertToPixel(128, 128);
         debug (PLAYERS[playerid].buffs[key].value.." / "..PLAYERS[playerid].buffs[key].target.." = "..goal);
