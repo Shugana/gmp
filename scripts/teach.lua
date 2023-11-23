@@ -27,7 +27,7 @@ function teachmenu(playerid)
     local size = {x=450, y=50};
     local start = {x=500, y=350};
     local teachcosts = getNextTeachCost(playerid);
-    for key, stat in pairs({"str", "dex", "maxmana", "onehanded", "twohanded", "bow", "crossbow"});
+    for key, stat in pairs({"str", "dex", "maxmana", "onehanded", "twohanded", "bow", "crossbow"}) do
         local cost = teachcosts.cost;
         if(teachcosts[stat] > 98) then
             cost = cost*5;
