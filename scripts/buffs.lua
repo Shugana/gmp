@@ -14,17 +14,18 @@ function BuffsPlayer(playerid)
         end
         PLAYERS[playerid].buffs[key].value = PLAYERS[playerid].buffs[key].value+1;
         local goal = math.ceil(PLAYERS[playerid].buffs[key].value / PLAYERS[playerid].buffs[key].target * 100);
+        if (goal > 100) then
+            DestroyTexture(playerid, PLAYERS[playerid].buffs[key].background);
+            PLAYERS[playerid].buffs[key] = nil;
+            return;
+        end
         local startx, starty = convertToPixel(800, 300);
         local sizex, sizey = convertToPixel(128, 128);
         debug (PLAYERS[playerid].buffs[key].value.." / "..PLAYERS[playerid].buffs[key].target.." = "..goal);
         
         PLAYERS[playerid].buffs[key].current = CreateTexture(startx, starty, startx+sizex, starty+sizey, "DATA\\TEXTURES\\DESKTOP\\SKORIP\\BUFFS_"..goal..".TGA");
         ShowTexture(playerid, PLAYERS[playerid].buffs[key].current);
-        if (goal > 100) then
-            DestroyTexture(playerid, PLAYERS[playerid].buffs[key].current);
-            DestroyTexture(playerid, PLAYERS[playerid].buffs[key].background);
-            PLAYERS[playerid][key] = nil;
-        end
+
     end
 end
 
@@ -34,7 +35,7 @@ function bufftest(playerid, params)
     local newbuff = {
         background = CreateTexture(startx, starty, startx+sizex, starty+sizey, "DATA\\TEXTURES\\DESKTOP\\SKORIP\\SKO_R_FLUFF_HUNTERICON.TGA"),
         current = CreateTexture(startx, starty, startx+sizex, starty+sizey, "DATA\\TEXTURES\\DESKTOP\\SKORIP\\BUFFS_0.TGA"),
-        target = 60*4,
+        target = 60*2,
         value = 0
     }
     if (PLAYERS[playerid].buffs == nil) then
