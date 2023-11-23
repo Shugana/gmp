@@ -19,7 +19,6 @@ function BuffsPlayer(playerid)
         local goal = math.ceil(PLAYERS[playerid].buffs[key].value / PLAYERS[playerid].buffs[key].target * 100);
         if (goal > 100) then
             PLAYERS[playerid].buffs[key] = nil;
-            debug("buff finished");
             return;
         end
         local startx, starty = convertToPixel(800, 300);
@@ -29,7 +28,6 @@ function BuffsPlayer(playerid)
         ShowTexture(playerid, PLAYERS[playerid].buffs[key].current);
         PLAYERS[playerid].buffs[key].background = CreateTexture(startx+key*sizex, starty, startx+key*sizex+sizex, starty+sizey, PLAYERS[playerid].buffs[key].bgtexture);
         ShowTexture(playerid, PLAYERS[playerid].buffs[key].background);
-        debug (PLAYERS[playerid].buffs[key].background.." - "..PLAYERS[playerid].buffs[key].current.." - "..PLAYERS[playerid].buffs[key].value.." / "..PLAYERS[playerid].buffs[key].target.." = "..goal);
     end
 end
 
@@ -47,5 +45,21 @@ function bufftest(playerid, params)
     end
 
     table.insert(PLAYERS[playerid].buffs, newbuff);
-    debug("buff initiated");
 end
+
+function OnPlayerUseItem(playerid, itemInstance, amount, hand)
+    if (itemInstance == "ITPO_HEALTH_01")
+        local startx, starty = convertToPixel(800, 300);
+        local sizex, sizey = convertToPixel(128, 128);
+        local newbuff = {
+            bgtexture = "DATA\\TEXTURES\\DESKTOP\\SKORIP\\SKO_R_ITPO_HEALTH_01_3DS.TGA",
+            current = nil,
+            target = 200,
+            value = 0
+        }
+        if (PLAYERS[playerid].buffs == nil) then
+            PLAYERS[playerid].buffs = {};
+        end
+
+        table.insert(PLAYERS[playerid].buffs, newbuff);
+    end
