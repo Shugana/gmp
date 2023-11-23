@@ -88,7 +88,7 @@ function GiveItemById(playerid, itemid, amount);
         else
             DB_update("character_inventory", {amount=oldamount+amount}, "characterid = "..PLAYERS[playerid].character.." AND itemid = "..itemid);
         end
-        GiveItem(playerid, instance, amount);
+        GiveItem(playerid, item.instance, amount);
         sendINFOMessage(playerid, "Du bekommst "..amount.."x "..item.name);
         return;
     end
