@@ -52,26 +52,37 @@ end
 
 function OnPlayerUseItem(playerid, itemInstance, amount, hand)
     if (itemInstance == "ITPO_HEALTH_01") then
-        local startx, starty = convertToPixel(800, 300);
-        local sizex, sizey = convertToPixel(128, 128);
-        local newbuff = {
-            bgtexture = "DATA\\TEXTURES\\DESKTOP\\SKORIP\\SKO_R_ITPO_HEALTH_01_3DS.TGA",
-            current = nil,
-            target = 1200,
-            value = 0,
-            effect = {
-                func = "healOverTime",
-                args = {
-                    targethp = 25,
-                    healed = 0
-                }
+        (playerid, 25, "DATA\\TEXTURES\\DESKTOP\\SKORIP\\SKO_R_ITPO_HEALTH_01_3DS.TGA", 1200)
+    end
+    if (itemInstance == "ITPO_HEALTH_02") then
+        (playerid, 50, "DATA\\TEXTURES\\DESKTOP\\SKORIP\\SKO_R_ITPO_HEALTH_02_3DS.TGA", 600)
+    end
+    if (itemInstance == "ITPO_HEALTH_03") then
+        (playerid, 100, "DATA\\TEXTURES\\DESKTOP\\SKORIP\\SKO_R_ITPO_HEALTH_03_3DS.TGA", 300)
+    end
+    
+end
+
+function drinkHealPot(playerid, heal, graphic, time)
+    local startx, starty = convertToPixel(800, 300);
+    local sizex, sizey = convertToPixel(128, 128);
+    local newbuff = {
+        bgtexture = graphic,
+        current = nil,
+        target = time,
+        value = 0,
+        effect = {
+            func = "healOverTime",
+            args = {
+                targethp = heal,
+                healed = 0
             }
         }
-        if (PLAYERS[playerid].buffs == nil) then
-            PLAYERS[playerid].buffs = {};
-        end
-        table.insert(PLAYERS[playerid].buffs, newbuff);
+    }
+    if (PLAYERS[playerid].buffs == nil) then
+        PLAYERS[playerid].buffs = {};
     end
+    table.insert(PLAYERS[playerid].buffs, newbuff);
 end
 
 function healOverTime(playerid, buffnumber)
@@ -82,7 +93,7 @@ function healOverTime(playerid, buffnumber)
 
     local progress = PLAYERS[playerid].buffs[buffnumber].value / PLAYERS[playerid].buffs[buffnumber].target;
 
-    local healestimaged = math.ceil(healtotal * progress);
+    local healestimated = math.ceil(healtotal * progress);
     local healdone = math.ceil(maxhp * PLAYERS[playerid].buffs[buffnumber].effect.args.healed);
 
     local thisheal = healestimated - healdone;
