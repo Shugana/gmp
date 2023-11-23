@@ -35,8 +35,8 @@ function BuffsPlayer(playerid)
 end
 
 function bufftest(playerid, params)
-    local startx, starty = convertToPixel(800, 300);
-    local sizex, sizey = convertToPixel(128, 128);
+    local startx, starty = convertToPixel(1000, 50);
+    local sizex, sizey = convertToPixel(64, 64);
     local newbuff = {
         bgtexture = "DATA\\TEXTURES\\DESKTOP\\SKORIP\\SKO_R_FLUFF_HUNTERICON.TGA",
         current = nil,
