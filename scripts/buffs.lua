@@ -41,6 +41,8 @@ function bufftest(playerid, params)
     if (PLAYERS[playerid].buffs == nil) then
         PLAYERS[playerid].buffs = {};
     end
+    debug (newbuff(background).." - "..newbuff(current));
+
     table.insert(PLAYERS[playerid].buffs, newbuff);
     ShowTexture(playerid, newbuff.background);
     ShowTexture(playerid, newbuff.current);
