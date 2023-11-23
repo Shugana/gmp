@@ -94,7 +94,7 @@ function healOverTime(playerid, buffnumber)
     local progress = PLAYERS[playerid].buffs[buffnumber].value / PLAYERS[playerid].buffs[buffnumber].target;
 
     local healestimated = math.ceil(healtotal * progress);
-    local healdone = math.ceil(maxhp * PLAYERS[playerid].buffs[buffnumber].effect.args.healed);
+    local healdone = PLAYERS[playerid].buffs[buffnumber].effect.args.healed;
 
     local thisheal = healestimated - healdone;
 
@@ -102,5 +102,5 @@ function healOverTime(playerid, buffnumber)
         return;
     end
     SetPlayerHealth(playerid, math.min(hp+thisheal, maxhp));
-    PLAYERS[playerid].buffs[buffnumber].effect.args.healed = healdone;
+    PLAYERS[playerid].buffs[buffnumber].effect.args.healed = healdone + thisheal;
 end
