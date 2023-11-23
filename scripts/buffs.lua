@@ -25,9 +25,9 @@ function BuffsPlayer(playerid)
         local startx, starty = convertToPixel(800, 300);
         local sizex, sizey = convertToPixel(128, 128);
         
-        PLAYERS[playerid].buffs[key].current = CreateTexture(startx+key*sizex, starty, startx+sizex, starty+sizey, "DATA\\TEXTURES\\DESKTOP\\SKORIP\\BUFFS_"..goal..".TGA");
+        PLAYERS[playerid].buffs[key].current = CreateTexture(startx+key*sizex, starty, startx+key*sizex+sizex, starty+sizey, "DATA\\TEXTURES\\DESKTOP\\SKORIP\\BUFFS_"..goal..".TGA");
         ShowTexture(playerid, PLAYERS[playerid].buffs[key].current);
-        PLAYERS[playerid].buffs[key].background = CreateTexture(startx+key*sizex, starty, startx+sizex, starty+sizey, PLAYERS[playerid].buffs[key].bgtexture);
+        PLAYERS[playerid].buffs[key].background = CreateTexture(startx+key*sizex, starty, startx+key*sizex+sizex, starty+sizey, PLAYERS[playerid].buffs[key].bgtexture);
         ShowTexture(playerid, PLAYERS[playerid].buffs[key].background);
         debug (PLAYERS[playerid].buffs[key].background.." - "..PLAYERS[playerid].buffs[key].current.." - "..PLAYERS[playerid].buffs[key].value.." / "..PLAYERS[playerid].buffs[key].target.." = "..goal);
     end
