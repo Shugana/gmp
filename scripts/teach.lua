@@ -27,32 +27,24 @@ function teachmenu(playerid)
     local size = {x=450, y=50};
     local start = {x=500, y=350};
     local teachcosts = getNextTeachCost(playerid);
-    if (teachcosts.lp >= teachcosts.cost) then
-        createButton(playerid, "Stärke "..teachcosts.str.." -> "..(teachcosts.str+1).." ("..teachcosts.cost..")", start.x, start.y+0*size.y, size.x, size.y, 0, 255, 152, "teach", {stat = "str", cost = teachcosts.cost, lp=teachcosts.lp, oldstat=teachcosts.str});
-        createButton(playerid, "Geschick "..teachcosts.dex.." -> "..(teachcosts.dex+1).." ("..teachcosts.cost..")", start.x, start.y+1*size.y, size.x, size.y, 0, 255, 152, "teach", {stat = "dex", cost = teachcosts.cost, lp=teachcosts.lp, oldstat=teachcosts.dex});
-        createButton(playerid, "Mana "..teachcosts.maxmana.." -> "..(teachcosts.maxmana+1).." ("..teachcosts.cost..")", start.x, start.y+2*size.y, size.x, size.y, 0, 255, 152, "teach", {stat = "maxmana", cost = teachcosts.cost, lp=teachcosts.lp, oldstat=teachcosts.maxmana});
-        if (teachcosts.onehanded < 100) then
-            createButton(playerid, "Einhand "..teachcosts.onehanded.." -> "..(teachcosts.onehanded+1).." ("..teachcosts.cost..")", start.x, start.y+3*size.y, size.x, size.y, 0, 255, 152, "teach", {stat = "onehanded", cost = teachcosts.cost, lp=teachcosts.lp, oldstat=teachcosts.onehanded});
-        else
-            createText(playerid, "Einhand - maximum - 100", start.x, start.y+3*size.y, size.x, size.y, 196, 30, 58);
+    for key, stat in pairs({"str", "dex", "maxmana", "onehanded", "twohanded", "bow", "crossbow"});
+        local cost = teachcosts.cost;
+        if(teachcosts[stat] > 98) then
+            cost = cost*5;
+        elseif (teachcosts[stat] > 58) then
+            cost = cost*3;
+        elseif (teachcosts[stat] > 28) then
+            cost = cost*2;
         end
-        if (teachcosts.twohanded < 100) then
-            createButton(playerid, "Zweihand "..teachcosts.twohanded.." -> "..(teachcosts.twohanded+1).." ("..teachcosts.cost..")", start.x, start.y+4*size.y, size.x, size.y, 0, 255, 152, "teach", {stat = "twohanded", cost = teachcosts.cost, lp=teachcosts.lp, oldstat=teachcosts.twohanded});
+        if (cost > teachcosts.lp) then
+            createButton(playerid, "Stärke "..teachcosts[stat].." -> "..(teachcosts[stat]+1).." ("..cost..")", start.x, start.y+0*size.y, size.x, size.y, 196, 30, 58, "clearMenu", {});
         else
-            createText(playerid, "Zweihand - maximum - 100", start.x, start.y+4*size.y, size.x, size.y, 196, 30, 58);
+            if (teachcosts[stat] > 99 and (stat == "onehanded" or stat == "twohanded" or stat == "bow" or stat == "crossbow")) then
+                createText(playerid, stat.." auf Maximum (100)", start.x, start.y+key*size.y, size.x, size.y, 196, 30, 58)
+            else
+                createButton(playerid, "Stärke "..teachcosts[stat].." -> "..(teachcosts[stat]+1).." ("..cost..")", start.x, start.y+key*size.y, size.x, size.y, 0, 255, 152, "teach", {stat = stat, cost = cost, lp=teachcosts.lp, oldstat=teachcosts[stat]});
+            end
         end
-        if (teachcosts.bow < 100) then
-            createButton(playerid, "Bogen "..teachcosts.bow.." -> "..(teachcosts.bow+1).." ("..teachcosts.cost..")", start.x, start.y+5*size.y, size.x, size.y, 0, 255, 152, "teach", {stat = "bow", cost = teachcosts.cost, lp=teachcosts.lp, oldstat=teachcosts.bow});
-        else
-            createText(playerid, "Bogen - maximum - 100", start.x, start.y+5*size.y, size.x, size.y, 196, 30, 58);
-        end
-        if (teachcosts.crossbow < 100) then
-            createButton(playerid, "Armbrust "..teachcosts.crossbow.." -> "..(teachcosts.crossbow+1).." ("..teachcosts.cost..")", start.x, start.y+6*size.y, size.x, size.y, 0, 255, 152, "teach", {stat = "crossbow", cost = teachcosts.cost, lp=teachcosts.lp, oldstat=teachcosts.crossbow});
-        else
-            createText(playerid, "Armbrust - maximum - 100", start.x, start.y+6*size.y, size.x, size.y, 196, 30, 58);
-        end
-    else
-        createButton(playerid, "Nicht genügend Lernpunkte.", start.x, start.y+0*size.y, size.x, size.y*7, 196, 30, 58, "clearMenu", {});
     end
 end
 
