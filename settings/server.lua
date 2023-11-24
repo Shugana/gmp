@@ -64,9 +64,22 @@ function initServerdraws()
         "",
         "CALLAWORLD.ZEN",
         370,
-        -90,
-        -1270,
+        -140,
+        -1200,
         "Innosschrein"
+    );
+
+    Mob.Create(
+        "KM_VOB_BIG_ADANOS_STATUE_01.ASC",
+        "mobsiname",
+        OCMOBINTER,
+        "INNOS",
+        "",
+        "CALLAWORLD.ZEN",
+        320,
+        -140,
+        -1600,
+        "Adanosschrein"
     );
 
     Mob.Create(
@@ -77,10 +90,11 @@ function initServerdraws()
         "",
         "CALLAWORLD.ZEN",
         270,
-        -90,
+        -140,
         -2000,
         "Beliarschrein"
     );
+    
 
 end
 
