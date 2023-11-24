@@ -45,7 +45,7 @@ function teachmenu(playerid)
         row = row + 1;
     end
     for _key, weaponskill in pairs({"onehanded", "twohanded", "bow", "crossbow"}) do
-        local cost = teachcosts.weaponskills;
+        local cost = teachcosts.weapons;
         if (teachcosts[weaponskill] > 58) then
             cost = cost*3;
         elseif (teachcosts[weaponskill] > 28) then
