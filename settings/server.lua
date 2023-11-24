@@ -70,7 +70,7 @@ function initServerdraws()
     );
 
     Mob.Create(
-        "KM_VOB_BIG_ADANOS_STATUE_01.MRM",
+        "CALLAADANOS.ASC",
         "mobsiname",
         OCMOBINTER,
         "INNOS",
