@@ -17,6 +17,11 @@ function BuffsPlayer(playerid)
         end
         PLAYERS[playerid].buffs[key].value = PLAYERS[playerid].buffs[key].value+1;
         local goal = math.ceil(PLAYERS[playerid].buffs[key].value / PLAYERS[playerid].buffs[key].target * 100);
+
+        if PLAYERS[playerid].buffs[key].effect ~= nil then
+            _G[PLAYERS[playerid].buffs[key].effect.func](playerid, key);
+        end
+        
         if (goal > 100) then
             PLAYERS[playerid].buffs[key] = nil;
             return;
@@ -28,9 +33,6 @@ function BuffsPlayer(playerid)
         ShowTexture(playerid, PLAYERS[playerid].buffs[key].current);
         PLAYERS[playerid].buffs[key].background = CreateTexture(startx+key*sizex, starty, startx+key*sizex+sizex, starty+sizey, PLAYERS[playerid].buffs[key].bgtexture);
         ShowTexture(playerid, PLAYERS[playerid].buffs[key].background);
-        if PLAYERS[playerid].buffs[key].effect ~= nil then
-            _G[PLAYERS[playerid].buffs[key].effect.func](playerid, key);
-        end
     end
 end
 
@@ -64,8 +66,8 @@ function OnPlayerUseItem(playerid, itemInstance, amount, hand)
 end
 
 function drinkHealPot(playerid, heal, graphic, time)
-    local startx, starty = convertToPixel(800, 300);
-    local sizex, sizey = convertToPixel(128, 128);
+    local startx, starty = convertToPixel(1000, 16);
+    local sizex, sizey = convertToPixel(64, 64);
     local newbuff = {
         bgtexture = graphic,
         current = nil,
