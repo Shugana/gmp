@@ -71,7 +71,6 @@ function initServerdraws()
     
 
     Vob.Create("CALLAADANOS.3DS", "CALLAWORLD.ZEN", 320, -140, -1600);
-    Vob.Create("HARPIES.3DS", "CALLAWORLD.ZEN", 295, -140, -1800);
 
     Mob.Create(
         "INNOS_BELIAR_ADDON_01.ASC",
