@@ -36,7 +36,7 @@ function tp(playerid, params)
         targetname = targetS;
     end
 
-    if (PLAYERS[sourceid] == nil and NPCS[sourceid == nil]) or (PLAYERS[targetid] == nil and NPCS[targetid] == nil) then
+    if (PLAYERS[sourceid] == nil and NPCS[sourceid] == nil) or (PLAYERS[targetid] == nil and NPCS[targetid] == nil) then
         sendERRMessage(playerid, "Teleportierender Spieler oder Ziel nicht online oder kein NPC");
         return;
     end
@@ -55,8 +55,24 @@ function tp(playerid, params)
     if (playerid ~= sourceid) then
         sendINFOMessage(playerid, sourcename.." ("..sourceid..") teleportiert zu "..targetname.." ("..targetid..")");
     end
-    log("tp", sourcename.." ("..PLAYERS[sourceid].character or "NPC"..") teleportiert zu "
-        ..targetname.." ("..PLAYERS[targetid].character or "NPC".."). Auslöser: "..GetPlayerName(playerid).." ("..PLAYERS[playerid].character or "NPC"..")");
+
+    local sourcechar, targetchar;
+
+    if (PLAYERS[sourceid] ~= nil) then
+        sourcechar = PLAYERS[sourceid].character;
+    else
+        sourcechar = "NPC";
+    end
+    if (PLAYERS[targetid] ~= nil) then
+        targetchar = PLAYERS[targetid].character;
+    else
+        targetchar = "NPC";
+    end
+    
+
+    log("tp", sourcename.." ("..sourcechar..") teleportiert zu "
+        ..targetname.." ("..targetchar.."). Auslöser: "
+        ..GetPlayerName(playerid).." ("..PLAYERS[playerid].character..")");
 end
 
 function useGoto(playerid, params)
