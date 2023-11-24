@@ -19,24 +19,21 @@ function cheatItem(playerid, params)
         return;
     end
     itemnameraw = capitalize(itemnameraw);
-    local iteminstance = nil;
     local itemname = nil;
     local itemid = 0;
     local responses = DB_select("*", "items", "name = '"..itemnameraw.."'");
     for _key, response in pairs(responses) do
-        iteminstance = response.instance;
         itemname = response.name;
         itemid = tonumber(response.id);
     end
-    if (iteminstance == nil) then
+    if (itemname == nil) then
         responses = DB_select("*", "items", "name LIKE '"..itemnameraw.."%'");
         for _key, response in pairs(responses) do
-            iteminstance = response.instance;
             itemname = response.name;
             itemid = tonumber(response.id);
         end
     end
-    if (iteminstance == nil) then
+    if (itemname == nil) then
         sendERRMessage(playerid, "Item '"..itemnameraw.."' nicht in der DB vorhanden.");
         return;
     end
@@ -48,8 +45,7 @@ function cheatItem(playerid, params)
     log("cheat", GetPlayerName(playerid).."("..PLAYERS[playerid].character..") cheated "
         ..GetPlayerName(recipientid).."("..PLAYERS[recipientid].character..") "
         ..amount.."x "..itemname.."("..itemid..")");
-    GiveItem(recipientid, iteminstance, amount);
-    playerGetsItem(recipientid, iteminstance, amount);
+    GiveItemById(recipientid, iteminstance, amount);
 end
 
 function OnPlayerTakeItem(playerid, itemid, iteminstance, amount, x, y, z, worldName)
@@ -57,7 +53,7 @@ function OnPlayerTakeItem(playerid, itemid, iteminstance, amount, x, y, z, world
         return;
     end
     DB_update("item_spawns", {spawned=0}, "id="..WORLDITEMS[itemid]);
-    playerGetsItem(playerid, iteminstance, amount);
+    playerGetsItem(playerid, itemid, amount);
 end
 
 function playerGetsItem(playerid, iteminstance, amount)
@@ -87,7 +83,7 @@ function GiveItemById(playerid, itemid, amount);
     for _key, item in pairs(items) do
         local inventories = DB_select("*", "character_inventory", "characterid = "..PLAYERS[playerid].character.." AND itemid = "..itemid);
         for _key, inventory in pairs(inventories) do
-            oldamount = tonumber(response.amount);
+            oldamount = tonumber(inventory.amount);
         end
         if oldamount == nil then
             DB_insert("character_inventory", {characterid=PLAYERS[playerid].character, itemid=itemid, amount=amount});
