@@ -21,16 +21,19 @@ function cheatItem(playerid, params)
     itemnameraw = capitalize(itemnameraw);
     local iteminstance = nil;
     local itemname = nil;
+    local itemid = 0;
     local responses = DB_select("*", "items", "name = '"..itemnameraw.."'");
     for _key, response in pairs(responses) do
         iteminstance = response.instance;
         itemname = response.name;
+        itemid = tonumber(response.id);
     end
     if (iteminstance == nil) then
         responses = DB_select("*", "items", "name LIKE '"..itemnameraw.."%'");
         for _key, response in pairs(responses) do
             iteminstance = response.instance;
             itemname = response.name;
+            itemid = tonumber(response.id);
         end
     end
     if (iteminstance == nil) then
@@ -42,6 +45,9 @@ function cheatItem(playerid, params)
     if (recipientid ~= playerid) then
         sendINFOMessage(recipientid, GetPlayerName(playerid).." cheated "..GetPlayerName(recipientid).." "..amount.."x "..itemname);
     end
+    log("cheat", GetPlayerName(playerid).."("..PLAYERS[playerid].character..") cheated "
+        ..GetPlayerName(recipientid).."("..PLAYERS[recipientid].character..") "
+        ..amount.."x "..itemname.."("..itemid..")");
     GiveItem(recipientid, iteminstance, amount);
     playerGetsItem(recipientid, iteminstance, amount);
 end
