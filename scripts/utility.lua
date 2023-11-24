@@ -104,3 +104,12 @@ function unfreeze(playerid, reason)
     end
     FreezePlayer(playerid, 0);
 end
+
+function coords_forward(angle)
+    local angle_rad = math.rad(angle)
+
+    local x = math.cos(angle_rad)
+    local z = math.sin(angle_rad)
+
+    return x, z;
+end

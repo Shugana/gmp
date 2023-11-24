@@ -22,7 +22,10 @@ function spawnMonsterOnPlayer(playerid, params)
         sendERRMessage(playerid, "Tier '"..tier.."' nicht in der Datenbank");
         return;
     end
-    spawnMonster(tier, GetPlayerWorld(playerid), GetPlayerPos(playerid));
+    local x, y, z = GetPlayerPos(playerid);
+    local angle = GetPlayerAngle(playerid);
+    local x_add, z_add = coords_forward(angle);
+    spawnMonster(tier, GetPlayerWorld(playerid), x+x_add*50, y+10, z+z_add*50);
 end
 
 function spawnMonster(instance, world, x, y, z)
