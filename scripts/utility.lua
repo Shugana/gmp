@@ -106,8 +106,8 @@ function unfreeze(playerid, reason)
 end
 
 function coords_forward(angle)
-    local angle_rad = math.rad((angle+180)%360);
-    local x = math.cos(angle_rad);
-    local z = math.sin(angle_rad);
+    local angle_rad = math.rad(angle);
+    local x = math.sin(angle_rad);
+    local z = math.cos(angle_rad);
     return x, z;
 end
