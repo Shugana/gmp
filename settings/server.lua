@@ -69,18 +69,7 @@ function initServerdraws()
         "Innosschrein"
     );
 
-    Mob.Create(
-        "CALLAADANOS.ASC",
-        "mobsiname",
-        OCMOBINTER,
-        "INNOS",
-        "",
-        "CALLAWORLD.ZEN",
-        320,
-        -140,
-        -1600,
-        "Adanosschrein"
-    );
+    Vob.Create("CALLAADANOS.3DS", "CALLAWORLD.ZEN", 320, -140, -1600);
 
     Mob.Create(
         "INNOS_BELIAR_ADDON_01.ASC",
