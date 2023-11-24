@@ -45,7 +45,7 @@ function cheatItem(playerid, params)
     log("cheat", GetPlayerName(playerid).."("..PLAYERS[playerid].character..") cheated "
         ..GetPlayerName(recipientid).."("..PLAYERS[recipientid].character..") "
         ..amount.."x "..itemname.."("..itemid..")");
-    GiveItemById(recipientid, iteminstance, amount);
+    GiveItemById(recipientid, itemid, amount);
 end
 
 function OnPlayerTakeItem(playerid, itemid, iteminstance, amount, x, y, z, worldName)
