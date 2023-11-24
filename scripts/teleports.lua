@@ -44,9 +44,9 @@ function tp(playerid, params)
     local angle = GetPlayerAngle(targetid);
     local x_add, z_add = coords_forward(angle);
 
-    local newx = x + x_add;
+    local newx = x + x_add*250;
     local newy = y + 50;
-    local newz = z + z_add;
+    local newz = z + z_add*250;
     if not(GetPlayerWorld(sourceid) == GetPlayerWorld(targetid)) then
         SetPlayerWorld(sourceid, GetPlayerWorld(targetid));
     end
