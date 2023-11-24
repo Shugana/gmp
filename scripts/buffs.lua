@@ -75,7 +75,8 @@ function drinkHealPot(playerid, heal, graphic, time)
             func = "healOverTime",
             args = {
                 targethp = heal,
-                healed = 0
+                healed = 0,
+                hp = GetPlayerHealth(playerid)
             }
         }
     }
@@ -87,7 +88,8 @@ end
 
 function healOverTime(playerid, buffnumber)
     local maxhp = GetPlayerMaxHealth(playerid);
-    local hp = GetPlayerHealth(playerid);
+    --local hp = GetPlayerHealth(playerid);
+    local hp = PLAYERS[playerid].buffs[buffnumber].effect.args.hp;
 
     local healtotal = math.ceil(maxhp * PLAYERS[playerid].buffs[buffnumber].effect.args.targethp / 100);
 
@@ -98,11 +100,12 @@ function healOverTime(playerid, buffnumber)
 
     local thisheal = healestimated - healdone;
 
-    debug(healtotal..": "..healdone.."/"..healestimated.." ("..progress..") -> +"..thisheal);
+    --debug(healtotal..": "..healdone.."/"..healestimated.." ("..progress..") -> +"..thisheal);
 
     if (thisheal < 1) then
         return;
     end
     SetPlayerHealth(playerid, math.min(hp+thisheal, maxhp));
+    PLAYERS[playerid].buffs[buffnumber].effect.args.hp = math.min(hp+thisheal, maxhp);
     PLAYERS[playerid].buffs[buffnumber].effect.args.healed = healdone + thisheal;
 end
