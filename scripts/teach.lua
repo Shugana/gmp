@@ -27,8 +27,9 @@ function teachmenu(playerid)
     local size = {x=450, y=50};
     local start = {x=500, y=350};
     local teachcosts = getNextTeachCost(playerid);
-    for key, stat in pairs({"str", "dex", "maxmana", "onehanded", "twohanded", "bow", "crossbow"}) do
-        local cost = teachcosts.cost;
+    local row = 0;
+    for _key, stat in pairs({"str", "dex", "maxmana"}) do
+        local cost = teachcosts.stats;
         if(teachcosts[stat] > 98) then
             cost = cost*5;
         elseif (teachcosts[stat] > 58) then
@@ -37,14 +38,29 @@ function teachmenu(playerid)
             cost = cost*2;
         end
         if (cost > teachcosts.lp) then
-            createButton(playerid, stat.." "..teachcosts[stat].." -> "..(teachcosts[stat]+1).." ("..cost..")", start.x, start.y+key*size.y, size.x, size.y, 196, 30, 58, "clearMenu", {});
+            createButton(playerid, stat.." "..teachcosts[stat].." -> "..(teachcosts[stat]+1).." ("..cost..")", start.x, start.y+row*size.y, size.x, size.y, 196, 30, 58, "clearMenu", {});
         else
-            if (teachcosts[stat] > 99 and (stat == "onehanded" or stat == "twohanded" or stat == "bow" or stat == "crossbow")) then
-                createText(playerid, stat.." auf Maximum (100)", start.x, start.y+key*size.y, size.x, size.y, 196, 30, 58)
+            createButton(playerid, stat.." "..teachcosts[stat].." -> "..(teachcosts[stat]+1).." ("..cost..")", start.x, start.y+row*size.y, size.x, size.y, 0, 255, 152, "teach", {stat = stat, cost = cost, lp=teachcosts.lp, oldstat=teachcosts[stat]});
+        end
+        row = row + 1;
+    end
+    for _key, weaponskill in pairs({"onehanded", "twohanded", "bow", "crossbow"}) do
+        local cost = teachcosts.weaponskills;
+        if (teachcosts[weaponskill] > 58) then
+            cost = cost*3;
+        elseif (teachcosts[weaponskill] > 28) then
+            cost = cost*2;
+        end
+        if (cost > teachcosts.lp) then
+            createButton(playerid, weaponskill.." "..teachcosts[weaponskill].." -> "..(teachcosts[weaponskill]+1).." ("..cost..")", start.x, start.y+row*size.y, size.x, size.y, 196, 30, 58, "clearMenu", {});
+        else
+            if (teachcosts[weaponskill] > 99) then
+                createText(playerid, weaponskill.." auf Maximum (100)", start.x, start.y+row*size.y, size.x, size.y, 196, 30, 58)
             else
-                createButton(playerid, stat.." "..teachcosts[stat].." -> "..(teachcosts[stat]+1).." ("..cost..")", start.x, start.y+key*size.y, size.x, size.y, 0, 255, 152, "teach", {stat = stat, cost = cost, lp=teachcosts.lp, oldstat=teachcosts[stat]});
+                createButton(playerid, weaponskill.." "..teachcosts[weaponskill].." -> "..(teachcosts[weaponskill]+1).." ("..cost..")", start.x, start.y+row*size.y, size.x, size.y, 0, 255, 152, "teach", {stat = weaponskill, cost = cost, lp=teachcosts.lp, oldstat=teachcosts[weaponskill]});
             end
         end
+        row = row + 1;
     end
 end
 
@@ -61,10 +77,11 @@ function teach(playerid, args)
 end
 
 function getNextTeachCost(playerid)
-    local responses = DB_select("id, (maxmana+str+dex+onehanded+twohanded+bow+crossbow) as totalstats, lp, str, dex, onehanded, twohanded, bow, crossbow, maxmana","character_stats","characterid = "..PLAYERS[playerid].character);
+    local responses = DB_select("id, (maxmana+str+dex) as stats, (onehanded+twohanded+bow+crossbow) as weapons, lp, str, dex, onehanded, twohanded, bow, crossbow, maxmana","character_stats","characterid = "..PLAYERS[playerid].character);
     for key_, response in pairs(responses) do
         return {
-            cost = math.max(1, math.ceil((tonumber(response.totalstats)-9)/10)),
+            stats = math.max(1, math.ceil((tonumber(response.stats)-9)/10))
+            weapons = math.max(1, math.ceil(tonumber(response.weapons)/10)),
             str = tonumber(response.str),
             dex = tonumber(response.dex),
             onehanded = tonumber(response.onehanded),
