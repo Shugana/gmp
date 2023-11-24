@@ -21,13 +21,13 @@ function BuffsPlayer(playerid)
         if PLAYERS[playerid].buffs[key].effect ~= nil then
             _G[PLAYERS[playerid].buffs[key].effect.func](playerid, key);
         end
-        
+
         if (goal > 100) then
             PLAYERS[playerid].buffs[key] = nil;
             return;
         end
-        local startx, starty = convertToPixel(800, 300);
-        local sizex, sizey = convertToPixel(128, 128);
+        local startx, starty = convertToPixel(1000, 16);
+        local sizex, sizey = convertToPixel(64, 64);
         
         PLAYERS[playerid].buffs[key].current = CreateTexture(startx+key*sizex, starty, startx+key*sizex+sizex, starty+sizey, "DATA\\TEXTURES\\DESKTOP\\SKORIP\\BUFFS_"..goal..".TGA");
         ShowTexture(playerid, PLAYERS[playerid].buffs[key].current);
@@ -66,8 +66,6 @@ function OnPlayerUseItem(playerid, itemInstance, amount, hand)
 end
 
 function drinkHealPot(playerid, heal, graphic, time)
-    local startx, starty = convertToPixel(1000, 16);
-    local sizex, sizey = convertToPixel(64, 64);
     local newbuff = {
         bgtexture = graphic,
         current = nil,
@@ -99,6 +97,8 @@ function healOverTime(playerid, buffnumber)
     local healdone = PLAYERS[playerid].buffs[buffnumber].effect.args.healed;
 
     local thisheal = healestimated - healdone;
+
+    debug(healtotal..": "..healdone.."/"..healestimated.." ("..progress..") -> +"..thisheal);
 
     if (thisheal < 1) then
         return;
