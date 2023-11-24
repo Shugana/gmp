@@ -36,7 +36,7 @@ function tp(playerid, params)
         targetname = targetS;
     end
 
-    if (PLAYERS[sourceid] == nil and NPCS[sourceid == nil]) or (PLAYERS[targetid] == nil or NPCS[sourceid] == nil) then
+    if (PLAYERS[sourceid] == nil and NPCS[sourceid == nil]) or (PLAYERS[targetid] == nil and NPCS[sourceid] == nil) then
         sendERRMessage(playerid, "Teleportierender Spieler oder Ziel nicht online oder kein NPC");
         return;
     end
