@@ -49,11 +49,37 @@ function initServerdraws()
         OCMOBINTER,
         "LAB",
         "",
-        "NEWWORLD\\KHORINIS.ZEN",
+        "CALLAWORLD.ZEN",
         -876,
         -166,
         -4251,
         "Strandlabor"
+    );
+
+    Mob.Create(
+        "INNOS_NW_MISC_01.ASC",
+        "mobsiname",
+        OCMOBINTER,
+        "INNOS",
+        "",
+        "CALLAWORLD.ZEN",
+        370,
+        -90,
+        -1270,
+        "Innosschrein"
+    );
+
+    Mob.Create(
+        "INNOS_BELIAR_ADDON_01.ASC",
+        "mobsiname",
+        OCMOBINTER,
+        "INNOS",
+        "",
+        "CALLAWORLD.ZEN",
+        270,
+        -90,
+        -2000,
+        "Beliarschrein"
     );
 
 end
