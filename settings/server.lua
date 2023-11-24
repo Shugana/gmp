@@ -70,7 +70,7 @@ function initServerdraws()
     );
 
     Mob.Create(
-        "CALLAADANOS.3DS",
+        "CALLAADANOS.ASC",
         "mobsiname",
         OCMOBINTER,
         "INNOS",
