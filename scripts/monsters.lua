@@ -25,7 +25,7 @@ function spawnMonsterOnPlayer(playerid, params)
     local x, y, z = GetPlayerPos(playerid);
     local angle = GetPlayerAngle(playerid);
     local x_add, z_add = coords_forward(angle);
-    spawnMonster(tier, GetPlayerWorld(playerid), x-x_add*250, y+50, z+z_add*250);
+    spawnMonster(tier, GetPlayerWorld(playerid), x+x_add*250, y+50, z+z_add*250);
 end
 
 function spawnMonster(instance, world, x, y, z)

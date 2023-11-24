@@ -36,17 +36,25 @@ function tp(playerid, params)
         targetname = targetS;
     end
 
-    if PLAYERS[sourceid] == nil or PLAYERS[targetid] == nil then
-        sendERRMessage(playerid, "Teleportierender Spieler oder Ziel nicht online");
+    if (PLAYERS[sourceid] == nil and NPCS[sourceid == nil]) or (PLAYERS[targetid] == nil or NPCS[sourceid] == nil) then
+        sendERRMessage(playerid, "Teleportierender Spieler oder Ziel nicht online oder kein NPC");
         return;
     end
     local x,y,z = GetPlayerPos(targetid);
+    local angle = GetPlayerAngle(targetid);
+    local x_add, z_add = coords_forward(angle);
+
+    local newx = x + x_add;
+    local newy = y + 50;
+    local newz = z + z_add;
     if not(GetPlayerWorld(sourceid) == GetPlayerWorld(targetid)) then
         SetPlayerWorld(sourceid, GetPlayerWorld(targetid));
     end
-    SetPlayerPos(sourceid, x, y, z);
+    SetPlayerPos(sourceid, newx, newy, newz);
     sendINFOMessage(sourceid, sourcename.." ("..sourceid..") teleportiert zu "..targetname.." ("..targetid..")");
-    sendINFOMessage(playerid, sourcename.." ("..sourceid..") teleportiert zu "..targetname.." ("..targetid..")");
+    if (playerid ~= sourceid) then
+        sendINFOMessage(playerid, sourcename.." ("..sourceid..") teleportiert zu "..targetname.." ("..targetid..")");
+    end
     log("tp", sourcename.." ("..PLAYERS[sourceid].character..") teleportiert zu "
         ..targetname.." ("..PLAYERS[targetid].character.."). Auslöser: "..GetPlayerName(playerid).." ("..PLAYERS[playerid].character..")");
 end
