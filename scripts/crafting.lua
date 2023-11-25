@@ -139,7 +139,8 @@ function craftChosen(playerid, args)
         end
         createClickableTexture(playerid, ingredient.graphic, start.x, start.y+size*row, size, size,
             "craft", {name=args.name, recipe=args.recipe, duration=args.duration, mobsi=args.mobsi});
-        createText(playerid, "Forschen: "..ingredient.name..": "..available.." / "..ingredient.amount, start.x+size, start.y+size*row, 400-size, size, r, g, b);
+        --createText(playerid, "ingredient.name..": "..available.." / "..ingredient.amount, start.x+size, start.y+size*row, 400-size, size, r, g, b);
+        createText(playerid, "Forschen: "..ingredient.name, start.x+size, start.y+size*row, 400-size, size, r, g, b);
         row = row + 1;
     end
 
@@ -150,7 +151,7 @@ function craftChosen(playerid, args)
 
     createClickableTexture(playerid, args.graphic, 700, 200, 400, 400, "craft", {name=args.name, recipe=args.recipe, duration=args.duration, mobsi=args.mobsi});
     createClickableTexture(playerid, SERVERDRAWS.craftingbackground.graphic, 710, 550, 380, 32, "craft", {name=args.name, recipe=args.recipe, duration=args.duration, mobsi=args.mobsi});
-    createClickableTexture(playerid, "Data\\Textures\\BAR_XP.tga", 725, 558, math.floor(351/percent*100), 16, "craft", {name=args.name, recipe=args.recipe, duration=args.duration, mobsi=args.mobsi});
+    createClickableTexture(playerid, "Data\\Textures\\BAR_XP.tga", 725, 558, math.floor(percent*351/100), 16, "craft", {name=args.name, recipe=args.recipe, duration=args.duration, mobsi=args.mobsi});
     createPlaintext(playerid, math.floor(percent).."%", 877, 552, 255, 255, 255);
 end
 
