@@ -143,10 +143,12 @@ function craftChosen(playerid, args)
         row = row + 1;
     end
     createClickableTexture(playerid, args.graphic, 700, 200, 400, 400, "craft", {name=args.name, recipe=args.recipe, duration=args.duration, mobsi=args.mobsi});
+    createClickableTexture(playerid, SERVERDRAWS.craftingbackground.graphic, 710, 550, 380, 32, "craft", {name=args.name, recipe=args.recipe, duration=args.duration, mobsi=args.mobsi});
+    createClickableTexture(playerid, "Data\\Textures\\BAR_XP.tga", 721, 553, 369, 26, "craft", {name=args.name, recipe=args.recipe, duration=args.duration, mobsi=args.mobsi});
 end
 
 function craft(playerid, args)
-    craftingStart(playerid, args.name, args.duration, "craftCreated", {name=args.name, recipe=args.recipe}, nil);
+    craftingStart(playerid, args.name, args.duration, "craftCreated", {name=args.name, recipe=args.recipe, mobsi=args.mobsi}, nil);
 end
 
 function craftCreated(playerid)
