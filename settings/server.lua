@@ -14,7 +14,7 @@ SERVERDRAWS = {
         id = nil,
         pos = {x=3500, y=7875},
         size = {x=3500, y=8025},
-        graphic = "Data\\Textures\\Desktop\\nomip\\Bar_Misc.tga"
+        graphic = "Data\\Textures\\BAR_XP.tga"
     }
 }
 
