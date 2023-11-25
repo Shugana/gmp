@@ -92,7 +92,7 @@ function OnPlayerTriggerMob(playerid, scheme, objectName, trigger)
     --debug("Triggered Mobsi - playerid: "..playerid..", scheme: "..scheme..", objectName: "..objectName..", trigger: "..trigger);
     if (trigger == 1) then
         freeze(playerid, "mobsi");
-        local responses = DB_select("*", "craft_mobsis", "mobsiname = '"..scheme.."'");
+        local responses = DB_select("*", "craft_mobsis", "name = '"..scheme.."'");
         for _key, _value in pairs(responses) do
             craftMenu(playerid, scheme);
             return;
