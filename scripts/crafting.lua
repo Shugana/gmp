@@ -95,7 +95,7 @@ function craftMenu(playerid, mobsi)
 
     local responses = DB_select(
         "crafts.id AS id, items.instance, items.graphic, crafts.name, crafts.crafttime",
-        "characters, character_crafts, crafts, craft_results, craft_mobsies, items",
+        "characters, character_crafts, crafts, craft_results, craft_mobsis, items",
         "characters.id = character_crafts.characterid AND character_crafts.craftid = crafts.id AND crafts.id = craft_results.craftid "..
         "AND craft_results.itemid = items.id AND characters.id = "..PLAYERS[playerid].character.. " AND craft_mobsis.id = crafts.mobsiid AND craft_mobsis.name = '"..mobsi.."'"
     );
