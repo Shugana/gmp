@@ -93,6 +93,7 @@ function craftMenu(playerid, mobsi)
     local crafts = DB_select("crafts.*", "crafts, craft_mobsis", "crafts.mobsiid = craft_mobsis.id AND craft_mobsis.name = '"..mobsi.."'");
     for _key, craft in pairs(crafts) do
         local craftid = tonumber(craft.id);
+        local xp = tonumber(craft.experience);
         if (character_crafts[craftid] ~= nil and character_crafts[craftid] >= xp) then
             table.insert(completed, craft);
         end
