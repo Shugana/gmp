@@ -103,7 +103,7 @@ function craftMenu(playerid, mobsi)
         if (character_crafts[craftid] == nil and (charjob == 0 or charjob == tonumber(craft.jobid))) then
             local allowed = true;
             local requirements = DB_select("*", "craft_requirements", "craftid = "..craftid);
-            for _key, requirement in pairs(requirements)
+            for _key, requirement in pairs(requirements) do
             local reqid = tonumber(requirement.requirementid);
                 if (character_crafts[reqid] == nil or character_crafts[reqid] < xp) then
                     allowed = false;
