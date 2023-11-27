@@ -77,6 +77,316 @@ function canWork(playerid)
     return true; -- for now... later: check hunger, check illness, etc.
 end
 
+function craftMenu(playerid, mobsi)
+    local charjob = getJob(playerid);
+    
+    local character_crafts = {};
+    local teaches = DB_select("*", "character_crafts", "characterid = "..PLAYERS[playerid].character);
+    for _key, teach in pairs(teaches) do
+        character_crafts[teach.craftid] = teach.experience;
+    end
+
+    local completed = {};
+    local researching = {};
+    local canResearch = {};
+
+    local crafts = DB_select("*", "crafts, craft_mobsis", "crafts.mobsiid = craft_mobsis.id AND craft_mobsis.name = '"..mobsi.."'");
+    for _key, craft in pairs(crafts) do
+        local craftid = tonumber(craft.id);
+        local xp = tonumber(craft.experience);
+        if (character_crafts[craftid] ~= nil and character_crafts[craftid] >= tonumber(xp)) then
+            table.insert(completed, craft);
+        end
+        if (character_crafts[craftid] ~= nil and character_crafts[craftid)] < tonumber(xp)) then
+            table.insert(researching, craft);
+        end
+        if (character_crafts[craftid] == nil and (charjob == 0 or charjob == tonumber(craft.jobid))) then
+            local allowed = true;
+            local requirements = DB_select("*", "craft_requirements", "craftid = "..craftid));
+            for _key, requirement in pairs(requirements)
+            local reqid = tonumber(requirement.requirementid);
+                if (character_crafts[reqid] == nil or character_crafts[reqid] < xp) then
+                    allowed = false;
+                end
+            end
+            if (allowed == true)  then
+                table.insert(canResearch, craft);
+            end
+        end
+    end
+
+    setupMenu(playerid, true);
+
+    local position = craftAppendList(playerid, completed, 0, "craftChosen", mobsi, "", false);
+    position = craftAppendList(playerid, researching, position, "craftChosen", mobsi, "Forschen :", false);
+    position = craftAppendList(playerid, canResearch, position, "learnCraft", mobsi, "Forschung starten: ", true);
+end
+
+function craftAppendList(playerid, craftgroup, position, func, mobsi, prefix, showLP)
+    local size = 50;
+    local start = {x=1100, y=200};
+    local text;
+    for _key, craft in pairs(craftgroup) do
+        column = position %2;
+        row = math.ceil(position/2);
+        text = prefix..craft.name;
+        if (showLP) then
+            text = text.."("..tonumber(craft.lp).." LP)";
+        end
+        createClickableTexture(playerid, craft.graphic, start.x+column*8*size, start.y+row*size, size, size,
+            func, {mobsi=mobsi, recipe=craft.id});
+        createButton(playerid, text, start.x+(8*column+1)*size, start.y+row*size+7, size*7, size, 255, 255, 255,
+            func, {mobsi=mobsi, recipe=craft.id});
+        position = position +1;
+    end
+    return position;
+end
+
+function craftChosen(playerid, args)
+    craftMenu(playerid, args.mobsi);
+
+    local crafts = DB_select(
+        "crafts.name, crafts.graphic, character_crafts.experience AS xpgained, crafts.experience AS xptotal, crafts.crafttime, character_crafts.amount",
+        "crafts, character_crafts",
+        "crafts.id = character_crafts.craftid AND crafts.id = "..args.recipe
+    );
+    local data;
+    for _key, craft in pairs(crafts) do
+        data = craft;
+    end
+
+    if (data == nil) then
+        sendERRMessage(playerid, "Du willst ein Rezept anzeigen, was du nicht kannst. Melde diesen Bug bitte dem Team");
+        return;
+    end
+
+    local start = {x=700, y=600};
+    local size = 40;
+
+    local duration = tonumber(data.crafttime);
+    local xpgained = tonumber(data.xpgained);
+    local xptotal = tonumber(data.xptotal);
+    local percent = xpgained/xptotal*100;
+
+    if (xpgained < xptotal) then
+        createClickableTexture(playerid, data.graphic, start.x, start.y-(size*10), size*10, size*10, "craftChosen", args);
+        createPlaintext(playerid, "Forschung: "..data.name, start.x+25, start.y-(size*10)+25, 255, 255, 255);
+        createClickableTexture(playerid, SERVERDRAWS.craftingbackground.graphic, 710, 550, 380, 32, "craftChosen", args);
+        createClickableTexture(playerid, "Data\\Textures\\BAR_XP.tga", 725, 558, math.floor(percent*351/100), 16, "craftChosen", args);
+        createPlaintext(playerid, math.floor(percent).."%", 877, 552, 255, 255, 255);
+    else
+        createPlaintext(playerid, data.name, start.x+25, 225, 255, 255, 255);
+        createClickableTexture(playerid, data.graphic, start.x, start.y-(size*10), size*10, size*10, "craft", {name=data.name, recipe=args.recipe, duration=duration, mobsi=args.mobsi});
+    end
+    
+    local row = 0;
+    local r, g, b;
+    local ingredients = DB_select(
+        "items.id, items.name, items.graphic, craft_ingredients.amount",
+        "crafts, craft_ingredients, items",
+        "crafts.id = craft_ingredients.craftid AND craft_ingredients.itemid = items.id AND crafts.id = "..args.recipe);
+    for _key, ingredient in pairs(ingredients) do
+        local available = 0;
+        local required = tonumber(ingredient.amount);
+        local items = DB_select(
+            "*",
+            "character_inventory",
+            "characterid = "..PLAYERS[playerid].character.." AND itemid = "..ingredient.id);
+        for _key, item in pairs(items) do
+            available = tonumber(item.amount);
+        end
+
+        local text = ingredient.name..": "..available.." / "..ingredient.amount;
+        local func = "craft";
+        local func_args = {recipe=args.recipe, ingredient=tonumber(item.itemid), mobsi=args.mobsi};
+
+        if (xpgained < xptotal) then
+            required = 1;
+            text = "Forschen: "..ingredient.name";
+            func = "research";
+        end
+
+        if (available < required) then
+            r, g, b = 196, 30, 58;
+        else
+            r, g, b = 0, 255, 152;
+        end
+
+        createClickableTexture(playerid, ingredient.graphic, start.x, start.y+size*row, size, size, func, func_args);
+        createButton(playerid, text, start.x+size, start.y+size*row, size*9, size, r, g, b, func, func_args);
+        row = row + 1;
+    end
+end
+
+function craft(playerid, args)
+    local crafts = DB_select("*", "crafts", "crafts.id = "..args.recipe);
+    local data;
+    for _key, craft in pairs(crafts) do
+        data = craft;
+    end
+    if (data == nil) or (hasAllIngredients(playerid, args.recipeid) == false) then
+        sendERRMessage(playerid, "Du hast nicht alles bei dir.");
+        craftChosen(playerid, args)
+        return;
+    end
+    craftingStart(playerid, data.name, data.crafttime, "craftCreated", args, nil);
+end
+
+function research(playerid, args)
+    local crafts = DB_select("*", "crafts", "crafts.id = "..args.recipe);
+    local data;
+    for _key, craft in pairs(crafts) do
+        data = craft;
+    end
+    if (data == nil) or (hasIngredient(playerid, args.ingredient) == false) then
+        sendERRMessage(playerid, "Du hast nicht alles bei dir.");
+        craftChosen(playerid, args)
+        return;
+    end
+    craftingStart(playerid, args.name, args.crafttime, "researchDone", args, nil);
+end
+
+function hasAllIngredients(playerid, recipeid)
+    local crafts = DB_select("*", "crafts", "crafts.id = "..recipeid);
+    local data;
+    for _key, craft in pairs(crafts) do
+        data = craft;
+    end
+    if (data == nil) then
+        return false;
+    end
+
+    local ingredients = DB_select(
+        "items.id, items.name, items.graphic, craft_ingredients.amount",
+        "crafts, craft_ingredients, items",
+        "crafts.id = craft_ingredients.craftid AND craft_ingredients.itemid = items.id AND crafts.id = "..recipeid);
+    for _key, ingredient in pairs(ingredients) do
+        local available = 0;
+        local required = tonumber(ingredient.amount);
+        local items = DB_select(
+            "*",
+            "character_inventory",
+            "characterid = "..PLAYERS[playerid].character.." AND itemid = "..ingredient.id);
+        for _key, item in pairs(items) do
+            available = tonumber(item.amount);
+        end
+        if available < required then
+            return false;
+        end
+    end
+    return true;
+end
+
+function hasIngredient(playerid, ingredientid)
+    local items = DB_select(
+        "*",
+        "character_inventory",
+        "characterid = "..PLAYERS[playerid].character.." AND itemid = "..ingredientid);
+    for _key, item in pairs(items) do
+        if (tonumber(item.amount) < 1) then
+            return false;
+        end
+    end
+    return false;
+end
+
+function craftCreated(playerid)
+    local args = PLAYERS[playerid].working.options;
+    if hasAllIngredients(playerid, args.recipe) == false then
+        sendERRMessage(playerid, "Du hast nicht alle Zutaten bei dir");
+        craftChosen(playerid, args);
+        return;
+    end
+    local xpgained = 0;
+    local ingredients = DB_select(
+        "craft_ingredients.itemid, craft_ingredients.amount, items.experience",
+        "items, craft_ingredients",
+        "items.id = crafts.itemid AND crafts.craftid = "..args.recipe);
+    for _key, ingredient in pairs(ingredients) do
+        RemoveItemById(playerid, tonumber(ingredient.itemid), tonumber(ingredient.amount));
+        xpgained = xpgained + tonumber(ingredient.experience);
+    end
+    local results = DB_select("*", "craft_results", "craftid = "..args.recipe);
+    for _key, result in pairs(results) do
+        GiveItemById(playerid, tonumber(ingredient.itemid), tonumber(ingredient.amount));
+    end
+    local charcrafts = DB_select("*", "character_crafts", "craftid = "..args.recipe);
+    for _key, charcraft in pairs(charcrafts) do
+        DB_update(tablename, {experience=tonumber(charcraft.experience)+xpgained, amount=tonumber(charcraft.amount)+1}, "craftid = "..args.recipe)
+    end
+    craftChosen(playerid, args);
+end
+
+function researchDone(playerid)
+    local args = PLAYERS[playerid].working.options;
+    
+    local xpgained = 0;
+    local ingredients = DB_select(
+        "craft_ingredients.itemid, craft_ingredients.amount, items.experience",
+        "items, craft_ingredients",
+        "items.id = crafts.itemid AND crafts.craftid = "..args.recipe.. "AND craft_ingredients.itemid = "..args.ingredient);
+    for _key, ingredient in pairs(ingredients) do
+        RemoveItemById(playerid, tonumber(ingredient.itemid), tonumber(ingredient.amount));
+        xpgained = xpgained + tonumber(ingredient.experience);
+    end
+    local charcrafts = DB_select("*", "character_crafts", "craftid = "..args.recipe);
+    for _key, charcraft in pairs(charcrafts) do
+        DB_update(tablename, {experience=tonumber(charcraft.experience)+xpgained}, "craftid = "..args.recipe)
+    end
+    craftChosen(playerid, args);
+end
+
+function learnCraft(playerid, args)
+    local name = "";
+    local lp = 0;
+    local job = "Taugenichts";
+    local responses = DB_select("crafts.name as name, jobs.name as job, crafts.lp", "crafts, jobs", "jobs.id = crafts.jobid AND crafts.id = "..args.recipe);
+    for _key, response in pairs(responses) do
+        name = response.name;
+        job = response.job;
+        lp = tonumber(response.lp);
+    end
+    setupMenu(playerid);
+
+    createText(playerid, "Die Forschung an '"..name.."' kostet "..lp.." Lernpunkte.", 640, 300, 640, 37, 255, 255, 255);
+    createText(playerid, "Diese Forschung kann nur ein "..job, 640, 337, 640, 37, 255, 255, 255);
+    createText(playerid, "Möchtest du die Forschung starten?", 640, 374, 640, 37, 255, 255, 255);
+
+    createButton(playerid, "-- Ja --", 640, 411, 320, 37, 255, 255, 255, "acceptLearning", args);
+    createButton(playerid, "- Nein -", 960, 448, 320, 37, 255, 255, 255, "craftMenu", {mobsi=args.mobsi});
+end
+
+function acceptLearning(playerid, args)
+    local name = "";
+    local lpcost = 0;
+    local job = "Taugenichts";
+    local jobid = 0;
+    local crafts = DB_select("crafts.name as name, jobs.name as job, jobs.id as jobid, crafts.lp", "crafts, jobs", "jobs.id = crafts.jobid AND crafts.id = "..args.recipe);
+    for _key, craft in pairs(crafts) do
+        name = craft.name;
+        job = craft.job;
+        jobid = tonumber(craft.jobid);
+        lpcost = tonumber(craft.lp);
+    end
+
+    local lp = 0;
+    local characters = DB_select("*", "character_stats", "characterid = "..PLAYERS[playerid].character)
+    for _key, character in pairs(characters) do
+        lp = tonumber(character.lp);
+    end
+
+    if (lp < lpcost) then
+        sendERRMessage(playerid, "Du hast keine "..lp.." Lernpunkte.");
+        craftMenu(playerid, args.mobsi);
+        return;
+    end
+    DB_update("character_stats", {lp = lp-lpcost}, "characterid = "..PLAYERS[playerid].character);
+    SetPlayerLearnPoints(playerid, lp-lpcost);
+    DB_update("character_jobs", {jobid = jobid}, "characterid = "..PLAYERS[playerid].character);
+    DB_insert("character_crafts", {characterid = PLAYERS[playerid].character, craftid = args.recipe});
+    craftChosen(playerid, args);
+end
+
 function createJobs(playerid)
     local characterjobid = DB_insert("character_jobs", {characterid=PLAYERS[playerid].character});
     if (characterjobid < 0) then
@@ -85,81 +395,11 @@ function createJobs(playerid)
     end
 end
 
-function craftMenu(playerid, mobsi)
-    setupMenu(playerid, true);
-    local size = 50;
-    local start = {x=1100, y=200};
-
-    local column = 0;
-    local row = 0;
-
-    local responses = DB_select(
-        "crafts.id AS id, items.instance, items.graphic, crafts.name, crafts.crafttime",
-        "characters, character_crafts, crafts, craft_results, craft_mobsis, items",
-        "characters.id = character_crafts.characterid AND character_crafts.craftid = crafts.id AND crafts.id = craft_results.craftid "..
-        "AND craft_results.itemid = items.id AND characters.id = "..PLAYERS[playerid].character.. " AND craft_mobsis.id = crafts.mobsiid AND craft_mobsis.name = '"..mobsi.."'"
-    );
-    for _key, response in pairs(responses) do
-        createClickableTexture(playerid, response.graphic, start.x+column*8*size, start.y+row*size, size, size,
-            "craftChosen", {mobsi=mobsi,recipe=response.id, name=response.name, graphic=response.graphic, duration=response.crafttime});
-        createButton(playerid, response.name, start.x+(8*column+1)*size, start.y+row*size+7, size*7, size, 255, 255, 255,
-            "craftChosen", {mobsi=mobsi,recipe=response.id, name=response.name, graphic=response.graphic, duration=response.crafttime});
-        column = column + 1;
-        if column > 1 then
-            column = 0;
-            row = row + 1;
-        end
+function getJob(playerid)
+    local jobid = 0;
+    local jobs = DB_select("*", "character_jobs", "characterid = "..PLAYERS[playerid].character);
+    for _key, job in pairs(jobs) do
+        charjob = tonumber(job.jobid);
     end
-end
-
-function craftChosen(playerid, args)
-    local size = 40;
-    local start = {x=700, y=600};
-    local row = 0;
-    local r, g, b;
-    craftMenu(playerid, args.mobsi);
-    createPlaintext(playerid, "Forschung: "..args.name, start.x+25, 225, 255, 255, 255);
-    local ingredients = DB_select(
-        "items.id, items.name, items.graphic, craft_ingredients.amount",
-        "crafts, craft_ingredients, items",
-        "crafts.id = craft_ingredients.craftid AND craft_ingredients.itemid = items.id AND crafts.id = "..args.recipe);
-    for _key, ingredient in pairs(ingredients) do
-        local available = 0;
-        local items = DB_select(
-            "*",
-            "character_inventory",
-            "characterid = "..PLAYERS[playerid].character.." AND itemid = "..ingredient.id);
-        for _key, item in pairs(items) do
-            available = tonumber(item.amount);
-        end
-        if (available < tonumber(ingredient.amount)) then
-            r, g, b = 196, 30, 58;
-        else
-            r, g, b = 0, 255, 152;
-        end
-        createClickableTexture(playerid, ingredient.graphic, start.x, start.y+size*row, size, size,
-            "craft", {name=args.name, recipe=args.recipe, duration=args.duration, mobsi=args.mobsi});
-        --createText(playerid, "ingredient.name..": "..available.." / "..ingredient.amount, start.x+size, start.y+size*row, 400-size, size, r, g, b);
-        createText(playerid, "Forschen: "..ingredient.name, start.x+size, start.y+size*row, 400-size, size, r, g, b);
-        row = row + 1;
-    end
-
-
-    local percent = math.random(0,1000)/10;
-    debug(percent);
-
-
-    createClickableTexture(playerid, args.graphic, 700, 200, 400, 400, "craft", {name=args.name, recipe=args.recipe, duration=args.duration, mobsi=args.mobsi});
-    createClickableTexture(playerid, SERVERDRAWS.craftingbackground.graphic, 710, 550, 380, 32, "craft", {name=args.name, recipe=args.recipe, duration=args.duration, mobsi=args.mobsi});
-    createClickableTexture(playerid, "Data\\Textures\\BAR_XP.tga", 725, 558, math.floor(percent*351/100), 16, "craft", {name=args.name, recipe=args.recipe, duration=args.duration, mobsi=args.mobsi});
-    createPlaintext(playerid, math.floor(percent).."%", 877, 552, 255, 255, 255);
-end
-
-function craft(playerid, args)
-    craftingStart(playerid, args.name, args.duration, "craftCreated", {name=args.name, recipe=args.recipe, mobsi=args.mobsi}, nil);
-end
-
-function craftCreated(playerid)
-    sendERRMessage(playerid, "Test. Noch keine Items ("..PLAYERS[playerid].working.options.name.." ("..PLAYERS[playerid].working.options.recipe..")) erstellt und auch kein Material verbraucht.");
-    craftMenu(playerid, PLAYERS[playerid].working.options.mobsi);
+    return jobid;
 end

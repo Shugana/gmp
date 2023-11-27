@@ -72,7 +72,7 @@ function playerGetsItem(playerid, iteminstance, amount)
     GiveItemById(playerid, itemid, amount);
 end
 
-function GiveItemById(playerid, itemid, amount);
+function GiveItemById(playerid, itemid, amount)
     if PLAYERS[playerid] == nil or PLAYERS[playerid].character == nil then
         sendERRMessage(playerid, "Du solltest ein Item bekommen, aber der Server denkt du bist nicht eingelogged. Melde dies mit Datum und Uhrzeit dem Team.")
         log("bugs", "GiveItemById - playerid: "..playerid..", itemid: "..itemid..", amount: "..amount);
@@ -92,6 +92,25 @@ function GiveItemById(playerid, itemid, amount);
         end
         GiveItem(playerid, item.instance, amount);
         sendINFOMessage(playerid, "Du bekommst "..amount.."x "..item.name);
+        return;
+    end
+end
+
+function RemoveItemById(playerid, itemid, amount)
+    if PLAYERS[playerid] == nil or PLAYERS[playerid].character == nil then
+        sendERRMessage(playerid, "Du solltest ein Item gelöscht bekommen, aber der Server denkt du bist nicht eingelogged. Melde dies mit Datum und Uhrzeit dem Team.")
+        log("bugs", "RemoveItemById - playerid: "..playerid..", itemid: "..itemid..", amount: "..amount);
+        return
+    end
+    local oldamount = nil;
+    local items = DB_select("*", "items", "id = "..itemid);
+    for _key, item in pairs(items) do
+        local inventories = DB_select("*", "character_inventory", "characterid = "..PLAYERS[playerid].character.." AND itemid = "..itemid);
+        for _key, inventory in pairs(inventories) do
+            oldamount = tonumber(inventory.amount);
+        end
+        DB_update("character_inventory", {amount=oldamount-amount}, "characterid = "..PLAYERS[playerid].character.." AND itemid = "..itemid);
+        RemoveItem(playerid, item.instance, amount);
         return;
     end
 end
