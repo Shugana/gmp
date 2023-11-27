@@ -119,7 +119,7 @@ function craftMenu(playerid, mobsi)
 
     local position = craftAppendList(playerid, completed, 0, "craftChosen", mobsi, "", false);
     position = craftAppendList(playerid, researching, position, "craftChosen", mobsi, "Forschen: ", false);
-    position = craftAppendList(playerid, canResearch, position, "learnCraft", mobsi, "Forschung starten: ", true);
+    position = craftAppendList(playerid, canResearch, position, "learnCraft", mobsi, "Neu: ", true);
 end
 
 function craftAppendList(playerid, craftgroup, position, func, mobsi, prefix, showLP)
@@ -128,7 +128,7 @@ function craftAppendList(playerid, craftgroup, position, func, mobsi, prefix, sh
     local text;
     for _key, craft in pairs(craftgroup) do
         column = position %2;
-        row = math.ceil(position/2);
+        row = math.floor(position/2);
         text = prefix..craft.name;
         if (showLP) then
             text = text.." ("..tonumber(craft.lp).." LP)";
@@ -348,8 +348,8 @@ function learnCraft(playerid, args)
     end
     setupMenu(playerid);
 
-    createText(playerid, "Die Forschung an '"..name.."' kostet "..lp.." Lernpunkte.", 600, 300, 720, 37, 255, 255, 255);
-    createText(playerid, "Diese Forschung kann nur ein "..job, 600, 337, 720, 37, 255, 255, 255);
+    createText(playerid, "'"..name.."' zu erforschen verbraucht "..lp.." Lernpunkte.", 600, 300, 720, 37, 255, 255, 255);
+    createText(playerid, "Diese Forschung kann nur ein "..job.. " durchführen.", 600, 337, 720, 37, 255, 255, 255);
     createText(playerid, "Möchtest du die Forschung starten?", 600, 374, 720, 37, 255, 255, 255);
 
     createButton(playerid, "-------- Ja --------", 600, 411, 360, 37, 255, 255, 255, "acceptLearning", args);
