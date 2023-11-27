@@ -198,7 +198,7 @@ function craftChosen(playerid, args)
 
         local text = ingredient.name..": "..available.." / "..ingredient.amount;
         local func = "craft";
-        local func_args = {recipe=args.recipe, ingredient=tonumber(item.itemid), mobsi=args.mobsi};
+        local func_args = {recipe=args.recipe, ingredient=tonumber(ingredient.id), mobsi=args.mobsi};
 
         if (xpgained < xptotal) then
             required = 1;
@@ -376,7 +376,7 @@ function acceptLearning(playerid, args)
     end
 
     if (lp < lpcost) then
-        sendERRMessage(playerid, "Du hast keine "..lp.." Lernpunkte.");
+        sendERRMessage(playerid, "Du hast keine "..lpcost.." Lernpunkte.");
         craftMenu(playerid, args.mobsi);
         return;
     end
@@ -384,6 +384,7 @@ function acceptLearning(playerid, args)
     SetPlayerLearnPoints(playerid, lp-lpcost);
     DB_update("character_jobs", {jobid = jobid}, "characterid = "..PLAYERS[playerid].character);
     DB_insert("character_crafts", {characterid = PLAYERS[playerid].character, craftid = args.recipe});
+    PlaySound(playerid, LEVELUPSOUND);
     craftChosen(playerid, args);
 end
 
