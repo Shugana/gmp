@@ -283,11 +283,11 @@ function hasIngredient(playerid, ingredientid)
         "character_inventory",
         "characterid = "..PLAYERS[playerid].character.." AND itemid = "..ingredientid);
     for _key, item in pairs(items) do
-        if (tonumber(item.amount) < 1) then
-            return false;
+        if (tonumber(item.amount) > 0) then
+            return true;
         end
     end
-    return true;
+    return false;
 end
 
 function craftCreated(playerid)
