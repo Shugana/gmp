@@ -131,7 +131,7 @@ function craftAppendList(playerid, craftgroup, position, func, mobsi, prefix, sh
         row = math.ceil(position/2);
         text = prefix..craft.name;
         if (showLP) then
-            text = text.."("..tonumber(craft.lp).." LP)";
+            text = text.." ("..tonumber(craft.lp).." LP)";
         end
         createClickableTexture(playerid, craft.graphic, start.x+column*8*size, start.y+row*size, size, size,
             func, {mobsi=mobsi, recipe=craft.id});
@@ -348,12 +348,12 @@ function learnCraft(playerid, args)
     end
     setupMenu(playerid);
 
-    createText(playerid, "Die Forschung an '"..name.."' kostet "..lp.." Lernpunkte.", 640, 300, 640, 37, 255, 255, 255);
-    createText(playerid, "Diese Forschung kann nur ein "..job, 640, 337, 640, 37, 255, 255, 255);
-    createText(playerid, "Möchtest du die Forschung starten?", 640, 374, 640, 37, 255, 255, 255);
+    createText(playerid, "Die Forschung an '"..name.."' kostet "..lp.." Lernpunkte.", 600, 300, 720, 37, 255, 255, 255);
+    createText(playerid, "Diese Forschung kann nur ein "..job, 600, 337, 720, 37, 255, 255, 255);
+    createText(playerid, "Möchtest du die Forschung starten?", 600, 374, 720, 37, 255, 255, 255);
 
-    createButton(playerid, "-- Ja --", 640, 411, 320, 37, 255, 255, 255, "acceptLearning", args);
-    createButton(playerid, "- Nein -", 960, 411, 320, 37, 255, 255, 255, "craftMenu", {mobsi=args.mobsi});
+    createButton(playerid, "-------- Ja --------", 600, 411, 360, 37, 255, 255, 255, "acceptLearning", args);
+    createButton(playerid, "------- Nein -------", 960, 411, 360, 37, 255, 255, 255, "declineLearning", {mobsi=args.mobsi});
 end
 
 function acceptLearning(playerid, args)
@@ -385,6 +385,10 @@ function acceptLearning(playerid, args)
     DB_update("character_jobs", {jobid = jobid}, "characterid = "..PLAYERS[playerid].character);
     DB_insert("character_crafts", {characterid = PLAYERS[playerid].character, craftid = args.recipe});
     craftChosen(playerid, args);
+end
+
+function declineLearning(playerid, args)
+    craftMenu(playerid, args.mobsi);
 end
 
 function createJobs(playerid)
