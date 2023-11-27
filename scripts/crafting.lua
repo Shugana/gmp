@@ -90,7 +90,7 @@ function craftMenu(playerid, mobsi)
     local researching = {};
     local canResearch = {};
 
-    local crafts = DB_select("*", "crafts, craft_mobsis", "crafts.mobsiid = craft_mobsis.id AND craft_mobsis.name = '"..mobsi.."'");
+    local crafts = DB_select("crafts.*", "crafts, craft_mobsis", "crafts.mobsiid = craft_mobsis.id AND craft_mobsis.name = '"..mobsi.."'");
     for _key, craft in pairs(crafts) do
         local craftid = tonumber(craft.id);
         local xp = tonumber(craft.experience);
@@ -104,7 +104,7 @@ function craftMenu(playerid, mobsi)
             local allowed = true;
             local requirements = DB_select("*", "craft_requirements", "craftid = "..craftid);
             for _key, requirement in pairs(requirements) do
-            local reqid = tonumber(requirement.requirementid);
+                local reqid = tonumber(requirement.requirementid);
                 if (character_crafts[reqid] == nil or character_crafts[reqid] < xp) then
                     allowed = false;
                 end
@@ -353,7 +353,7 @@ function learnCraft(playerid, args)
     createText(playerid, "Möchtest du die Forschung starten?", 640, 374, 640, 37, 255, 255, 255);
 
     createButton(playerid, "-- Ja --", 640, 411, 320, 37, 255, 255, 255, "acceptLearning", args);
-    createButton(playerid, "- Nein -", 960, 448, 320, 37, 255, 255, 255, "craftMenu", {mobsi=args.mobsi});
+    createButton(playerid, "- Nein -", 960, 411, 320, 37, 255, 255, 255, "craftMenu", {mobsi=args.mobsi});
 end
 
 function acceptLearning(playerid, args)
