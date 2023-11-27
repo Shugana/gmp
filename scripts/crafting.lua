@@ -299,7 +299,7 @@ function craftCreated(playerid)
     end
     local xpgained = 0;
     local ingredients = DB_select(
-        "craft_ingredients.itemid, craft_ingredients.amount, items.experience",
+        "craft_ingredients.itemid, craft_ingredients.amount, items.value as experience",
         "items, craft_ingredients",
         "items.id = crafts.itemid AND crafts.craftid = "..args.recipe);
     for _key, ingredient in pairs(ingredients) do
@@ -322,7 +322,7 @@ function researchDone(playerid)
     
     local xpgained = 0;
     local ingredients = DB_select(
-        "craft_ingredients.itemid, craft_ingredients.amount, items.experience",
+        "craft_ingredients.itemid, craft_ingredients.amount, items.value as experience",
         "items, craft_ingredients",
         "items.id = crafts.itemid AND crafts.craftid = "..args.recipe.. " AND craft_ingredients.itemid = "..args.ingredient);
     for _key, ingredient in pairs(ingredients) do
