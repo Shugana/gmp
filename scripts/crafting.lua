@@ -202,7 +202,7 @@ function craftChosen(playerid, args)
 
         if (xpgained < xptotal) then
             required = 1;
-            text = "Forschen: "..ingredient.name";
+            text = "Forschen: "..ingredient.name;
             func = "research";
         end
 
