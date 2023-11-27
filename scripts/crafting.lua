@@ -224,7 +224,7 @@ function craft(playerid, args)
     for _key, craft in pairs(crafts) do
         data = craft;
     end
-    if (data == nil) or (hasAllIngredients(playerid, args.recipeid) == false) then
+    if (data == nil) or (hasAllIngredients(playerid, args.recipe) == false) then
         sendERRMessage(playerid, "Du hast nicht alles bei dir.");
         craftChosen(playerid, args)
         return;
@@ -326,7 +326,7 @@ function researchDone(playerid)
         "items, craft_ingredients",
         "items.id = craft_ingredients.itemid AND craft_ingredients.craftid = "..args.recipe.. " AND craft_ingredients.itemid = "..args.ingredient);
     for _key, ingredient in pairs(ingredients) do
-        RemoveItemById(playerid, tonumber(ingredient.itemid), tonumber(ingredient.amount));
+        RemoveItemById(playerid, tonumber(ingredient.itemid), 1);
         xpgained = xpgained + tonumber(ingredient.experience);
     end
     local charcrafts = DB_select("*", "character_crafts", "craftid = "..args.recipe);
