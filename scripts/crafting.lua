@@ -105,7 +105,7 @@ function craftMenu(playerid, mobsi)
             local requirements = DB_select("craft_requirements.requirementid, crafts.experience", "crafts, craft_requirements", "crafts.id = craft_requirements.id AND craftid = "..craftid);
             for _key, requirement in pairs(requirements) do
                 local reqid = tonumber(requirement.requirementid);
-                if (character_crafts[reqid] == nil or character_crafts[reqid] < tonumer(requirement.experience)) then
+                if (character_crafts[reqid] == nil or character_crafts[reqid] < tonumber(requirement.experience)) then
                     allowed = false;
                 end
             end
