@@ -83,7 +83,7 @@ function craftMenu(playerid, mobsi)
     local character_crafts = {};
     local teaches = DB_select("*", "character_crafts", "characterid = "..PLAYERS[playerid].character);
     for _key, teach in pairs(teaches) do
-        character_crafts[teach.craftid] = teach.experience;
+        character_crafts[tonumber(teach.craftid)] = tonumber(teach.experience);
     end
 
     local completed = {};
@@ -233,17 +233,17 @@ function craft(playerid, args)
 end
 
 function research(playerid, args)
-    local crafts = DB_select("*", "crafts", "crafts.id = "..args.recipe);
+    local crafts = DB_select("*", "crafts", "id = "..args.recipe);
     local data;
     for _key, craft in pairs(crafts) do
         data = craft;
     end
     if (data == nil) or (hasIngredient(playerid, args.ingredient) == false) then
         sendERRMessage(playerid, "Du hast nicht alles bei dir.");
-        craftChosen(playerid, args)
+        craftChosen(playerid, args);
         return;
     end
-    craftingStart(playerid, args.name, args.crafttime, "researchDone", args, nil);
+    craftingStart(playerid, data.name, data.crafttime, "researchDone", args, nil);
 end
 
 function hasAllIngredients(playerid, recipeid)
