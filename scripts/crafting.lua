@@ -118,7 +118,7 @@ function craftMenu(playerid, mobsi)
     setupMenu(playerid, true);
 
     local position = craftAppendList(playerid, completed, 0, "craftChosen", mobsi, "", false);
-    position = craftAppendList(playerid, researching, position, "craftChosen", mobsi, "Forschen :", false);
+    position = craftAppendList(playerid, researching, position, "craftChosen", mobsi, "Forschen: ", false);
     position = craftAppendList(playerid, canResearch, position, "learnCraft", mobsi, "Forschung starten: ", true);
 end
 
@@ -287,7 +287,7 @@ function hasIngredient(playerid, ingredientid)
             return false;
         end
     end
-    return false;
+    return true;
 end
 
 function craftCreated(playerid)
