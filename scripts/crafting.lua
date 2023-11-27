@@ -93,7 +93,6 @@ function craftMenu(playerid, mobsi)
     local crafts = DB_select("crafts.*", "crafts, craft_mobsis", "crafts.mobsiid = craft_mobsis.id AND craft_mobsis.name = '"..mobsi.."'");
     for _key, craft in pairs(crafts) do
         local craftid = tonumber(craft.id);
-        local xp = tonumber(craft.experience);
         if (character_crafts[craftid] ~= nil and character_crafts[craftid] >= xp) then
             table.insert(completed, craft);
         end
@@ -102,10 +101,10 @@ function craftMenu(playerid, mobsi)
         end
         if (character_crafts[craftid] == nil and (charjob == 0 or charjob == tonumber(craft.jobid))) then
             local allowed = true;
-            local requirements = DB_select("*", "craft_requirements", "craftid = "..craftid);
+            local requirements = DB_select("craft_requirements.requirementid, crafts.experience", "crafts, craft_requirements", "crafts.id = craft_requirements.id AND craftid = "..craftid);
             for _key, requirement in pairs(requirements) do
                 local reqid = tonumber(requirement.requirementid);
-                if (character_crafts[reqid] == nil or character_crafts[reqid] < xp) then
+                if (character_crafts[reqid] == nil or character_crafts[reqid] < tonumer(requirement.experience)) then
                     allowed = false;
                 end
             end
@@ -308,7 +307,7 @@ function craftCreated(playerid)
     end
     local results = DB_select("*", "craft_results", "craftid = "..args.recipe);
     for _key, result in pairs(results) do
-        GiveItemById(playerid, tonumber(ingredient.itemid), tonumber(ingredient.amount));
+        GiveItemById(playerid, tonumber(result.itemid), tonumber(result.amount));
     end
     local charcrafts = DB_select("*", "character_crafts", "craftid = "..args.recipe);
     for _key, charcraft in pairs(charcrafts) do
