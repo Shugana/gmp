@@ -243,7 +243,7 @@ function research(playerid, args)
         craftChosen(playerid, args);
         return;
     end
-    craftingStart(playerid, data.name, data.crafttime, "researchDone", args, nil);
+    craftingStart(playerid, "Forschen an "..data.name, data.crafttime, "researchDone", args, nil);
 end
 
 function hasAllIngredients(playerid, recipeid)
