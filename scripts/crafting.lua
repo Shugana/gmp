@@ -94,10 +94,10 @@ function craftMenu(playerid, mobsi)
     for _key, craft in pairs(crafts) do
         local craftid = tonumber(craft.id);
         local xp = tonumber(craft.experience);
-        if (character_crafts[craftid] ~= nil and character_crafts[craftid] >= tonumber(xp)) then
+        if (character_crafts[craftid] ~= nil and character_crafts[craftid] >= xp) then
             table.insert(completed, craft);
         end
-        if (character_crafts[craftid] ~= nil and character_crafts[craftid)] < tonumber(xp)) then
+        if (character_crafts[craftid] ~= nil and character_crafts[craftid] < xp) then
             table.insert(researching, craft);
         end
         if (character_crafts[craftid] == nil and (charjob == 0 or charjob == tonumber(craft.jobid))) then
