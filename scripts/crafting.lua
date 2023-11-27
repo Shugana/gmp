@@ -324,7 +324,7 @@ function researchDone(playerid)
     local ingredients = DB_select(
         "craft_ingredients.itemid, craft_ingredients.amount, items.experience",
         "items, craft_ingredients",
-        "items.id = crafts.itemid AND crafts.craftid = "..args.recipe.. "AND craft_ingredients.itemid = "..args.ingredient);
+        "items.id = crafts.itemid AND crafts.craftid = "..args.recipe.. " AND craft_ingredients.itemid = "..args.ingredient);
     for _key, ingredient in pairs(ingredients) do
         RemoveItemById(playerid, tonumber(ingredient.itemid), tonumber(ingredient.amount));
         xpgained = xpgained + tonumber(ingredient.experience);
