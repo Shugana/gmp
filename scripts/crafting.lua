@@ -312,7 +312,7 @@ function craftCreated(playerid)
     end
     local charcrafts = DB_select("*", "character_crafts", "craftid = "..args.recipe);
     for _key, charcraft in pairs(charcrafts) do
-        DB_update(tablename, {experience=tonumber(charcraft.experience)+xpgained, amount=tonumber(charcraft.amount)+1}, "craftid = "..args.recipe)
+        DB_update("character_crafts", {experience=tonumber(charcraft.experience)+xpgained, amount=tonumber(charcraft.amount)+1}, "craftid = "..args.recipe)
     end
     craftChosen(playerid, args);
 end
@@ -331,7 +331,7 @@ function researchDone(playerid)
     end
     local charcrafts = DB_select("*", "character_crafts", "craftid = "..args.recipe);
     for _key, charcraft in pairs(charcrafts) do
-        DB_update(tablename, {experience=tonumber(charcraft.experience)+xpgained}, "craftid = "..args.recipe)
+        DB_update("character_crafts", {experience=tonumber(charcraft.experience)+xpgained}, "craftid = "..args.recipe)
     end
     craftChosen(playerid, args);
 end
