@@ -135,3 +135,34 @@ function updateGametimeDraw(hour, minute)
     local rltime = os.date("%H:%M");
     SetDrawText(SERVERDRAWS.time.id, "IG: "..hour..":"..minute.." Uhr || RL: "..rltime.." Uhr");
 end
+
+function spawnMob(playerid, params)
+    local result, asc, scheme = sscanf(params, "ss");
+    if (result ~= 1) then
+        sendERRMessage(playerid, "Benutze /spawnMob <ASC> <Scheme>");
+        return;
+    end
+    local x,y,z = GetPlayerPos(playerid);
+    Mob.Create(
+        asc,
+        "mobsiname",
+        OCMOBINTER,
+        scheme,
+        "",
+        "CALLAWORLD.ZEN",
+        x,
+        y,
+        z,
+        "Placeholder"
+    );
+end
+
+function spawnVob(playerid, params)
+    local result, asc = sscanf(params, "s");
+    if (result ~= 1) then
+        sendERRMessage(playerid, "Benutze /spawnVob <3DS>");
+        return;
+    end
+    local x,y,z = GetPlayerPos(playerid);
+    Vob.Create(asc, "CALLAWORLD.ZEN", x, y, z);
+end

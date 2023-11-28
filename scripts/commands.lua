@@ -200,6 +200,16 @@ COMMANDS = {
         func = "bufftest",
         help = "Zeigt eine Bufftextur an (Test)",
         minadminlevel = ADMINRANKS.Spieler
+    },
+    spawnvob = {
+        func = "spawnVob",
+        help = "Spawned ein Vob bei dir",
+        minadminlevel = ADMINRANKS.Support
+    },
+    spawnmob = {
+        func = "spawnMob",
+        help = "Spawned ein Mob bei dir",
+        minadminlevel = ADMINRANKS.Support
     }
 };
 
