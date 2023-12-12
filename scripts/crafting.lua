@@ -84,6 +84,7 @@ function craftMenu(playerid, mobsi)
     local teaches = DB_select("*", "character_crafts", "characterid = "..PLAYERS[playerid].character);
     for _key, teach in pairs(teaches) do
         character_crafts[tonumber(teach.craftid)] = tonumber(teach.experience);
+        debug("storing xp "..tonumber(teach.craftid).. " = "..tonumber(teach.experience));
     end
 
     local completed = {};
@@ -96,9 +97,11 @@ function craftMenu(playerid, mobsi)
         local xp = tonumber(craft.experience);
         if (character_crafts[craftid] ~= nil and character_crafts[craftid] >= xp) then
             table.insert(completed, craft);
+            debug("completed "..craftid);
         end
         if (character_crafts[craftid] ~= nil and character_crafts[craftid] < xp) then
             table.insert(researching, craft);
+            debug("researching "..craftid);
         end
         if (character_crafts[craftid] == nil and (charjob == 0 or charjob == tonumber(craft.jobid))) then
             local allowed = true;
@@ -107,10 +110,12 @@ function craftMenu(playerid, mobsi)
                 local reqid = tonumber(requirement.requirementid);
                 if (character_crafts[reqid] == nil or character_crafts[reqid] < tonumber(requirement.experience)) then
                     allowed = false;
+                    debug("missing "..reqid.." for "..craftid);
                 end
             end
             if (allowed == true)  then
                 table.insert(canResearch, craft);
+                debug("allowed "..craftid);
             end
         end
     end
