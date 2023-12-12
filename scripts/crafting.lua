@@ -109,6 +109,9 @@ function craftMenu(playerid, mobsi)
             for _key, requirement in pairs(requirements) do
                 local reqid = tonumber(requirement.requirementid);
                 if (character_crafts[reqid] == nil or character_crafts[reqid] < tonumber(requirement.experience)) then
+                    if (character_crafts[reqid] ~= nil) then
+                        debug(character_crafts[reqid] .." < ".. tonumber(requirement.experience.."?"));
+                    end
                     allowed = false;
                     debug("missing "..reqid.." for "..craftid);
                 end
