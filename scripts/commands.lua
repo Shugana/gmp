@@ -210,6 +210,11 @@ COMMANDS = {
         func = "spawnMob",
         help = "Spawned ein Mob bei dir",
         minadminlevel = ADMINRANKS.Support
+    },
+    wetter = {
+        func = "weather",
+        help = "Ändert das Wetter",
+        minadminlevel = ADMINRANKS.Support
     }
 };
 
