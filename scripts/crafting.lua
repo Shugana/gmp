@@ -106,11 +106,10 @@ function craftMenu(playerid, mobsi)
             for _key, requirement in pairs(requirements) do
                 local reqid = tonumber(requirement.requirementid);
                 if (character_crafts[reqid] == nil or character_crafts[reqid] < tonumber(requirement.experience)) then
-                    if (character_crafts[reqid] ~= nil) then
                     allowed = false;
                 end
             end
-            if (allowed == true)  then
+            if (allowed == true) then
                 table.insert(canResearch, craft);
             end
         end
