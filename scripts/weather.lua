@@ -7,7 +7,7 @@ function weather(playerid, params)
         return;
     end
     
-    local hour, minute = getTime();
+    local hour, minute = GetTime();
 
     if (wetter == 1) then
         debug("Wetter kein Regen");
