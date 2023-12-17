@@ -4,7 +4,7 @@ RAINING = 0;
 STARTRAIN = 80;
 STOPRAIN = 20;
 
-WEATHER = 1;
+WEATHER = 0;
 
 function changeWeather(playerid, params)
     local result, wetter = sscanf(params, "d");
@@ -108,17 +108,17 @@ function tickWeather()
     if (RAINING > 0) then
         rainText = "es nieselt";
         weather = 2;
-        if (raining > 3) then
+        if (RAINING > 3) then
             rainText = "es regnet";
         end
-        if (raining > 7) then
+        if (RAINING > 7) then
             rainText = "es schüttet unentwegt";
         end
-        if temperature > 25 then
+        if TEMPERATURE > 25 then
             rainText = "es gewittert";
             weather = 3;
         end
-        if temperature < 0 then
+        if TEMPERATURE < 0 then
             rainText = "es schneit";
             weather = 4;
         end
@@ -144,6 +144,7 @@ function adjustWeather(weather, hour, minute, endHour, endMinute)
     elseif (wetter == 4) then
         SetWeather(WEATHER_SNOW, 0, endHour, endMinute, 11, 59);
     end
+    WEATHER = weather;
 end
 
 function initWeather()
