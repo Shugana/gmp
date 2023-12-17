@@ -127,7 +127,7 @@ function tickWeather()
     SetDrawText(SERVERDRAWS.weather.id, tempText.." und "..rainText);
 	SetDrawColor(SERVERDRAWS.weather.id, r, g, b);
     adjustWeather(weather, hour, minute, endHour, endMinute);
-    log("weather", hour..":"..minute.." - "..TEMPERATURE.."°C @ "..HUMIDITY.."H, Regen seit: "..RAINING.." Stunden");
+    log("weather", string.format("%02d", hour)..":"..string.format("%02d", minute).." - "..TEMPERATURE.." Grad @ "..HUMIDITY.."H, Regen seit: "..RAINING.." Stunden");
     DB_update("weather", {humidity=HUMIDITY, raining=RAINING, temperature=TEMPERATURE}, "id = 1");
 end
 
