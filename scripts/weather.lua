@@ -135,13 +135,13 @@ function adjustWeather(weather, hour, minute, endHour, endMinute)
     if weather == WEATHER then
         return;
     end
-    if (wetter == 1) then
+    if (weather == 1) then
         SetWeather(WEATHER_RAIN, 0, hour, minute, endHour, endMinute);
-    elseif (wetter == 2) then
+    elseif (weather == 2) then
         SetWeather(WEATHER_RAIN, 0, endHour, endMinute, 11, 59);
-    elseif (wetter == 3) then
+    elseif (weather == 3) then
         SetWeather(WEATHER_RAIN, 1, endHour, endMinute, 11, 59);
-    elseif (wetter == 4) then
+    elseif (weather == 4) then
         SetWeather(WEATHER_SNOW, 0, endHour, endMinute, 11, 59);
     end
     WEATHER = weather;
