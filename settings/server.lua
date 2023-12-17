@@ -51,6 +51,7 @@ function initServerdraws()
         SERVERDRAWS.weather.pos.x,
         SERVERDRAWS.weather.pos.y,
         "Wetter Platzhalter",
+        FONTS.sequel,
         SERVERDRAWS.weather.color.r,
         SERVERDRAWS.weather.color.g,
         SERVERDRAWS.weather.color.b
