@@ -212,7 +212,7 @@ COMMANDS = {
         minadminlevel = ADMINRANKS.Support
     },
     wetter = {
-        func = "weather",
+        func = "changeWeather",
         help = "Ändert das Wetter",
         minadminlevel = ADMINRANKS.Support
     }

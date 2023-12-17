@@ -15,6 +15,11 @@ SERVERDRAWS = {
         pos = {x=3500, y=7875},
         size = {x=3500, y=8025},
         graphic = "Data\\Textures\\Desktop\\nomip\\Bar_Misc.tga"
+    },
+    weather = {
+        id = nil,
+        pos = {x=130, y=7600},
+        color = {r=255,g=255,b=0}
     }
 }
 
@@ -41,6 +46,14 @@ function initServerdraws()
         SERVERDRAWS.craftingbackground.size.x,
         SERVERDRAWS.craftingbackground.size.y,
         SERVERDRAWS.craftingbackground.graphic
+    );
+    SERVERDRAWS.weather.id = CreateDraw(
+        SERVERDRAWS.weather.pos.x,
+        SERVERDRAWS.weather.pos.y,
+        "Wetter Platzhalter",
+        SERVERDRAWS.weather.color.r,
+        SERVERDRAWS.weather.color.g,
+        SERVERDRAWS.weather.color.b
     );
 
     Mob.Create(

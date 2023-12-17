@@ -14,6 +14,7 @@ function OnPlayerConnect(playerid)
     };
     tryAutologinAccount(playerid);
     ShowDraw(playerid, SERVERDRAWS.time.id);
+    ShowDraw(playerid, SERVERDRAWS.weather.id);
 end
 
 function OnPlayerDisconnect(playerid, reason)

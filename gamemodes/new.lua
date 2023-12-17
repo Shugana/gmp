@@ -34,6 +34,7 @@ function OnGamemodeInit()
     math.randomseed(os.time());
     ConnectDB();
     initServerdraws();
+    initWeather();
     spawnItemsOnServerInit();
     spawnMonstersOnServerInit();
     startTimers();
