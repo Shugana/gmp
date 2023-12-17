@@ -155,6 +155,3 @@ function initWeather()
     end
     tickWeather();
 end
-
-
-end
