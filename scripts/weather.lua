@@ -149,9 +149,9 @@ end
 function initWeather()
     local weathers = DB_select("*", "weather", "1");
     for _key, weather in pairs(weathers) do
-        HUMIDITY = weather.humidity;
-        TEMPERATURE = weather.temperature;
-        RAINING = weather.raining;
+        HUMIDITY = tonumber(weather.humidity);
+        TEMPERATURE = tonumber(weather.temperature);
+        RAINING = tonumber(weather.raining);
     end
     tickWeather();
 end
