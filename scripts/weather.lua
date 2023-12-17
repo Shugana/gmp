@@ -80,22 +80,22 @@ function tickWeather()
     local tempText = "Es ist eiskalt";
     local r, g, b;
 
-    if (temperature > 30) then
+    if (TEMPERATURE > 30) then
         tempText = "Die Luft flirrt vor Hitze";
         r = 255; g = 124; b = 10; -- orange
-    elseif (temperature > 25) then
+    elseif (TEMPERATURE > 25) then
         tempText = "Es ist heiß";
         r = 255; g = 244; b = 104; -- gelb
-    elseif (temperature > 20) then
+    elseif (TEMPERATURE > 20) then
         tempText = "Es ist warm";
         r = 255; g = 244; b = 104; -- gelb
-    elseif (temperature > 15) then
+    elseif (TEMPERATURE > 15) then
         tempText = "Es ist angenehm";
         r = 255; g = 255; b = 255; -- weiß
-    elseif (temperature > 5) then
+    elseif (TEMPERATURE > 5) then
         tempText = "Es ist kühl";
         r = 63; g = 199; b = 235; -- hellbalu
-    elseif (temperature > -0) then
+    elseif (TEMPERATURE > 0) then
         tempText = "Es ist kalt";
         r = 0; g = 112; b = 221; -- blau
     end
