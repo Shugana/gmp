@@ -215,6 +215,11 @@ COMMANDS = {
         func = "changeWeather",
         help = "Ändert das Wetter",
         minadminlevel = ADMINRANKS.Support
+    },
+    wurf = {
+        func = "roll",
+        help = "Würfelt die Angabe (Standard W20)",
+        minadminlevel = ADMINRANKS.Spieler
     }
 };
 

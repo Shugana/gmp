@@ -138,3 +138,13 @@ function sendChatToArea(playerid, command, range, text, colors);
     local logtext = GetPlayerName(playerid).."("..PLAYERS[playerid].character..") "..command.." > ("..listeners..") "..text;
     log("chat", logtext);
 end
+
+function roll(playerid, params)
+    local result, rollamount = sscanf(params, "d");
+    if (result ~= 1) then
+        rollamount = 20;
+    end
+    rollamount = math.min(1, rollamount);
+    local result = math.random(rollamount);
+    sendChatToArea(playerid, "wurf", CHATDISTANCES.far, GetPlayerName(playerid).." würfelt eine "..result.." (W"..rollamount..")", {r=135, g=136, b=238});
+end
