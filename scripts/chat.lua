@@ -144,7 +144,7 @@ function roll(playerid, params)
     if (result ~= 1) then
         rollamount = 20;
     end
-    rollamount = math.min(1, rollamount);
+    rollamount = math.max(1, rollamount);
     local result = math.random(rollamount);
     sendChatToArea(playerid, "wurf", CHATDISTANCES.far, GetPlayerName(playerid).." würfelt eine "..result.." (W"..rollamount..")", {r=135, g=136, b=238});
 end
