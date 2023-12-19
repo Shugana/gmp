@@ -56,50 +56,6 @@ function initServerdraws()
         SERVERDRAWS.weather.color.g,
         SERVERDRAWS.weather.color.b
     );
-
-    Mob.Create(
-        "LAB_PSI.ASC",
-        "mobsiname",
-        OCMOBINTER,
-        "LAB",
-        "",
-        "CALLAWORLD.ZEN",
-        -876,
-        -166,
-        -4251,
-        "Strandlabor"
-    );
-
-    Mob.Create(
-        "INNOS_NW_MISC_01.ASC",
-        "mobsiname",
-        OCMOBINTER,
-        "INNOS",
-        "",
-        "CALLAWORLD.ZEN",
-        370,
-        -140,
-        -1200,
-        "Innosschrein"
-    );
-    
-
-    Vob.Create("CALLAADANOS.3DS", "CALLAWORLD.ZEN", 320, -140, -1600);
-
-    Mob.Create(
-        "INNOS_BELIAR_ADDON_01.ASC",
-        "mobsiname",
-        OCMOBINTER,
-        "INNOS",
-        "",
-        "CALLAWORLD.ZEN",
-        270,
-        -140,
-        -2000,
-        "Beliarschrein"
-    );
-    
-
 end
 
 function OnPlayerTriggerMob(playerid, scheme, objectName, trigger)
@@ -157,13 +113,14 @@ function spawnMob(playerid, params)
         return;
     end
     local x,y,z = GetPlayerPos(playerid);
+    local world = GetPlayerWorld(playerid);
     Mob.Create(
         asc,
         "mobsiname",
         OCMOBINTER,
         scheme,
         "",
-        "CALLAWORLD.ZEN",
+        world,
         x,
         y,
         z,
@@ -178,5 +135,6 @@ function spawnVob(playerid, params)
         return;
     end
     local x,y,z = GetPlayerPos(playerid);
-    Vob.Create(asc, "CALLAWORLD.ZEN", x, y, z);
+    local world = GetPlayerWorld(playerid);
+    Vob.Create(asc, world, x, y, z);
 end
