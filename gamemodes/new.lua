@@ -27,8 +27,8 @@ require("scripts/timers");
 
 
 function OnGamemodeInit()
-    SetServerDescription("Fluffy Server");
-    SetGamemodeName("Fluff Local Test");
+    SetServerDescription("History of Khorinis - RP");
+    SetGamemodeName("HoK - Testserver");
     EnableNickname(0);
     EnableExitGame(0);
     EnableChat(0);
