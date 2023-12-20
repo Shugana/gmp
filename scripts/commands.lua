@@ -7,7 +7,7 @@ COMMANDS = {
     giveitem = {
         func = "cheatItem",
         help = "Cheated ein Item",
-        minadminlevel = ADMINRANKS.Admin
+        minadminlevel = ADMINRANKS.Spielleiter
     },
     help = {
         func = "help",
@@ -17,7 +17,7 @@ COMMANDS = {
     loc = {
         func = "getLocation",
         help = "Zeigt dir an wo du bist",
-        minadminlevel = ADMINRANKS.Support
+        minadminlevel = ADMINRANKS.Eventler
     },
     register = {
         func = "registerAccount",
@@ -54,7 +54,7 @@ COMMANDS = {
     spawn = {
         func = "spawnMonsterOnPlayer",
         help = "Spawned ein Tier in dein Umfeld",
-        minadminlevel = ADMINRANKS.Support
+        minadminlevel = ADMINRANKS.Eventler
     },
     hit = {
         func = "testhit",
@@ -74,22 +74,22 @@ COMMANDS = {
     ani = {
         func = "playAni",
         help = "<ID> macht Animation",
-        minadminlevel = ADMINRANKS.Support
+        minadminlevel = ADMINRANKS.Eventler
     },
     follow = {
         func = "follow",
         help = "<ID> folgt dir",
-        minadminlevel = ADMINRANKS.Support
+        minadminlevel = ADMINRANKS.Eventler
     },
     unfollow = {
         func = "unfollow",
         help = "<ID> folgt dir nicht mehr",
-        minadminlevel = ADMINRANKS.Support
+        minadminlevel = ADMINRANKS.Eventler
     },
     showani = {
         func = "showAni",
         help = "Zeigt dir deine aktuelle Ani an",
-        minadminlevel = ADMINRANKS.Support
+        minadminlevel = ADMINRANKS.Eventler
     },
     w = {
         func = "chatw",
@@ -179,22 +179,22 @@ COMMANDS = {
     tp = {
         func = "tp",
         help = "Teleportere <ID1> zu <ID2>. Gibst du nur eine ID an, wirst du zu der ID teleportiert",
-        minadminlevel = ADMINRANKS.Support
+        minadminlevel = ADMINRANKS.Eventler
     },
     ["goto"] = {
         func = "useGoto",
         help = "Teleport dich zu einem Ort mit Namen",
-        minadminlevel = ADMINRANKS.Support
+        minadminlevel = ADMINRANKS.Eventler
     },
     newgoto = {
         func = "createGoto",
         help = "Speichert einen neuen Ort für /goto in der DB",
-        minadminlevel = ADMINRANKS.Support
+        minadminlevel = ADMINRANKS.Eventler
     },
     teachsimulator = {
         func = "teachsimulator",
         help = "Gibts dir ein Menü zum Probeweise LP verteilen",
-        minadminlevel = ADMINRANKS.Spieler
+        minadminlevel = ADMINRANKS.Eventler
     },
     bufftest = {
         func = "bufftest",

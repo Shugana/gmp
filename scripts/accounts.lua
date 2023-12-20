@@ -5,10 +5,18 @@ ADMINRANKS = {
     Ausgelogged = 0,
     [1] = "Spieler",
     Spieler = 1,
-    [2] = "Support",
-    Support = 2,
-    [3] = "Admin",
-    Admin = 3
+    [2] = "Gildenleiter",
+    Gildenleiter = 2,
+    [3] = "Eventler",
+    Eventler = 3,
+    [4] = "Techniker",
+    Techniker = 4,
+    [5] = "Spielleiter",
+    Spielleiter = 5,
+    [6] = "Support",
+    Support = 6,
+    [7] = "Admin",
+    Admin = 7
 }
 
 function registerAccount(playerid, params)
