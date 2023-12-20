@@ -10,10 +10,11 @@ TORSOSKINS = {
     female = {4,5,6,7,11,12,37,38,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,73,74,75,76,92,117,147}
 };
 HEADS = {
-    male = {"HUM_HEAD_PONY","HUM_HEAD_PSIONIC","HUM_HEAD_FATBALD","HUM_HEAD_BALD","HUM_HEAD_THIEF","HUM_HEAD_FIGHTER","HUM_HEAD_BART",
-        "HUM_HEAD_BART2","HUM_HEAD_LANGEHAARE","HUM_HEAD_KOTELETTEN","HUM_HEAD_Piratfighter","HUM_HEAD_PIRATBALD","HUM_HEAD_PIRATFATBALD","HUM_HEAD_LUTTER",
-        "HUM_HEAD_BART2CLEAN", "HUM_HEAD_BART2LONG","HUM_HEAD_BARTGOATEE","HUM_HEAD_NECKBEARD","HUM_HEAD_SCHNAUTZER1","HUM_HEAD_SCHNAUTZER2",
-        "HUM_HEAD_SCHNAUTZER3", "HUM_HEAD_ZIEGENBART"},
+    ---male = {"HUM_HEAD_PONY","HUM_HEAD_PSIONIC","HUM_HEAD_FATBALD","HUM_HEAD_BALD","HUM_HEAD_THIEF","HUM_HEAD_FIGHTER","HUM_HEAD_BART",
+    --    "HUM_HEAD_BART2","HUM_HEAD_LANGEHAARE","HUM_HEAD_KOTELETTEN","HUM_HEAD_Piratfighter","HUM_HEAD_PIRATBALD","HUM_HEAD_PIRATFATBALD","HUM_HEAD_LUTTER",
+    --    "HUM_HEAD_BART2CLEAN", "HUM_HEAD_BART2LONG","HUM_HEAD_BARTGOATEE","HUM_HEAD_NECKBEARD","HUM_HEAD_SCHNAUTZER1","HUM_HEAD_SCHNAUTZER2",
+    --    "HUM_HEAD_SCHNAUTZER3", "HUM_HEAD_ZIEGENBART"},
+    male = {"HUM_HEAD_PONY","HUM_HEAD_PSIONIC","HUM_HEAD_FATBALD","HUM_HEAD_BALD","HUM_HEAD_THIEF","HUM_HEAD_FIGHTER"},
     female = {"HUM_HEAD_BABE","HUM_HEAD_BABE1","HUM_HEAD_BABE2","HUM_HEAD_BABE3","HUM_HEAD_BABE4","HUM_HEAD_BABE5","HUM_HEAD_BABE6","HUM_HEAD_BABE7",
         "HUM_HEAD_BABE8","HUM_HEAD_BABE9", "HUM_HEAD_BABE12"}
 };
@@ -102,11 +103,11 @@ function showFacechangeMenu(playerid)
     createButton(playerid, "---->", x_start+x_size*3, y_start+y_size*2, x_size, y_size, 255, 255, 255, func, {option = "torsoskin", change=1});
 
     createButton(playerid, "<----", x_start+x_size*0, y_start+y_size*3, x_size, y_size, 255, 255, 255, func, {option = "head", change=-1});
-    createText(playerid, "Kopf", x_start+x_size*1, y_start+y_size*3, x_size*2, y_size, 255, 255, 255);
+    createText(playerid, "Kopfmesh", x_start+x_size*1, y_start+y_size*3, x_size*2, y_size, 255, 255, 255);
     createButton(playerid, "---->", x_start+x_size*3, y_start+y_size*3, x_size, y_size, 255, 255, 255, func, {option = "head", change=1});
 
     createButton(playerid, "<----", x_start+x_size*0, y_start+y_size*4, x_size, y_size, 255, 255, 255, func, {option = "headskin", change=-1});
-    createText(playerid, "Frisur", x_start+x_size*1, y_start+y_size*4, x_size*2, y_size, 255, 255, 255);
+    createText(playerid, "Kopfskin", x_start+x_size*1, y_start+y_size*4, x_size*2, y_size, 255, 255, 255);
     createButton(playerid, "---->", x_start+x_size*3, y_start+y_size*4, x_size, y_size, 255, 255, 255, func, {option = "headskin", change=1});
 
     createButton(playerid, "<----", x_start+x_size*0, y_start+y_size*5, x_size, y_size, 255, 255, 255, func, {option = "fatness", change=-0.1});
