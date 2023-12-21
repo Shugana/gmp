@@ -49,8 +49,8 @@ function heal(playerid, params)
     SetPlayerHealth(targetid, GetPlayerMaxHealth(targetid));
     
     if (IsDead(targetid) == 1 and PLAYERS[targetid] ~= nil) then
-        saveChar(playerid);
-        loadChar(playerid);
+        saveChar(targetid);
+        loadChar(targetid);
     end
     SetPlayerHealth(targetid, GetPlayerMaxHealth(targetid));
 
@@ -96,8 +96,8 @@ function revive(playerid, params)
     SetPlayerHealth(targetid, 1);
 
     if (PLAYERS[targetid] ~= nil) then
-        saveChar(playerid);
-        loadChar(playerid);
+        saveChar(targetid);
+        loadChar(targetid);
     end
     SetPlayerHealth(targetid, 1);
 
