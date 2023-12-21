@@ -90,10 +90,38 @@ end
 
 function monsterAni(npcid, ani)
     if (NPCS[npcid].lastani ~= ani) then
-        --debug("Monsterani ("..npcid.."): "..NPCS[npcid].lastani.." --> "..ani);
         PlayAnimation(npcid, ani);
         NPCS[npcid].lastani = ani;
     end
+end
+
+function getMonsteraniByWeaponmode(monsterid, prefix, animation)
+    local weapontext = "FIST";
+    local weaponmode = GetPlayerWeaponMode(monsterid);
+    if (weaponmode == WEAPON_NONE) then
+        weapontext = "FIST";
+    end
+    if (weaponmode == WEAPON_FIST) then
+        weapontext = "FIST";
+    end
+    if (weaponmode == WEAPON_1H) then
+        weapontext = "1H";
+    end
+    if (weaponmode == WEAPON_2H) then
+        weapontext = "2H";
+    end
+    if (weaponmode == WEAPON_BOW) then
+        weapontext = "BOW";
+    end
+    if (weaponmode == WEAPON_CBOW) then
+        weapontext = "CBOW";
+    end
+    if (weaponmode == WEAPON_MAGIC) then
+        weapontext = "MAG";
+    end
+    return prefix..weapontext..animation;
+    
+
 end
 
 function monsterWarn(npcid)
@@ -103,15 +131,23 @@ function monsterWarn(npcid)
         if (NPCS[npcid].warnings >= NPCS[npcid].warntime) then
             NPCS[npcid].state = NPCSTATES.approach.id;
         end
+        local weapon = GetEquippedMeleeWeapon(npcid)
+        if weapon ~= "NULL" then
+            SetPlayerWeaponMode (playerid, WEAPON_2H);
+        end
         PlayAnimation(npcid, "T_WARN");
         monsterAni(npcid, "T_WARN");
         monsterTurn(npcid, targetPlayer);
     else
         NPCS[npcid].warnings = math.max(0, NPCS[npcid].warnings - 1);
         if NPCS[npcid].warnings > 0 then
-            monsterAni(npcid, "S_FISTRUN");
+            monsterAni(npcid, getMonsteraniByWeaponmode(npcid, "S_", "RUN"));
         else
-            monsterAni(npcid, "S_SLEEP");
+            if (GetPlayerWeaponMode(npcid) ~= WEAPON_FIST and GetPlayerWeaponMode(npcid) ~= WEAPON_NONE) then
+                monsterAni(npcid, getMonsteraniByWeaponmode(npcid, "T_", "MOVE_2_MOVE"));
+            else
+                monsterAni(npcid, "S_SLEEP");
+            end
         end
     end
 end
@@ -168,9 +204,9 @@ function monsterApproach(npcid)
         NPCS[npcid].state = NPCSTATES.attack.id;
         NPCS[npcid].target = playerid;
     elseif distance < NPCS[npcid].runrange then
-        monsterAni(npcid, "S_FISTRUNL");
+        monsterAni(npcid, getMonsteraniByWeaponmode(npcid, "S_", "RUNL"));
     else
-        monsterAni(npcid, "S_FISTWALKL");
+        monsterAni(npcid, getMonsteraniByWeaponmode(npcid, "S_", "WALKL"));
     end
 end
 
@@ -188,20 +224,20 @@ function monsterAttack(npcid)
     end
     local random = math.random(1, 30);
     if (random < 2) then
-        monsterAni(npcid, "T_FISTRUNSTRAFEL");
+        monsterAni(npcid, getMonsteraniByWeaponmode(npcid, "T_", "STRAFEL"));
     elseif (random < 3) then
-        monsterAni(npcid, "T_FISTRUNSTRAFER");
+        monsterAni(npcid, getMonsteraniByWeaponmode(npcid, "T_", "RUNSTRAFER"));
     elseif (random < 5) then
-        monsterAni(npcid, "T_FISTWALKSTRAFEL");
+        monsterAni(npcid, getMonsteraniByWeaponmode(npcid, "T_", "WALKSTRAFEL"));
     elseif (random < 7) then
-        monsterAni(npcid, "T_FISTWALKSTRAFER");
+        monsterAni(npcid, getMonsteraniByWeaponmode(npcid, "T_", "WALKSTRAFER"));
     elseif (random < 10) then
-        monsterAni(npcid, "T_FISTATTACKMOVE");
+        monsterAni(npcid, getMonsteraniByWeaponmode(npcid, "T_", "ATTACKMOVE"));
     elseif (random < 11) then
-        monsterAni(npcid, "T_FISTPARADEJUMPB");
+        monsterAni(npcid, getMonsteraniByWeaponmode(npcid, "T_", "PARADEJUMPB"));
     else
 
-        monsterAni(npcid, "S_FISTATTACK");
+        monsterAni(npcid, getMonsteraniByWeaponmode(npcid, "S_", "ATTACK"));
     end
 end
 
@@ -212,9 +248,9 @@ function monsterFollow(npcid)
     if distance < NPCS[npcid].attackrange then
         monsterAni(npcid, "S_SLEEP");
     elseif distance < NPCS[npcid].runrange then
-        monsterAni(npcid, "S_FISTWALKL");
+        monsterAni(npcid, getMonsteraniByWeaponmode(npcid, "S_", "WALKL"));
     else
-        monsterAni(npcid, "S_FISTRUNL");
+        monsterAni(npcid, getMonsteraniByWeaponmode(npcid, "S_", "RUN"));
     end
 end
 
