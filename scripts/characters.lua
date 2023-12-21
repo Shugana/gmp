@@ -234,17 +234,25 @@ function switchCharacterById(playerid, characterid)
     for _key, response in pairs(responses) do
         DB_update("account_autologins", {characterid=response.id}, "accountid = "..PLAYERS[playerid].account);
         clearMenu(playerid);
-        savePosition(playerid);
-        saveStats(playerid);
+        saveChar(playerid)
         PLAYERS[playerid].character = response.id;
-        ClearInventory (playerid);
-        loadFace(playerid);
-        loadPosition(playerid);
-        loadStats(playerid);
-        loadInventory(playerid);
+        loadChar(playerid);
         sendINFOMessage(playerid, "Erfolgreich auf Charakter '"..response.name.."' gewechselt.");
         return;
     end
+end
+
+function saveChar(playerid)
+    savePosition(playerid);
+    saveStats(playerid);
+end
+
+function loadChar(playerid)
+    ClearInventory(playerid);
+    loadFace(playerid);
+    loadPosition(playerid);
+    loadStats(playerid);
+    loadInventory(playerid);
 end
 
 function savePosition(playerid)
