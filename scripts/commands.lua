@@ -222,13 +222,13 @@ COMMANDS = {
         minadminlevel = ADMINRANKS.Spieler
     },
     revive = {
-        func = "revive"
-        help = "Belebt dich oder ein Ziel (ID/Name) wieder"
+        func = "revive",
+        help = "Belebt dich oder ein Ziel (ID/Name) wieder",
         minadminlevel = ADMINRANKS.Eventler
     },
     heal = {
-        func = "heal"
-        help = "Heilt dich oder ein Ziel (ID/Name) voll"
+        func = "heal",
+        help = "Heilt dich oder ein Ziel (ID/Name) voll",
         minadminlevel = ADMINRANKS.Eventler
     }
 };
