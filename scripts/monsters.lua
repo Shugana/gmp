@@ -121,7 +121,6 @@ function getMonsteraniByWeaponmode(monsterid, prefix, animation)
     end
 
     local result = prefix..weapontext..animation;
-    debug("Monster sets animation - "..result);
 
     return result;
 end
@@ -133,7 +132,8 @@ function monsterWarn(npcid)
         if (NPCS[npcid].warnings >= NPCS[npcid].warntime) then
             NPCS[npcid].state = NPCSTATES.approach.id;
         end
-        local weapon = GetEquippedMeleeWeapon(npcid)
+        local weapon = GetEquippedMeleeWeapon(npcid);
+        debug(weapon);
         if weapon ~= "NULL" then
             SetPlayerWeaponMode(npcid, WEAPON_2H);
         end
