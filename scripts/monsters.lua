@@ -47,6 +47,7 @@ function spawnMonster(instance, world, x, y, z)
         SetPlayerMana(npcid, tonumber(monster.mana));
 
         if (monster.meleeweapon ~= "NULL") then
+            log(debug, monster.meleeweapon);
             local weapons = DB_select("*", "items", "id = "..tonumber(monster.meleeweapon));
             for _key, weapon in pairs(weapons) do
                 EquipMeleeWeapon(npcid, weapon.instance);
