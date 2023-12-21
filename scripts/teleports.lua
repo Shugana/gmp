@@ -24,14 +24,14 @@ function tp(playerid, params)
     elseif (resultSS == 1) then
         sourceSS = capitalize(sourceSS);
         targetSS = capitalize(targetSS);
-        sourceid = getPlayerIdByName(playerid, sourceSS);
-        targetid = getPlayerIdByName(playerid, targetSS);
+        sourceid = getPlayerIdByName(sourceSS);
+        targetid = getPlayerIdByName(targetSS);
         sourcename = sourceSS;
         targetname = targetSS;
     elseif (resultS == 1) then
         sourceid = playerid;
         targetS = capitalize(targetS);
-        targetid = getPlayerIdByName(playerid, targetS);
+        targetid = getPlayerIdByName(targetS);
         sourcename = GetPlayerName(sourceid);
         targetname = targetS;
     end
@@ -56,17 +56,14 @@ function tp(playerid, params)
         sendINFOMessage(playerid, sourcename.." ("..sourceid..") teleportiert zu "..targetname.." ("..targetid..")");
     end
 
-    local sourcechar, targetchar;
+    local sourcechar = "NPC";
+    local targetchar = "NPC";
 
     if (PLAYERS[sourceid] ~= nil) then
         sourcechar = PLAYERS[sourceid].character;
-    else
-        sourcechar = "NPC";
     end
     if (PLAYERS[targetid] ~= nil) then
         targetchar = PLAYERS[targetid].character;
-    else
-        targetchar = "NPC";
     end
     
 
