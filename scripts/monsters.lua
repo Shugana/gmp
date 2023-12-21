@@ -135,7 +135,7 @@ function monsterWarn(npcid)
         end
         local weapon = GetEquippedMeleeWeapon(npcid)
         if weapon ~= "NULL" then
-            SetPlayerWeaponMode (playerid, WEAPON_2H);
+            SetPlayerWeaponMode(npcid, WEAPON_2H);
         end
         PlayAnimation(npcid, "T_WARN");
         monsterAni(npcid, "T_WARN");
@@ -147,6 +147,7 @@ function monsterWarn(npcid)
         else
             if (GetPlayerWeaponMode(npcid) ~= WEAPON_FIST and GetPlayerWeaponMode(npcid) ~= WEAPON_NONE) then
                 monsterAni(npcid, getMonsteraniByWeaponmode(npcid, "T_", "MOVE_2_MOVE"));
+                SetPlayerWeaponMode(npcid, WEAPON_NONE);
             else
                 monsterAni(npcid, "S_SLEEP");
             end
