@@ -46,6 +46,16 @@ function updateHP(playerid, delta)
     end
 end
 
+function setHP(playerid, amount)
+    if PLAYERS[playerid] ~= nil then
+        PLAYERS[playerid].stats.hp = amount;
+    end
+    if NPCS[playerid] ~= nil then
+        NPCS[playerid].stats.hp = amount;
+    end
+    updateHP(playerid, 0);
+end
+
 function heal(playerid, params)
     local targetid = playerid;
     local targetname = GetPlayerName(playerid);
@@ -66,8 +76,7 @@ function heal(playerid, params)
         return;
     end
 
-    SetPlayerHealth(targetid, GetPlayerMaxHealth(targetid));
-    
+    setHP(targetid, GetPlayerMaxHealth(targetid)); 
     if (IsDead(targetid) == 1 and PLAYERS[targetid] ~= nil) then
         saveChar(targetid);
         SpawnPlayer(targetid, GetPlayerPos(targetid));
@@ -115,7 +124,7 @@ function revive(playerid, params)
         return;
     end
 
-    SetPlayerHealth(targetid, 1);
+    setHP(targetid, 1);
     saveChar(targetid);
     SpawnPlayer(targetid, GetPlayerPos(targetid));
     loadChar(targetid);
