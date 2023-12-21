@@ -46,7 +46,7 @@ function spawnMonster(instance, world, x, y, z)
         SetPlayerMaxMana(npcid, tonumber(monster.mana));
         SetPlayerMana(npcid, tonumber(monster.mana));
 
-        if (monster.meleeweapon ~= nil and monster.meleeweapon ~= "NULL") then
+        if (tonumber(monster.meleeweapon) ~= 0) then
             log("debug", "monster meleeweapon: "..tonumber(monster.meleeweapon));
             local weapons = DB_select("*", "items", "id = "..tonumber(monster.meleeweapon));
             for _key, weapon in pairs(weapons) do
@@ -56,7 +56,7 @@ function spawnMonster(instance, world, x, y, z)
             log("debug", "no melee");
         end
 
-        if (monster.rangedweapon ~= nil and monster.rangedweapon ~= "NULL") then
+        if (tonumber(monster.rangedweapon) ~= 0) then
             log("debug", "monster rangedweapon: "..tonumber(monster.rangedweapon));
             local weapons = DB_select("*", "items", "id = "..tonumber(monster.rangedweapon));
             for _key, weapon in pairs(weapons) do
