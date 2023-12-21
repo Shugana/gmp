@@ -47,23 +47,17 @@ function spawnMonster(instance, world, x, y, z)
         SetPlayerMana(npcid, tonumber(monster.mana));
 
         if (tonumber(monster.meleeweapon) ~= 0) then
-            log("debug", "monster meleeweapon: "..tonumber(monster.meleeweapon));
             local weapons = DB_select("*", "items", "id = "..tonumber(monster.meleeweapon));
             for _key, weapon in pairs(weapons) do
                 EquipMeleeWeapon(npcid, weapon.instance);
             end
-        else
-            log("debug", "no melee");
         end
 
         if (tonumber(monster.rangedweapon) ~= 0) then
-            log("debug", "monster rangedweapon: "..tonumber(monster.rangedweapon));
             local weapons = DB_select("*", "items", "id = "..tonumber(monster.rangedweapon));
             for _key, weapon in pairs(weapons) do
                 EquipRangedWeapon(npcid, weapon.instance);
             end
-        else
-            log("debug", "no ranged");
         end
 
         SetPlayerWorld(npcid, world);
@@ -153,7 +147,6 @@ function monsterWarn(npcid)
             NPCS[npcid].state = NPCSTATES.approach.id;
         end
         local weapon = GetEquippedMeleeWeapon(npcid);
-        debug(weapon);
         if weapon ~= "NULL" then
             SetPlayerWeaponMode(npcid, WEAPON_2H);
         end
