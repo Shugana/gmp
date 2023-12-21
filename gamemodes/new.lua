@@ -21,6 +21,7 @@ require("scripts/monsterspawns");
 require("scripts/focus");
 require("scripts/teach");
 require("scripts/damage");
+require("scripts/movement");
 require("scripts/onserverworldtime");
 require("scripts/buffs");
 require("scripts/timers");

@@ -230,6 +230,11 @@ COMMANDS = {
         func = "heal",
         help = "Heilt dich oder ein Ziel (ID/Name) voll",
         minadminlevel = ADMINRANKS.Eventler
+    },
+    sprint = {
+        func = "sprint",
+        help = "Aktiviert oder deaktiviert Sprintfunktion (Geschwindigkeitstrank)",
+        minadminlevel = ADMINRANKS.Eventler
     }
 };
 
