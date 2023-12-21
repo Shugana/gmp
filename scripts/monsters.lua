@@ -147,7 +147,7 @@ function getEquippedWeapons(playerid)
 
     local meleeinstance = GetEquippedMeleeWeapon(playerid);
     if (meleeinstance ~= "NULL") then
-        local meleeweapons = DB_select("weapons.*", "weapons, items", "items.id = weapons.itemid AND items.instance = "..meleeinstance);
+        local meleeweapons = DB_select("weapons.*", "weapons, items", "items.id = weapons.itemid AND items.instance = '"..meleeinstance.."'");
         for _key, meleeweapon in pairs(meleeweapons) do
             weapons.melee = {
                 weapontype = tonumber(meleeweapon.weapontype),
@@ -164,7 +164,7 @@ function getEquippedWeapons(playerid)
 
     local rangedinstance = GetEquippedRangedWeapon(playerid);
     if (rangedinstance ~= "NULL") then
-        local rangedweapons = DB_select("weapons.*", "weapons, items", "items.id = weapons.itemid AND items.instance = "..rangedinstance);
+        local rangedweapons = DB_select("weapons.*", "weapons, items", "items.id = weapons.itemid AND items.instance = '"..rangedinstance.."'");
         for _key, rangedweapon in pairs(rangedweapons) do
             weapons.melee = {
                 weapontype = tonumber(rangedweapon.weapontype),
