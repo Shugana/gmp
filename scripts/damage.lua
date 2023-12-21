@@ -49,9 +49,10 @@ function heal(playerid, params)
     SetPlayerHealth(targetid, GetPlayerMaxHealth(targetid));
     
     if (IsDead(targetid) == 1 and PLAYERS[targetid] ~= nil) then
-        PlayAnimation(targetid, "T_JUMPB");
+        savePosition(playerid);
         SpawnPlayer(targetid, GetPlayerPos(targetid));
         loadChar(targetid);
+        PlayAnimation(targetid, "T_JUMPB");
         unfreeze(targetid, "dead");
     end
 
@@ -95,9 +96,10 @@ function revive(playerid, params)
     end
 
     SetPlayerHealth(targetid, 1);
-    PlayAnimation(targetid, "T_JUMPB");
+    savePosition(playerid);
     SpawnPlayer(targetid, GetPlayerPos(targetid));
     loadChar(targetid);
+    PlayAnimation(targetid, "T_JUMPB");
     unfreeze(targetid, "dead");
 
     sendINFOMessage(playerid, "Du hast "..targetname.." belebt");
