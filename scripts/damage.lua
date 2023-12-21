@@ -125,11 +125,13 @@ function revive(playerid, params)
     end
 
     setHP(targetid, 1);
-    saveChar(targetid);
-    SpawnPlayer(targetid, GetPlayerPos(targetid));
-    loadChar(targetid);
-    PlayAnimation(targetid, "T_JUMPB");
-    unfreeze(targetid, "dead");
+    if (PLAYERS[targetid] ~= nil) then
+        saveChar(targetid);
+        SpawnPlayer(targetid, GetPlayerPos(targetid));
+        loadChar(targetid);
+        PlayAnimation(targetid, "T_JUMPB");
+        unfreeze(targetid, "dead");
+    end
 
     sendINFOMessage(playerid, "Du hast "..targetname.." belebt");
     
