@@ -1,5 +1,5 @@
 function OnPlayerHit(playerid, attackerid)
-    debug(attackerid.." attacked "..playerid);
+    debug(attackerid.." attacked "..playerid.." default dmg: 5");
     local weaponmode = GetPlayerWeaponMode(attackerid);
     debug("Weaponmode of attacker: "..weaponmode);
 
@@ -23,6 +23,26 @@ function OnPlayerHit(playerid, attackerid)
     end
     if (weaponmode == WEAPON_MAGIC) then
         debug ("Magie...?!");
+    end
+    updateHP(playerid, -5);
+end
+
+function OnPlayerSpellSetup(playerid, spellInstance)
+    debug("Spell prepared by "..playerid.." -> "..spellInstance);
+end
+
+function OnPlayerSpellCast(playerid, spellInstance)
+    debug("Spell cast by "..playerid.." -> "..spellInstance);
+end
+
+function updateHP(playerid, delta)
+    if PLAYERS[playerid] ~= nil then
+        PLAYERS[playerid].stats.hp = PLAYERS[playerid].stats.hp + delta;
+        SetPlayerHealth(playerid, math.max(0, PLAYERS[playerid].stats.hp));
+    end
+    if NPCS[playerid] ~= nil then
+        NPCS[playerid].stats.hp = PLAYERS[playerid].stats.hp + delta;
+        SetPlayerHealth(playerid, math.max(0, NPCS[playerid].stats.hp));
     end
 end
 

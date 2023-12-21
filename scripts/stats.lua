@@ -6,6 +6,7 @@ function loadStats(playerid)
     if PLAYERS[playerid] == nil or PLAYERS[playerid].character == nil then
         return;
     end
+    PLAYERS[playerid].stats = {};
     local responses = DB_select("*", "character_stats", "characterid = "..PLAYERS[playerid].character);
     for _key, response in pairs(responses) do
         local lvl = math.floor(tonumber(response.xp)/XPPERLEVEL);
@@ -14,9 +15,11 @@ function loadStats(playerid)
         SetPlayerExperience(playerid, tonumber(response.xp)%XPPERLEVEL);
         SetPlayerMaxHealth(playerid, BASEHP+HPPERLEVEL*lvl);
         SetPlayerHealth(playerid, tonumber(response.hp));
+        PLAYERS[playerid].stats.hp = tonumber(response.hp);
         SetPlayerMagicLevel(playerid, tonumber(response.circle))
         SetPlayerMaxMana(playerid, tonumber(response.maxmana));
         SetPlayerMana(playerid, tonumber(response.mana));
+        PLAYERS[playerid].stats.mana = tonumber(response.mana);
         SetPlayerStrength(playerid, tonumber(response.str));
         SetPlayerDexterity(playerid, tonumber(response.dex));
         SetPlayerSkillWeapon (playerid, SKILL_1H, tonumber(response.onehanded));
@@ -38,7 +41,5 @@ function saveStats(playerid)
     if PLAYERS[playerid] == nil or PLAYERS[playerid].character == nil then
         return;
     end
-    local mana = GetPlayerMana(playerid);
-    local hp = GetPlayerHealth(playerid);
-    DB_update("character_stats", {hp=hp, mana=mana}, "characterid = "..PLAYERS[playerid].character);
+    DB_update("character_stats", {hp=PLAYERS[playerid].stats.hp, mana=PLAYERS[playerid].stats.mana}, "characterid = "..PLAYERS[playerid].character);
 end

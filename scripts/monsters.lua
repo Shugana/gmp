@@ -59,6 +59,10 @@ function spawnMonster(instance, world, x, y, z)
             warntime = tonumber(monster.warntime),
             lastani = "NULL",
             delay = 0,
+            stats = {
+                hp = tonumber(monster.hp),
+                mana = tonumber(monster.mana)
+            },
             loot = {}
         };
         local loots = DB_select("*", "monster_loot", "monsterid = "..monster.id);
