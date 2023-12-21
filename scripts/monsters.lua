@@ -52,6 +52,8 @@ function spawnMonster(instance, world, x, y, z)
             for _key, weapon in pairs(weapons) do
                 EquipMeleeWeapon(npcid, weapon.instance);
             end
+        else
+            log("debug", "no melee");
         end
 
         if (monster.rangedweapon ~= nil and monster.rangedweapon ~= "NULL") then
@@ -60,6 +62,8 @@ function spawnMonster(instance, world, x, y, z)
             for _key, weapon in pairs(weapons) do
                 EquipRangedWeapon(npcid, weapon.instance);
             end
+        else
+            log("debug", "no ranged");
         end
 
         SetPlayerWorld(npcid, world);
