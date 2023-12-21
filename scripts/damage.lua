@@ -56,7 +56,7 @@ function heal(playerid, params)
         end
     end
     
-    log("heal", GetPlayerName(playerid).." ("..PLAYERS[playerid].character..") heilt "....targetname.." ("..targetchar..")");
+    log("heal", GetPlayerName(playerid).." ("..PLAYERS[playerid].character..") heilt "..targetname.." ("..targetchar..")");
 end
 
 function revive(playerid, params)
