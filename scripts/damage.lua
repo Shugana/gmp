@@ -27,11 +27,11 @@ function OnPlayerHit(playerid, attackerid)
 end
 
 function heal(playerid, params)
-    local targetname = "";
+    local targetid = playerid;
+    local targetname = GetPlayerName(playerid);
     local resultD, targetD = sscanf(params, "d");
     local resultS, targetS = sscanf(params, "s");
 
-    local targetid = playerid;
     if (resultS == 1) then
         targetname = capitalize(targetS);
         targetid = getPlayerIdByName(targetname);
@@ -45,7 +45,15 @@ function heal(playerid, params)
         sendERRMessage(playerid, "Ziel nicht online");
         return;
     end
+
     SetPlayerHealth(targetid, GetPlayerMaxHealth(targetid));
+    
+    if (IsDead(targetid) == 1 and PLAYERS[targetid] ~= nil) then
+        savePosition(targetid);
+        loadFace(targetid);
+        loadPosition(targetid);
+    end
+
     sendINFOMessage(playerid, "Du hast "..targetname.." geheilt");
     
     local targetchar = "NPC";
@@ -60,7 +68,8 @@ function heal(playerid, params)
 end
 
 function revive(playerid, params)
-    local targetname = "";
+    local targetid = playerid;
+    local targetname = GetPlayerName(playerid);
     local resultD, targetD = sscanf(params, "d");
     local resultS, targetS = sscanf(params, "s");
 
@@ -85,6 +94,13 @@ function revive(playerid, params)
     end
 
     SetPlayerHealth(targetid, 1);
+
+    if (PLAYERS[targetid] ~= nil) then
+        savePosition(targetid);
+        loadFace(targetid);
+        loadPosition(targetid);
+    end
+
     sendINFOMessage(playerid, "Du hast "..targetname.." belebt");
     
     local targetchar = "NPC";
