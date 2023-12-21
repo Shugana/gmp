@@ -191,7 +191,7 @@ function monsterWarn(npcid)
         end
         local weapons = getEquippedWeapons(npcid);
         if (weapons.melee ~= nil) then
-            SetPlayerWeaponMode(npcid, weapons.melee.weaponmode);
+            SetPlayerWeaponMode(npcid, weapons.melee.weapontype);
         end
         PlayAnimation(npcid, "T_WARN");
         monsterAni(npcid, "T_WARN");
