@@ -37,8 +37,8 @@ function heal(playerid, params)
         targetid = getPlayerIdByName(targetname);
     end
     if (resultD == 1) then
-        targetname = GetPlayerName(targetid);
         targetid = targetD;
+        targetname = GetPlayerName(targetid);
     end
 
     if (PLAYERS[targetid] == nil and NPCS[targetid] == nil) then
@@ -79,8 +79,8 @@ function revive(playerid, params)
         targetid = getPlayerIdByName(targetname);
     end
     if (resultD == 1) then
-        targetname = GetPlayerName(targetid);
         targetid = targetD;
+        targetname = GetPlayerName(targetid);
     end
 
     if (PLAYERS[targetid] == nil and NPCS[targetid] == nil) then
