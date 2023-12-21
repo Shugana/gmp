@@ -41,7 +41,7 @@ function updateHP(playerid, delta)
         SetPlayerHealth(playerid, math.max(0, PLAYERS[playerid].stats.hp));
     end
     if NPCS[playerid] ~= nil then
-        NPCS[playerid].stats.hp = PLAYERS[playerid].stats.hp + delta;
+        NPCS[playerid].stats.hp = NPCS[playerid].stats.hp + delta;
         SetPlayerHealth(playerid, math.max(0, NPCS[playerid].stats.hp));
     end
 end
