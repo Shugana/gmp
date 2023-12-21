@@ -139,6 +139,49 @@ function getMonsteraniByWeaponmode(monsterid, prefix, animation)
     return result;
 end
 
+function getEquippedWeapons(playerid)
+    local weapons = {
+        melee = nil,
+        ranged = nil
+    };
+
+    local meleeinstance = GetEquippedMeleeWeapon(playerid);
+    if (meleeinstance ~= "NULL") then
+        local meleeweapons = DB_select("weapons.*", "weapons, items", "items.id = weapons.itemid AND items.instance = "..meleeinstance);
+        for _key, meleeweapon in pairs(meleeweapons) do
+            weapons.melee = {
+                weapontype = tonumber(meleeweapon.weapontype),
+                blunt = tonumber(meleeweapon.blunt),
+                edge = tonumber(meleeweapon.edge),
+                point = tonumber(meleeweapon.point),
+                fire = tonumber(meleeweapon.fire),
+                water = tonumber(meleeweapon.water),
+                earth = tonumber(meleeweapon.earth),
+                air = tonumber(meleeweapon.air)
+            };
+        end
+    end
+
+    local rangedinstance = GetEquippedRangedWeapon(playerid);
+    if (rangedinstance ~= "NULL") then
+        local rangedweapons = DB_select("weapons.*", "weapons, items", "items.id = weapons.itemid AND items.instance = "..rangedinstance);
+        for _key, rangedweapon in pairs(rangedweapons) do
+            weapons.melee = {
+                weapontype = tonumber(rangedweapon.weapontype),
+                blunt = tonumber(rangedweapon.blunt),
+                edge = tonumber(rangedweapon.edge),
+                point = tonumber(rangedweapon.point),
+                fire = tonumber(rangedweapon.fire),
+                water = tonumber(rangedweapon.water),
+                earth = tonumber(rangedweapon.earth),
+                air = tonumber(rangedweapon.air)
+            };
+        end
+    end
+
+    return weapons;
+end
+
 function monsterWarn(npcid)
     local targetPlayer = monsterGetClosestAggro(npcid);
     if (targetPlayer ~= nil) then
@@ -146,9 +189,9 @@ function monsterWarn(npcid)
         if (NPCS[npcid].warnings >= NPCS[npcid].warntime) then
             NPCS[npcid].state = NPCSTATES.approach.id;
         end
-        local weapon = GetEquippedMeleeWeapon(npcid);
-        if weapon ~= "NULL" then
-            SetPlayerWeaponMode(npcid, WEAPON_2H);
+        local weapons = getEquippedWeapons(npcid);
+        if (weapons.melee ~= nil) then
+            SetPlayerWeaponMode(npcid, weapons.melee.weaponmode);
         end
         PlayAnimation(npcid, "T_WARN");
         monsterAni(npcid, "T_WARN");
