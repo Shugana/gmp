@@ -119,9 +119,11 @@ function getMonsteraniByWeaponmode(monsterid, prefix, animation)
     if (weaponmode == WEAPON_MAGIC) then
         weapontext = "MAG";
     end
-    return prefix..weapontext..animation;
-    
 
+    local result = prefix..weapontext..animation;
+    debug("Monster sets animation - "..result);
+
+    return result;
 end
 
 function monsterWarn(npcid)
