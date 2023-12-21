@@ -13,6 +13,8 @@ function getLocation(playerid, _params)
 end
 
 function leaveGame(playerid, params)
+    saveStats(playerid);
+    savePosition(playerid);
     ExitGame(playerid);
 end
 
