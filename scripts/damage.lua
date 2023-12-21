@@ -49,7 +49,7 @@ function heal(playerid, params)
     SetPlayerHealth(targetid, GetPlayerMaxHealth(targetid));
     
     if (IsDead(targetid) == 1 and PLAYERS[targetid] ~= nil) then
-        savePosition(playerid);
+        savePosition(targetid);
         SpawnPlayer(targetid, GetPlayerPos(targetid));
         loadChar(targetid);
         PlayAnimation(targetid, "T_JUMPB");
@@ -96,7 +96,7 @@ function revive(playerid, params)
     end
 
     SetPlayerHealth(targetid, 1);
-    savePosition(playerid);
+    savePosition(targetid);
     SpawnPlayer(targetid, GetPlayerPos(targetid));
     loadChar(targetid);
     PlayAnimation(targetid, "T_JUMPB");
