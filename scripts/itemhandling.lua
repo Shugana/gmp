@@ -176,6 +176,9 @@ function createItemSpawn(playerid, params)
         return;
     end
     local x, y, z = GetPlayerPos(playerid);
+    x = math.ceil(x);
+    y = math.ceil(y);
+    z = math.ceil(z);
     local world = GetPlayerWorld(playerid);
     local items = DB_select("*", "items", "name = '"..itemname.."'");
     for _key, item in pairs(items) do
