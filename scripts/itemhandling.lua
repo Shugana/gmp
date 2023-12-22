@@ -49,13 +49,14 @@ function cheatItem(playerid, params)
 end
 
 function OnPlayerTakeItem(playerid, worlditemid, iteminstance, amount, _x, _y, _z, _worldName)
-    RemoveItem(playerid, iteminstance, amount);
     if (worlditemid < 0) then
         if worlditemid == ITEM_UNSYNCHRONIZED then
             sendERRMessage(playerid, "Dieses Item war asynchron und wird zerstört.");
+            RemoveItem(playerid, iteminstance, amount);
         end
         return;
     end
+    RemoveItem(playerid, iteminstance, amount);
     DB_update("item_spawns", {spawned=0}, "id="..WORLDITEMS[worlditemid].spawnid);
     playerGetsItem(playerid, iteminstance, amount);
 end
