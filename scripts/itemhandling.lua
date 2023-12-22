@@ -188,7 +188,7 @@ function createItemSpawn(playerid, params)
         for _key, spawn in pairs(spawns) do
             spawnid = tonumber(spawn.id);
         end
-        sendINFOMessage(playerid, "Spawn gesetzt für "..item.name.."("..item.itemid..") - Spawn-ID: "..spawnid);
+        sendINFOMessage(playerid, "Spawn gesetzt für "..item.name.."("..item.id..") - Spawn-ID: "..spawnid);
         if not(DB_exists("*", "item_spawntimers", "itemid = "..tonumber(item.id))) then
             sendERRMessage(playerid, "Item '"..itemname.."' hat noch keine Spawnzeit in der DB. Setze 60 Sekunden als Standardwert. Dies kann in der DB geändert werden");
             DB_insert("item_spawntimers", {itemid=tonumber(item.id)});
