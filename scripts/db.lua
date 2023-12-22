@@ -53,7 +53,7 @@ function DB_delete(tablename, condition)
     local response = mysql_query(DB.HANDLER, query);
 	mysql_free_result(response);
     local affected = mysql_affected_rows(DB.HANDLER);
-	return tonumer(affected);
+	return tonumber(affected);
 end
 
 function DB_update(tablename, data, condition)
