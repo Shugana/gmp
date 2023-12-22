@@ -152,7 +152,7 @@ function respawnTickItem(itemid)
     local item = items[randomItem];
     local worlditemid = CreateItem(item.instance, 1, item.x, item.y, item.z, item.world);
     WORLDITEMS[worlditemid] = {spawnid=tonumber(item.id), itemid=itemid};
-    DB_update("item_spawns", {spawned=1}, "spawnid="..tonumber(item.id));
+    DB_update("item_spawns", {spawned=1}, "id="..tonumber(item.id));
     debug("Spawned spawnid "..item.id);
 end
 
