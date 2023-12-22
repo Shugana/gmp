@@ -171,13 +171,13 @@ function createItemSpawn(playerid, params)
         return;
     end
     itemname = capitalize(itemname);
-    if not(DB_exists("*", "items", "name = "..itemname)) then
+    if not(DB_exists("*", "items", "name = '"..itemname.."'")) then
         sendERRMessage(playerid, "Item '"..itemname.."' ist nicht bekannt");
         return;
     end
     local x, y, z = GetPlayerPos(playerid);
     local world = GetPlayerWorld(playerid);
-    local items = DB_select("*", "items", "name = "..itemname);
+    local items = DB_select("*", "items", "name = '"..itemname.."'");
     for _key, item in pairs(items) do
         DB_insert("itemspawns", {itemid=tonumber(item.id), x=x, y=y, z=z, world=world});
         local spawns = DB_select("*", "itemspawns", "itemid="..tonumber(item.id).." AND x="..x.." AND y="..y.." AND z="..z.." AND world="..world);
