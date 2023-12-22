@@ -142,18 +142,20 @@ function ItemRespawnLoop()
 end
 
 function respawnTickItem(itemid)
-    local items = DB_select("item_spawns.*, items.name, items.instance", "items, item_spawns", "item_spawns.spawned = 0 AND items.id = item_spawns.itemid AND items.id = "..itemid);
-    local unspawned = #items;
-    debug("Unspawned items "..unspawned);
+    local spaws = DB_select("item_spawns.*, items.name, items.instance", "items, item_spawns", "item_spawns.spawned = 0 AND items.id = item_spawns.itemid AND items.id = "..itemid);
+    local unspawned = #spaws;
     if (unspawned < 1) then
         return;
     end
     local randomItem = math.random(unspawned);
-    local item = items[randomItem];
-    local worlditemid = CreateItem(item.instance, 1, item.x, item.y, item.z, item.world);
-    WORLDITEMS[worlditemid] = {spawnid=tonumber(item.id), itemid=itemid};
-    DB_update("item_spawns", {spawned=1}, "id="..tonumber(item.id));
-    debug("Spawned spawnid "..item.id);
+    local spawn = spaws[randomItem];
+    respawnItem(spawn.instance, tonumber(spawn.x), tonumber(spawn.y), tonumber(spawn.z), spawn.world, tonumber(spawn.id), itemid);
+end
+
+function respawnItem(iteminstance, x, y, z, world, spawnid, itemid)
+    local worlditemid = CreateItem(iteminstance, 1, x, y, z, world);
+    WORLDITEMS[worlditemid] = {spawnid=spawnid, itemid=itemid};
+    DB_update("item_spawns", {spawned=1}, "id="..spawnid);
 end
 
 function spawnItemsOnServerInit()
@@ -182,17 +184,20 @@ function createItemSpawn(playerid, params)
     local world = GetPlayerWorld(playerid);
     local items = DB_select("*", "items", "name = '"..itemname.."'");
     for _key, item in pairs(items) do
-        DB_insert("item_spawns", {itemid=tonumber(item.id), x=x, y=y, z=z, world=world});
-        local spawns = DB_select("*", "item_spawns", "itemid="..tonumber(item.id).." AND x="..x.." AND y="..y.." AND z="..z.." AND world='"..world.."'");
+        local itemid = tonumber(item.id);
+        DB_insert("item_spawns", {itemid=itemid, x=x, y=y, z=z, world=world});
+        local spawns = DB_select("*", "item_spawns", "itemid="..itemid.." AND x="..x.." AND y="..y.." AND z="..z.." AND world='"..world.."'");
         local spawnid = -1;
         for _key, spawn in pairs(spawns) do
             spawnid = tonumber(spawn.id);
         end
+        respawnItem(item.instance, x, y, z, world, spawnid, itemid);
         sendINFOMessage(playerid, "Spawn gesetzt für "..item.name.."("..item.id..") - Spawn-ID: "..spawnid);
         if not(DB_exists("*", "item_spawntimers", "itemid = "..tonumber(item.id))) then
             sendERRMessage(playerid, "Item '"..itemname.."' hat noch keine Spawnzeit in der DB. Setze 60 Sekunden als Standardwert. Dies kann in der DB geändert werden");
             DB_insert("item_spawntimers", {itemid=tonumber(item.id)});
         end
+        
     end
 end
 
