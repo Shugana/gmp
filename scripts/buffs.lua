@@ -105,7 +105,7 @@ function healOverTime(playerid, buffnumber)
     if (thisheal < 1) then
         return;
     end
-    SetPlayerHealth(playerid, math.min(hp+thisheal, maxhp));
+    updateHP(playerid, thisheal);
     PLAYERS[playerid].buffs[buffnumber].effect.args.hp = math.min(hp+thisheal, maxhp);
     PLAYERS[playerid].buffs[buffnumber].effect.args.healed = healdone + thisheal;
 end

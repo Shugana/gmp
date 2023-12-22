@@ -35,9 +35,9 @@ function spawnMonster(instance, world, x, y, z)
         if (npcid == -1) then
             return;
         end
-        
+
         SetPlayerInstance(npcid, monster.instance);
-        
+
         SetPlayerLevel(npcid, 0);
         SetPlayerStrength(npcid, tonumber(monster.str));
         SetPlayerDexterity(npcid, tonumber(monster.dex));
@@ -95,7 +95,7 @@ function spawnMonster(instance, world, x, y, z)
     return -1;
 end
 
-function NPCloop()
+function NPCLoop()
     local distance;
     for npcid, npc in pairs(NPCS) do
         _G[NPCSTATES[npc.state].func](npcid);
@@ -229,7 +229,7 @@ function monsterTurn(npcid, targetid)
     if (GetPlayerHealth(npcid) < 1) then
         return;
     end
-        
+
     local npcangle = GetPlayerAngle(npcid);
     local targetangle = GetAngleToPlayer(npcid, targetid);
 
@@ -257,7 +257,7 @@ function monsterApproach(npcid)
         return;
     end
     monsterTurn(npcid, playerid);
-    
+
     local distance = GetDistancePlayers(npcid, playerid);
     if distance < NPCS[npcid].attackrange then
         NPCS[npcid].state = NPCSTATES.attack.id;

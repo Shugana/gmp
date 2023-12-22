@@ -48,12 +48,16 @@ function cheatItem(playerid, params)
     GiveItemById(recipientid, itemid, amount);
 end
 
-function OnPlayerTakeItem(playerid, itemid, iteminstance, amount, x, y, z, worldName)
-    if (itemid < 0) then
+function OnPlayerTakeItem(playerid, worlditemid, iteminstance, amount, _x, _y, _z, _worldName)
+    if (worlditemid < 0) then
+        if worlditemid == ITEM_UNSYNCHRONIZED then
+            sendERRMessage(playerid, "Dieses Item war asynchron und wird zerstört.");
+            RemoveItem(playerid, iteminstance, amount);
+        end
         return;
     end
-    DB_update("item_spawns", {spawned=0}, "id="..WORLDITEMS[itemid]);
-    playerGetsItem(playerid, itemid, amount);
+    DB_update("item_spawns", {spawned=0}, "id="..WORLDITEMS[worlditemid].spawnid);
+    playerGetsItem(playerid, iteminstance, amount);
 end
 
 function playerGetsItem(playerid, iteminstance, amount)
@@ -124,31 +128,104 @@ function loadInventory(playerid)
     end
 end
 
-function respawnTickItems()
-    SPAWNTICKS.items = (SPAWNTICKS.items+1)%SPAWNTICKS.itemsmax;
-    if (SPAWNTICKS.items == 1) then
-        local responses = DB_select(
-            "items.instance AS instance, item_spawns.id as id, item_spawns.x AS x, item_spawns.y AS y, item_spawns.z AS z, item_spawns.world AS world",
-            "items, item_spawns",
-            "items.id = item_spawns.itemid AND item_spawns.spawned=0"
-        );
-        for _key, response in pairs(responses) do
-            local itemid = CreateItem(response.instance, 1, response.x, response.y, response.z, response.world);
-            WORLDITEMS[itemid] = response.id;
-            DB_update("item_spawns", {spawned=1}, "id="..response.id);
-            SendMessageToAll(255,255,255,"Spawned: "..response.instance);
+function ItemRespawnLoop()
+    local spawntimers = DB_select("*", "spawntimers", "1");
+    for _key, spawntimer in pairs(spawntimers) do
+        local timeelapsed = tonumber(spawntimer.timeelapsed)+1;
+        local nextspawn = tonumber(spawntimer.nextspawn);
+        if timeelapsed >= nextspawn then
+            respawnTickItem(tonumber(spawntimer.itemid));
+            timeelapsed = math.max(0, timeelapsed - nextspawn);
+        end
+        DB_update("spawntimers", {timeelapsed=timeelapsed}, "id="..tonumber(spawntimer.id));
+    end
+end
+
+function respawnTickItem(itemid)
+    local items = DB_select("item_spawns.*, items.name, items.instance", "items, item_spawns", "item_spawns.spawned = 0 AND items.id = item_spawns.itemid AND items.id = "..itemid);
+    local unspawned = #items;
+    debug("Unspawned items "..unspawned);
+    if (unspawned < 1) then
+        return;
+    end
+    local randomItem = math.random(unspawned);
+    local item = items[randomItem];
+    local worlditemid = CreateItem(item.instance, 1, item.x, item.y, item.z, item.world);
+    WORLDITEMS[worlditemid] = {spawnid=tonumber(item.id), itemid=itemid};
+    debug("Spawned spawnid "..item.id);
+end
+
+function spawnItemsOnServerInit()
+    local items = DB_select("item_spawns.*, items.id AS itemid, items.name, items.instance", "items, item_spawns", "item_spawns.spawned = 1 AND items.id = item_spawns.itemid");
+    for _key, item in pairs(items) do
+        local worlditemid = CreateItem(item.instance, 1, item.x, item.y, item.z, item.world);
+        WORLDITEMS[worlditemid] = {spawnid=tonumber(item.id), itemid=tonumber(items.itemid)};
+    end
+end
+
+function createItemSpawn(playerid, params)
+    local result, itemname = sscanf(params, "s");
+    if (result ~= 1) then
+        sendERRMessage(playerid, "Gib einen Itemnamen an");
+        return;
+    end
+    itemname = capitalize(itemname);
+    if not(DB_exists("*", "items", "name = "..itemname)) then
+        sendERRMessage(playerid, "Item '"..itemname.."' ist nicht bekannt");
+        return;
+    end
+    local x, y, z = GetPlayerPos(playerid);
+    local world = GetPlayerWorld(playerid);
+    local items = DB_select("*", "items", "name = "..itemname);
+    for _key, item in pairs(items) do
+        DB_insert("itemspawns", {itemid=tonumber(item.id), x=x, y=y, z=z, world=world});
+        local spawns = DB_select("*", "itemspawns", "itemid="..tonumber(item.id).." AND x="..x.." AND y="..y.." AND z="..z.." AND world="..world);
+        local spawnid = -1;
+        for _key, spawn in pairs(spawns) do
+            spawnid = tonumber(spawn.id);
+        end
+        sendINFOMessage(playerid, "Spawn gesetzt für "..item.name.."("..item.itemid..") - Spawn-ID: "..spawnid);
+        if not(DB_exists("*", "item_spawntimers", "itemid = "..tonumber(item.id))) then
+            sendERRMessage(playerid, "Item '"..itemname.."' hat noch keine Spawnzeit in der DB. Setze 60 Sekunden als Standardwert. Dies kann in der DB geändert werden");
+            DB_insert("item_spawntimers", {itemid=tonumber(item.id)});
         end
     end
 end
 
-function spawnItemsOnServerInit()
-    local responses = DB_select(
-        "items.instance AS instance, item_spawns.id as id, item_spawns.x AS x, item_spawns.y AS y, item_spawns.z AS z, item_spawns.world AS world",
-        "items, item_spawns",
-        "items.id = item_spawns.itemid AND item_spawns.spawned=1"
-    );
-    for _key, response in pairs(responses) do
-        local itemid = CreateItem(response.instance, 1, response.x, response.y, response.z, response.world);
-        WORLDITEMS[itemid] = response.id;
+function showItemSpawns(playerid, params)
+    sendINFOMessage(playerid, "In deiner Nähe sind die folgenden Spawns:");
+    local x, y, z = GetPlayerPos(playerid);
+    local itemspawns = DB_select("item_spawns.*, items.id as itemid, items.name as name", "items, item_spawns", "item_spawns.itemid = items.id");
+    for _key, itemspawn in pairs(itemspawns) do
+        local distance = GetDistance3D (x, y, z, tonumber(itemspawn.x), tonumber(itemspawn.y), tonumber(itemspawn.z));
+        if distance < 2500 then
+            sendINFOMessage(playerid, itemspawn.name.." ("..tonumber(itemspawn.itemid)..") - Spawn-ID: "..tonumber(itemspawn.id));
+        end
+    end
+end
+
+function deleteItemSpawn(playerid, params)
+    local result, spawnid = sscanf(params, "d");
+    if (result ~= 1) then
+        sendERRMessage(playerid, "Gib eine Spawn-ID an");
+        return;
+    end
+    if not(DB_exists("item_spawns.*, items.id as itemid, items.name as name", "items, item_spawns", "item_spawns.id = "..spawnid)) then
+        sendERRMessage("Item mit der Spawn-ID "..spawnid.." existiert nicht");
+        return;
+    end
+    local itemspawns = DB_select("item_spawns.*, items.id as itemid, items.name as name", "items, item_spawns", "item_spawns.id = "..spawnid);
+    for _key, itemspawn in pairs(itemspawns) do
+        DB_delete("item_spawns", "id="..tonumber(itemspawn.id));
+        if (tonumber(itemspawn.spawned) == 1) then
+            for worlditemid, worlditem in pairs(WORLDITEMS) do
+                if (worlditem.spawnid == itemspawn.id) then
+                    DestroyItem(worlditemid);
+                    WORLDITEMS[worlditemid] = nil;
+                end
+            end
+        end
+        sendINFOMessage(playerid, itemspawn.name.." ("..tonumber(itemspawn.itemid)..") - Spawn-ID: "..tonumber(itemspawn.id).." - wurde gelöscht.");
+        return;
     end
 end

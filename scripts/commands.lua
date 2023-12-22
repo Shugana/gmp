@@ -235,13 +235,28 @@ COMMANDS = {
         func = "sprint",
         help = "Aktiviert oder deaktiviert Sprintfunktion (Geschwindigkeitstrank)",
         minadminlevel = ADMINRANKS.Eventler
+    },
+    itemspawn = {
+        func = "createItemSpawn",
+        help = "Setzt ein Item als Respawn in die DB und spawned das ding direkt",
+        minadminlevel = ADMINRANKS.Support
+    },
+    showitemspawns = {
+        func = "showItemSpawns",
+        help = "Zeigt dir alle Itemspawns im Umkreis mit Itemname und Spawn-ID",
+        minadminlevel = ADMINRANKS.Support
+    },
+    deleteitemspawn = {
+        func = "deleteItemSpawn",
+        help = "Löscht ein Item und den zugehörigen Spawn aus der ID",
+        minadminlevel = ADMINRANKS.Support
     }
 };
 
 function OnPlayerText(playerid, text)
     OnPlayerCommandText(playerid, text);
 end
-  
+
 function OnPlayerCommandText(playerid, text)
     if not(text) then
         return;
