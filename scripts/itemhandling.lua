@@ -129,7 +129,7 @@ function loadInventory(playerid)
 end
 
 function ItemRespawnLoop()
-    local spawntimers = DB_select("*", "spawntimers", "1");
+    local spawntimers = DB_select("*", "item_spawntimers", "1");
     for _key, spawntimer in pairs(spawntimers) do
         local timeelapsed = tonumber(spawntimer.timeelapsed)+1;
         local nextspawn = tonumber(spawntimer.nextspawn);
@@ -137,7 +137,7 @@ function ItemRespawnLoop()
             respawnTickItem(tonumber(spawntimer.itemid));
             timeelapsed = math.max(0, timeelapsed - nextspawn);
         end
-        DB_update("spawntimers", {timeelapsed=timeelapsed}, "id="..tonumber(spawntimer.id));
+        DB_update("item_spawntimers", {timeelapsed=timeelapsed}, "id="..tonumber(spawntimer.id));
     end
 end
 
