@@ -52,19 +52,6 @@ function bufftest(playerid, params)
     table.insert(PLAYERS[playerid].buffs, newbuff);
 end
 
-function OnPlayerUseItem(playerid, itemInstance, amount, hand)
-    if (itemInstance == "ITPO_HEALTH_01") then
-        drinkHealPot(playerid, 25, "DATA\\TEXTURES\\DESKTOP\\SKORIP\\SKO_R_ITPO_HEALTH_01_3DS.TGA", 1200);
-    end
-    if (itemInstance == "ITPO_HEALTH_02") then
-        drinkHealPot(playerid, 50, "DATA\\TEXTURES\\DESKTOP\\SKORIP\\SKO_R_ITPO_HEALTH_02_3DS.TGA", 600);
-    end
-    if (itemInstance == "ITPO_HEALTH_03") then
-        drinkHealPot(playerid, 100, "DATA\\TEXTURES\\DESKTOP\\SKORIP\\SKO_R_ITPO_HEALTH_03_3DS.TGA", 300);
-    end
-    
-end
-
 function drinkHealPot(playerid, heal, graphic, time)
     local newbuff = {
         bgtexture = graphic,
