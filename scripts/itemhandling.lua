@@ -239,3 +239,7 @@ function deleteItemSpawn(playerid, params)
         return;
     end
 end
+
+function OnPlayerUseItem(playerid, itemInstance, amount, hand)
+    debug("Someone used an item playerid="..playerid..", iteminstance="..itemInstance..", amount="..amount..", hand="..hand);
+end
