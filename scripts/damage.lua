@@ -1,5 +1,5 @@
 function OnPlayerHit(playerid, attackerid)
-    debug(attackerid.." attacked "..playerid.." default dmg: 5");
+    debug(attackerid.." attacked "..playerid);
     local weaponmode = GetPlayerWeaponMode(attackerid);
 
     local damage = 0;
@@ -29,7 +29,7 @@ function OnPlayerHit(playerid, attackerid)
         damage = calculateDamage({blunt=0, edge=0, point=10, fire=50, water=0, earth=0, air=0}, getProtections(playerid));
     end
     debug ("result of "..damage);
-    updateHP(playerid, damage);
+    updateHP(playerid, -damage);
 end
 
 function OnPlayerSpellSetup(playerid, spellInstance)
