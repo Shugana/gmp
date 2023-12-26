@@ -58,6 +58,10 @@ function OnPlayerTakeItem(playerid, worlditemid, iteminstance, amount, _x, _y, _
     end
     debug("Picked up item with worlditemid "..worlditemid);
     RemoveItem(playerid, iteminstance, amount);
+    if WORLDITEMS[worlditemid] == nil then
+        sendERRMessage(playerid, "Dieses Item war asynchron und wird zerstört.");
+        return;
+    end
     DB_update("item_spawns", {spawned=0}, "id="..WORLDITEMS[worlditemid].spawnid);
     playerGetsItem(playerid, iteminstance, amount);
 end
