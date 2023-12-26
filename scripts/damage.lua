@@ -1,30 +1,35 @@
 function OnPlayerHit(playerid, attackerid)
     debug(attackerid.." attacked "..playerid.." default dmg: 5");
     local weaponmode = GetPlayerWeaponMode(attackerid);
-    debug("Weaponmode of attacker: "..weaponmode);
 
-    if (weaponmode == WEAPON_NONE) then
-        debug ("Nicht im Kampf...?!");
-    end
-    if (weaponmode == WEAPON_FIST) then
-        debug ("Faustkampf...?!");
+    local damage = 0;
+
+    if (weaponmode == WEAPON_NONE or weaponmode == WEAPON_FIST) then
+        debug ("Faust default dmg: 5 blunt");
+        damage = calculateDamage({blunt=5, edge=0, point=0, fire=0, water=0, earth=0, air=0}, getProtections(playerid));
     end
     if (weaponmode == WEAPON_1H) then
-        debug ("Einhand...?!");
+        debug ("1H default dmg: 10 edge");
+        damage = calculateDamage({blunt=0, edge=10, point=0, fire=0, water=0, earth=0, air=0}, getProtections(playerid));
     end
     if (weaponmode == WEAPON_2H) then
-        debug ("Zweihand...?!");
+        debug ("2H default dmg: 25 edge");
+        damage = calculateDamage({blunt=0, edge=25, point=0, fire=0, water=0, earth=0, air=0}, getProtections(playerid));
     end
     if (weaponmode == WEAPON_BOW) then
-        debug ("Bogen...?!");
+        debug ("Bogen default dmg: 25 point");
+        damage = calculateDamage({blunt=0, edge=0, point=25, fire=0, water=0, earth=0, air=0}, getProtections(playerid));
     end
     if (weaponmode == WEAPON_CBOW) then
-        debug ("Armbrust...?!");
+        debug ("Armbrust default dmg: 10 point");
+        damage = calculateDamage({blunt=0, edge=0, point=10, fire=0, water=0, earth=0, air=0}, getProtections(playerid));
     end
     if (weaponmode == WEAPON_MAGIC) then
-        debug ("Magie...?!");
+        debug ("Magie default dmg: 50 fire");
+        damage = calculateDamage({blunt=0, edge=0, point=10, fire=50, water=0, earth=0, air=0}, getProtections(playerid));
     end
-    updateHP(playerid, -5);
+    debug ("result of "..damage);
+    updateHP(playerid, damage);
 end
 
 function OnPlayerSpellSetup(playerid, spellInstance)
@@ -64,6 +69,39 @@ function getHP(playerid)
         return NPCS[playerid].stats.hp;
     end
     return 0;
+end
+
+function getProtections(playerid)
+    if PLAYERS[playerid] ~= nil then
+        return PLAYERS[playerid].stats.protections;
+    end
+    if NPCS[playerid] ~= nil then
+        return NPCS[playerid].stats.protections;
+    end
+    return {blunt=0, edge=0, point=0, fire=0, water=0, earth=0, air=0};
+end
+
+function calculateDamage(damagesource, armorsource)
+    local physicals = {"blunt", "edge", "point"};
+    local physdmg = 0;
+    local potential = 0;
+    for _key, physical in pairs(physicals) do
+        physdmg = physdmg + math.max(0, (damagesource[physical] - armorsource[physical]));
+        potential = potential + damagesource[physical];
+    end
+    if (potential > 0) then
+        physdmg = math.max(5, physdmg);
+    end
+    local magics = {"fire", "water", "earth", "air"};
+    local magicdmg = 0;
+    for _key, magic in pairs(magics) do
+        if (armorsource[magic] < 0) then
+            magicdmg = magicdmg - damagesource[magic];
+        else
+            magicdmg = magicdmg + math.max(0, (damagesource[magic] - armorsource[magic]));
+        end
+    end
+    return physdmg + magicdmg;
 end
 
 function heal(playerid, params)
