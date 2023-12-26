@@ -42,12 +42,14 @@ end
 
 function updateHP(playerid, delta)
     if PLAYERS[playerid] ~= nil then
-        PLAYERS[playerid].stats.hp = PLAYERS[playerid].stats.hp + delta;
-        SetPlayerHealth(playerid, math.min(math.max(0, PLAYERS[playerid].stats.hp),GetPlayerMaxHealth(playerid)));
+        local newhp = math.min(math.max(0, PLAYERS[playerid].stats.hp+delta),GetPlayerMaxHealth(playerid));
+        PLAYERS[playerid].stats.hp = newhp;
+        SetPlayerHealth(playerid, newhp);
     end
     if NPCS[playerid] ~= nil then
-        NPCS[playerid].stats.hp = NPCS[playerid].stats.hp + delta;
-        SetPlayerHealth(playerid, math.min(math.max(0, NPCS[playerid].stats.hp),GetPlayerMaxHealth(playerid)));
+        local newhp = math.min(math.max(0, NPCS[playerid].stats.hp+delta),GetPlayerMaxHealth(playerid));
+        NPCS[playerid].stats.hp = newhp;
+        SetPlayerHealth(playerid, newhp);
     end
 end
 
