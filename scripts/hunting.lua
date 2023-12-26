@@ -158,7 +158,7 @@ function plunderNPC(playerid)
         if (loot.trophy == 0) then
             GiveItemById(playerid, loot.itemid, loot.amount);
             table.remove(NPCS[npcid].loot, key);
-            plunderNPC(playerid, npcid);
+            plunderNPC(playerid);
             return;
         end
     end

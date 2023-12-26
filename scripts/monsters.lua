@@ -98,7 +98,9 @@ end
 function NPCLoop()
     local distance;
     for npcid, npc in pairs(NPCS) do
-        _G[NPCSTATES[npc.state].func](npcid);
+        if (NPCS[npcid].stats.hp > 0) then
+            _G[NPCSTATES[npc.state].func](npcid);
+        end
     end
 end
 
@@ -217,7 +219,7 @@ function monsterGetClosestAggro(npcid)
     local targetPlayer;
     for playerid, _playerdata in pairs(PLAYERS) do
         distance = GetDistancePlayers(npcid, playerid);
-        if (GetPlayerHealth(playerid) > 0) and (GetPlayerWorld(npcid) == GetPlayerWorld(playerid)) and (distance < mindist) then
+        if (PLAYERS[playerid].stats.hp > 0) and (GetPlayerWorld(npcid) == GetPlayerWorld(playerid)) and (distance < mindist) then
             mindist = distance;
             targetPlayer = playerid;
         end
@@ -226,10 +228,6 @@ function monsterGetClosestAggro(npcid)
 end
 
 function monsterTurn(npcid, targetid)
-    if (GetPlayerHealth(npcid) < 1) then
-        return;
-    end
-
     local npcangle = GetPlayerAngle(npcid);
     local targetangle = GetAngleToPlayer(npcid, targetid);
 
