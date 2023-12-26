@@ -56,6 +56,7 @@ function OnPlayerTakeItem(playerid, worlditemid, iteminstance, amount, _x, _y, _
         end
         return;
     end
+    debug("Picked up item with worlditemid "..worlditemid);
     RemoveItem(playerid, iteminstance, amount);
     DB_update("item_spawns", {spawned=0}, "id="..WORLDITEMS[worlditemid].spawnid);
     playerGetsItem(playerid, iteminstance, amount);
