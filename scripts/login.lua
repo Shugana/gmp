@@ -6,8 +6,8 @@ function OnPlayerConnect(playerid)
 
     SetPlayerEnable_OnPlayerKey(playerid, 1);
     
-    SetPlayerWorld(playerid, "NEWWORLD\\ABANDONED.ZEN");
-    SetPlayerPos(playerid, 1093, -122, 295);
+    SetPlayerWorld(playerid, "HOK.ZEN");
+    SetPlayerPos(playerid, -49944, -604, 0);
 
     PLAYERS[playerid] = {
         adminlevel = ADMINRANKS.Ausgelogged
