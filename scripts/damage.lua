@@ -56,6 +56,16 @@ function setHP(playerid, amount)
     updateHP(playerid, 0);
 end
 
+function getHP(playerid)
+    if PLAYERS[playerid] ~= nil then
+        return PLAYERS[playerid].stats.hp;
+    end
+    if NPCS[playerid] ~= nil then
+        return NPCS[playerid].stats.hp;
+    end
+    return 0;
+end
+
 function heal(playerid, params)
     local targetid = playerid;
     local targetname = GetPlayerName(playerid);
@@ -76,15 +86,7 @@ function heal(playerid, params)
         return;
     end
 
-    setHP(targetid, GetPlayerMaxHealth(targetid)); 
-    if (IsDead(targetid) == 1 and PLAYERS[targetid] ~= nil) then
-        saveChar(targetid);
-        SpawnPlayer(targetid, GetPlayerPos(targetid));
-        loadChar(targetid);
-        PlayAnimation(targetid, "T_JUMPB");
-        unfreeze(targetid, "dead");
-    end
-
+    ressurect(targetid, GetPlayerMaxHealth(targetid));
     sendINFOMessage(playerid, "Du hast "..targetname.." geheilt");
     
     local targetchar = "NPC";
@@ -119,22 +121,13 @@ function revive(playerid, params)
         return;
     end
 
-    if (IsDead(targetid) ~= 1) then
+    if IsDead(targetid) ~= 1 and getHP(targetid) > 0 then
         sendERRMessage(playerid, "Dein Ziel ist nicht tot.");
         return;
     end
-
-    setHP(targetid, 1);
-    if (PLAYERS[targetid] ~= nil) then
-        saveChar(targetid);
-        SpawnPlayer(targetid, GetPlayerPos(targetid));
-        loadChar(targetid);
-        PlayAnimation(targetid, "T_JUMPB");
-        unfreeze(targetid, "dead");
-    end
-
+    ressurect(targetid, 1);
     sendINFOMessage(playerid, "Du hast "..targetname.." belebt");
-    
+
     local targetchar = "NPC";
     if (PLAYERS[targetid] ~= nil) then
         targetchar = PLAYERS[targetid].character;
@@ -142,6 +135,17 @@ function revive(playerid, params)
             sendINFOMessage(targetid, "Du wurdest belebt.");
         end
     end
-    
+
     log("heal", GetPlayerName(playerid).." ("..PLAYERS[playerid].character..") belebt "..targetname.." ("..targetchar..")");
+end
+
+function ressurect(playerid, hp);
+    setHP(playerid, hp);
+    if (PLAYERS[playerid] ~= nil and IsDead(playerid)) then
+        saveChar(playerid);
+        SpawnPlayer(playerid, GetPlayerPos(playerid));
+        loadChar(playerid);
+        PlayAnimation(playerid, "T_JUMPB");
+        unfreeze(playerid, "dead");
+    end
 end
