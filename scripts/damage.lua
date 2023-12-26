@@ -26,7 +26,7 @@ function OnPlayerHit(playerid, attackerid)
     end
     if (weaponmode == WEAPON_MAGIC) then
         debug ("Magie default dmg: 50 fire");
-        damage = calculateDamage({blunt=0, edge=0, point=10, fire=50, water=0, earth=0, air=0}, getProtections(playerid));
+        damage = calculateDamage({blunt=0, edge=0, point=0, fire=50, water=0, earth=0, air=0}, getProtections(playerid));
     end
     debug ("result of "..damage);
     updateHP(playerid, -damage);
