@@ -9,6 +9,11 @@ COMMANDS = {
         help = "Cheated ein Item",
         minadminlevel = ADMINRANKS.Spielleiter
     },
+    giveall = {
+        func = "cheatItemAll",
+        help = "Gibt dir Testweise alle Items",
+        minadminlevel = ADMINRANKS.Spielleiter
+    },
     help = {
         func = "help",
         help = "Zeigt diese Hilfe an",

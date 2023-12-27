@@ -48,6 +48,16 @@ function cheatItem(playerid, params)
     GiveItemById(recipientid, itemid, amount);
 end
 
+function cheatItemAll(playerid, params)
+    local items = DB_select("*", "items", "1");
+    for _key, item in pairs(items) do
+        sendINFOMessage(playerid, GetPlayerName(playerid).." cheated "..GetPlayerName(playerid).." 1x "..item.name);
+        log("cheat", GetPlayerName(playerid).."("..PLAYERS[playerid].character..") cheated "
+        ..GetPlayerName(playerid).."("..PLAYERS[playerid].character..") 1x "..item.name.."("..item.id..")");
+        GiveItemById(playerid, item.id, 1);
+    end
+end
+
 function OnPlayerTakeItem(playerid, worlditemid, iteminstance, amount, _x, _y, _z, _worldName)
     if (worlditemid < 0) then
         if worlditemid == ITEM_UNSYNCHRONIZED then
