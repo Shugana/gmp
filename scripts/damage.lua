@@ -5,30 +5,22 @@ function OnPlayerHit(playerid, attackerid)
     local damage = 0;
 
     if (weaponmode == WEAPON_NONE or weaponmode == WEAPON_FIST) then
-        debug ("Faust default dmg: 5 blunt");
+        debug ("Melee Angriff (Faust)");
         damage = calculateDamage({blunt=5, edge=0, point=0, fire=0, water=0, earth=0, air=0}, getProtections(playerid));
     end
-    if (weaponmode == WEAPON_1H) then
-        debug ("1H default dmg: 10 edge");
-        damage = calculateDamage({blunt=0, edge=10, point=0, fire=0, water=0, earth=0, air=0}, getProtections(playerid));
+    if (weaponmode == WEAPON_1H or weaponmode == WEAPON_2H) then
+        debug ("Melee Angriff (Waffe)");
+        damage = calculateDamage(getWeapon(attackerid, "melee"), getProtections(playerid));
     end
-    if (weaponmode == WEAPON_2H) then
-        debug ("2H default dmg: 25 edge");
-        damage = calculateDamage({blunt=0, edge=25, point=0, fire=0, water=0, earth=0, air=0}, getProtections(playerid));
-    end
-    if (weaponmode == WEAPON_BOW) then
-        debug ("Bogen default dmg: 25 point");
-        damage = calculateDamage({blunt=0, edge=0, point=25, fire=0, water=0, earth=0, air=0}, getProtections(playerid));
-    end
-    if (weaponmode == WEAPON_CBOW) then
-        debug ("Armbrust default dmg: 10 point");
-        damage = calculateDamage({blunt=0, edge=0, point=10, fire=0, water=0, earth=0, air=0}, getProtections(playerid));
+    if (weaponmode == WEAPON_BOW or weaponmode == WEAPON_CBOW) then
+        debug ("Ranged Angriff");
+        damage = calculateDamage(getWeapon(attackerid, "ranged"), getProtections(playerid));
     end
     if (weaponmode == WEAPON_MAGIC) then
         debug ("Magie default dmg: 50 fire");
         damage = calculateDamage({blunt=0, edge=0, point=0, fire=50, water=0, earth=0, air=0}, getProtections(playerid));
     end
-    debug ("result of "..damage);
+    debug ("Schaden: "..damage);
     updateHP(playerid, -damage);
 end
 
@@ -81,6 +73,57 @@ function getProtections(playerid)
         return NPCS[playerid].stats.protections;
     end
     return {blunt=0, edge=0, point=0, fire=0, water=0, earth=0, air=0};
+end
+
+function getWeapon(playerid, slot)
+    local weapons = getEquippedWeapons(playerid);
+    if weapons[slot] == nil then
+        return {blunt=0, edge=0, point=0, fire=0, water=0, earth=0, air=0}
+    end
+    return weapons[slot];
+end
+
+function getEquippedWeapons(playerid)
+    local weapons = {
+        melee = nil,
+        ranged = nil
+    };
+
+    local meleeinstance = GetEquippedMeleeWeapon(playerid);
+    if (meleeinstance ~= "NULL") then
+        local meleeweapons = DB_select("weapons.*", "weapons, items", "items.id = weapons.itemid AND items.instance = '"..meleeinstance.."'");
+        for _key, meleeweapon in pairs(meleeweapons) do
+            weapons.melee = {
+                weapontype = tonumber(meleeweapon.weapontype),
+                blunt = tonumber(meleeweapon.blunt),
+                edge = tonumber(meleeweapon.edge),
+                point = tonumber(meleeweapon.point),
+                fire = tonumber(meleeweapon.fire),
+                water = tonumber(meleeweapon.water),
+                earth = tonumber(meleeweapon.earth),
+                air = tonumber(meleeweapon.air)
+            };
+        end
+    end
+
+    local rangedinstance = GetEquippedRangedWeapon(playerid);
+    if (rangedinstance ~= "NULL") then
+        local rangedweapons = DB_select("weapons.*", "weapons, items", "items.id = weapons.itemid AND items.instance = '"..rangedinstance.."'");
+        for _key, rangedweapon in pairs(rangedweapons) do
+            weapons.melee = {
+                weapontype = tonumber(rangedweapon.weapontype),
+                blunt = tonumber(rangedweapon.blunt),
+                edge = tonumber(rangedweapon.edge),
+                point = tonumber(rangedweapon.point),
+                fire = tonumber(rangedweapon.fire),
+                water = tonumber(rangedweapon.water),
+                earth = tonumber(rangedweapon.earth),
+                air = tonumber(rangedweapon.air)
+            };
+        end
+    end
+
+    return weapons;
 end
 
 function calculateDamage(damagesource, armorsource)
