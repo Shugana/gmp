@@ -125,8 +125,8 @@ function showroom(playerid, params)
     local x_add, z_add = coords_forward(GetPlayerAngle(playerid));
     local items = DB_select("*", "items", "1");
     for _key, item in pairs(items) do
-        local prefix = string.sub(item.name, 1, 4);
-        local suffix = string.sub(item.name, -2);
+        local prefix = string.sub(item.instance, 1, 4);
+        local suffix = string.sub(item.instance, -2);
         if (prefix == "ITAR") then
             npcid = spawnMonster("Puppe", world, x+(x_add*range*count), y+50, z+(z_add*range*count));
             SetPlayerAngle(npcid, npcangle);
