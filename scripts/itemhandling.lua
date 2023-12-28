@@ -71,8 +71,8 @@ function OnPlayerTakeItem(playerid, worlditemid, iteminstance, amount, _x, _y, _
         sendERRMessage(playerid, "Dieses Item war asynchron und wird zerstört.");
         return;
     end
-    WORLDITEMS[worlditemid] = nil;
     DB_update("item_spawns", {spawned=0}, "id="..WORLDITEMS[worlditemid].spawnid);
+    WORLDITEMS[worlditemid] = nil;
     playerGetsItem(playerid, iteminstance, amount);
 end
 
