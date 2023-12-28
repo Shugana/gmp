@@ -41,6 +41,9 @@ function updateHP(playerid, delta)
     if NPCS[playerid] ~= nil then
         local newhp = math.min(math.max(0, NPCS[playerid].stats.hp+delta),GetPlayerMaxHealth(playerid));
         NPCS[playerid].stats.hp = newhp;
+        if newhp < 1 then
+            monsterAni(playerid, "T_DEAD");
+        end
         SetPlayerHealth(playerid, newhp);
     end
 end

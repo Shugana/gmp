@@ -113,3 +113,43 @@ function coords_forward(angle)
     local z = math.cos(angle_rad);
     return x, z;
 end
+
+function showroom(playerid, params)
+    local npcid;
+    local range = 150;
+    local count = 1;
+    local x, y, z = GetPlayerPos(playerid);
+    local world = GetPlayerWorld(playerid);
+    local angle = GetPlayerAngle(playerid);
+    local npcangle = (angle + 90)%360;
+    local x_add, z_add = coords_forward(GetPlayerAngle(playerid));
+    local items = DB_select("*", "items", "1");
+    for _key, item in pairs(items) do
+        local prefix = string.sub(item.name, 1, 4);
+        local suffix = string.sub(item.name, -2);
+        if (prefix == "ITAR") then
+            npcid = spawnMonster("Puppe", world, x+(x_add*range*count), y+50, z+(z_add*range*count));
+            SetPlayerAngle(npcid, npcangle);
+            if (suffix == "_F") then
+                SetPlayerAdditionalVisual(
+                    npcid,
+                    "HUM_BODY_BABE0",
+                    48,
+                    "HUM_HEAD_BABE12",
+                    343
+                );
+            else                
+                SetPlayerAdditionalVisual(
+                    npcid,
+                    "HUM_BODY_NAKED0",
+                    78,
+                    "HUM_HEAD_FATBALD",
+                    370
+                );
+            end
+            GiveItem(npcid, item.instance, 1);
+            EquipArmor(npcid, item.instance);
+            count = count + 1;
+        end
+    end
+end

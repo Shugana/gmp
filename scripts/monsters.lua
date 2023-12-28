@@ -8,7 +8,9 @@ NPCSTATES = {
     attack = {id=3, func="monsterAttack"},
     [3] = {id=3, func="monsterAttack"},
     follow = {id=4, func="monsterFollow"},
-    [4] = {id=4, func="monsterFollow"}
+    [4] = {id=4, func="monsterFollow"},
+    guard = {id=5, func="monsterGuard"},
+    [5] = {id=5, func="monsterGuard"}
 }
 
 function spawnMonsterOnPlayer(playerid, params)
@@ -64,7 +66,7 @@ function spawnMonster(instance, world, x, y, z)
         SetPlayerPos(npcid, x, y, z);
 
         NPCS[npcid] = {
-            state = NPCSTATES.idle.id,
+            state = tonumber(monster.startstate),
             warnings = 0,
             turnspeed = tonumber(monster.turnspeed),
             aggrorange = tonumber(monster.aggrorange),
@@ -259,14 +261,13 @@ function monsterAttack(npcid)
     elseif (random < 11) then
         monsterAni(npcid, getMonsteraniByWeaponmode(npcid, "T_", "PARADEJUMPB"));
     else
-
         monsterAni(npcid, getMonsteraniByWeaponmode(npcid, "S_", "ATTACK"));
     end
 end
 
 function monsterFollow(npcid)
     monsterTurn(npcid, NPCS[npcid].followid);
-    
+
     local distance = GetDistancePlayers(npcid, NPCS[npcid].followid);
     if distance < NPCS[npcid].attackrange then
         monsterAni(npcid, "S_SLEEP");
@@ -275,6 +276,10 @@ function monsterFollow(npcid)
     else
         monsterAni(npcid, getMonsteraniByWeaponmode(npcid, "S_", "RUN"));
     end
+end
+
+function monsterGuard(npcid)
+    monsterAni(npcid, "S_HGUARD");
 end
 
 function testhit(playerid, params)

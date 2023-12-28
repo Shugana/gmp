@@ -255,6 +255,11 @@ COMMANDS = {
         func = "deleteItemSpawn",
         help = "Löscht ein Item und den zugehörigen Spawn aus der ID",
         minadminlevel = ADMINRANKS.Support
+    },
+    showroom = {
+        func = "showroom",
+        help = "Spawned NPCs mit sämtlichen Rüstungen in einer Reihe vor dir";
+        minadminlevel = ADMINRANKS.Support
     }
 };
 
