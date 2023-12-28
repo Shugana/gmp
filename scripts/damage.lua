@@ -113,7 +113,7 @@ function getEquippedWeapons(playerid)
     if (rangedinstance ~= "NULL") then
         local rangedweapons = DB_select("weapons.*", "weapons, items", "items.id = weapons.itemid AND items.instance = '"..rangedinstance.."'");
         for _key, rangedweapon in pairs(rangedweapons) do
-            weapons.melee = {
+            weapons.ranged = {
                 weapontype = tonumber(rangedweapon.weapontype),
                 blunt = tonumber(rangedweapon.blunt),
                 edge = tonumber(rangedweapon.edge),

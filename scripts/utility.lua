@@ -123,7 +123,7 @@ function showroom(playerid, params)
     local angle = GetPlayerAngle(playerid);
     local npcangle = (angle + 90)%360;
     local x_add, z_add = coords_forward(GetPlayerAngle(playerid));
-    local items = DB_select("*", "items", "1");
+    local items = DB_select("*", "items", "1 ORDER BY instance ASC");
     for _key, item in pairs(items) do
         local prefix = string.sub(item.instance, 1, 4);
         local suffix = string.sub(item.instance, -2);
