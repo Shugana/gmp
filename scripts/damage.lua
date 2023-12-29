@@ -1,19 +1,15 @@
 function OnPlayerHit(playerid, attackerid)
-    debug(attackerid.." attacked "..playerid);
     local weaponmode = GetPlayerWeaponMode(attackerid);
 
     local damage = 0;
 
     if (weaponmode == WEAPON_NONE or weaponmode == WEAPON_FIST) then
-        debug ("Melee Angriff (Faust)");
         damage = calculateDamage({blunt=5, edge=0, point=0, fire=0, water=0, earth=0, air=0}, getProtections(playerid));
     end
     if (weaponmode == WEAPON_1H or weaponmode == WEAPON_2H) then
-        debug ("Melee Angriff (Waffe)");
         damage = calculateDamage(getWeapon(attackerid, "melee"), getProtections(playerid));
     end
     if (weaponmode == WEAPON_BOW or weaponmode == WEAPON_CBOW) then
-        debug ("Ranged Angriff");
         damage = calculateDamage(getWeapon(attackerid, "ranged"), getProtections(playerid));
     end
     if (weaponmode == WEAPON_MAGIC) then

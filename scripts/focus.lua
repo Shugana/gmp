@@ -14,13 +14,15 @@ function OnPlayerFocus(playerid, focusid)
         return;
     end
 
-    text = "Fokus: "..GetPlayerName(focusid).." ("..focusid..")";
+    text = GetPlayerName(focusid).." ("..focusid..")";
 
     if WORLDMONSTERS[focusid] ~= nil then
         text = text.." {"..WORLDMONSTERS[focusid].."}";
     end
-    local x, y = convertToPixel(30, 923);
-    PLAYERS[playerid].focus = CreatePlayerDraw(playerid, x, y, text, FONTS.sequel, 255, 255, 255);
+    --local x, y = convertToPixel(30, 923);
+    local x, y = convertToPixel(955, 45);
+    --PLAYERS[playerid].focus = CreatePlayerDraw(playerid, x, y, text, FONTS.sequel, 255, 255, 255);
+    PLAYERS[playerid].focus = CreatePlayerDraw(playerid, x, y, text, FONTS.sequel, 255, 255, 255, 255, 1);
     ShowPlayerDraw(playerid, PLAYERS[playerid].focus);
     updateFocusHP(playerid, focusid);
 
