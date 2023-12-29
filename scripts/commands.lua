@@ -262,7 +262,7 @@ COMMANDS = {
         minadminlevel = ADMINRANKS.Support
     },
     changeattribute = {
-        func = "changeattribute",
+        func = "changeAttribute",
         help = "Ändert deine eigenen Stats";
         minadminlevel = ADMINRANKS.Spielleiter
     }
