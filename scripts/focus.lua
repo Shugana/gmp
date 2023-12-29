@@ -27,7 +27,7 @@ function OnPlayerFocus(playerid, focusid)
     local hp = getHP(focusid);
     local maxhp = getMaxHP(focusid);
     local perc = math.ceil(hp/maxhp*100);
-    PLAYERS[playerid].focushp = CreatePlayerDraw(playerid, x, y, hp.." / "..maxhp.."("..perc..")", FONTS.sequel, 255, 255, 255, 255, 1);
+    PLAYERS[playerid].focushp = CreatePlayerDraw(playerid, x, y, hp.."/"..maxhp.." ("..perc.."%)", FONTS.sequel, 255, 255, 255, 255, 1);
     ShowPlayerDraw(playerid, PLAYERS[playerid].focushp);
 end
 
