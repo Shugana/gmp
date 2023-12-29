@@ -93,6 +93,16 @@ function getHP(playerid)
     return 0;
 end
 
+function getMaxHP(playerid)
+    if PLAYERS[playerid] ~= nil then
+        return PLAYERS[playerid].stats.maxhp;
+    end
+    if NPCS[playerid] ~= nil then
+        return NPCS[playerid].stats.maxhp;
+    end
+    return 1;
+end
+
 function getProtections(playerid)
     if PLAYERS[playerid] ~= nil then
         return PLAYERS[playerid].stats.protections;

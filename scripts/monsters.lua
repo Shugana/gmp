@@ -77,7 +77,9 @@ function spawnMonster(instance, world, x, y, z)
             delay = 0,
             stats = {
                 hp = tonumber(monster.hp),
+                maxhp = tonumber(monster.hp),
                 mana = tonumber(monster.mana),
+                maxmana = tonumber(monster.maxmana),
                 protections = {
                     blunt = tonumber(monster.protection_blunt),
                     edge = tonumber(monster.protection_edge),
