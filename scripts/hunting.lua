@@ -3,7 +3,7 @@ function huntingCheck(playerid)
     if NPCS[focusid] == nil then
         return;
     end
-    if GetPlayerHealth(focusid) > 0 then
+    if getHP(focusid) > 0 then
         sendERRMessage(playerid, "Lebend hätte dein Ziel wohl etwas dagegen...");
         return;
     end
