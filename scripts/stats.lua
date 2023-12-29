@@ -85,6 +85,42 @@ function getMaxMana(playerid)
     return 0;
 end
 
+function updateMana(playerid, delta)
+    if PLAYERS[playerid] ~= nil then
+        local newmana = math.min(math.max(0, PLAYERS[playerid].stats.mana+delta),GetPlayerMaxMana(playerid));
+        PLAYERS[playerid].stats.mana = newmana;
+        SetPlayerMana(playerid, newmana);
+    end
+    if NPCS[playerid] ~= nil then
+        local newmana = math.min(math.max(0, NPCS[playerid].stats.hp+delta),GetPlayerMaxMana(playerid));
+        NPCS[playerid].stats.hp = newmana;
+        SetPlayerMana(playerid, newmana);
+    end
+end
+
+function setMana(playerid, amount)
+    if PLAYERS[playerid] ~= nil then
+        PLAYERS[playerid].stats.mana = amount;
+    end
+    if NPCS[playerid] ~= nil then
+        NPCS[playerid].stats.mana = amount;
+    end
+    updateMana(playerid, 0);
+end
+
+function setMaxMana(playerid, amount)
+    if PLAYERS[playerid] ~= nil then
+        PLAYERS[playerid].stats.maxmana = amount;
+        PLAYERS[playerid].stat.mana = math.min(PLAYERS[playerid].stat.mana, PLAYERS[playerid].stats.maxmana);
+    end
+    if NPCS[playerid] ~= nil then
+        NPCS[playerid].stats.maxmana = amount;
+        NPCS[playerid].stat.mana = math.min(NPCS[playerid].stat.mana, NPCS[playerid].stats.maxmana);
+    end
+    SetPlayerMaxMana(playerid, amount);
+    updateMana(playerid, 0);
+end
+
 function loadStats(playerid)
     if PLAYERS[playerid] == nil or PLAYERS[playerid].character == nil then
         return;
@@ -142,7 +178,7 @@ end
 function changeAttribute(playerid, params)
     result, stat, amount = sscanf(params, "sd");
     if result ~= 1 then
-        sendERRMessage("Du musst Stat und Zahl angeben");
+        sendERRMessage(playerid, "Du musst Stat und Zahl angeben");
         return;
     end
     if (amount < 1) then

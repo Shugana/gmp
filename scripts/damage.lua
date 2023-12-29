@@ -80,6 +80,19 @@ function setHP(playerid, amount)
     updateHP(playerid, 0);
 end
 
+function setMaxHP(playerid, amount)
+    if PLAYERS[playerid] ~= nil then
+        PLAYERS[playerid].stats.maxhp = amount;
+        PLAYERS[playerid].stats.hp = math.min(PLAYERS[playerid].stats.hp, PLAYERS[playerid].stats.maxhp);
+    end
+    if NPCS[playerid] ~= nil then
+        NPCS[playerid].stats.maxhp = amount;
+        NPCS[playerid].stats.hp = math.min(NPCS[playerid].stats.hp, NPCS[playerid].stats.maxhp);
+    end
+    SetPlayerMaxHealth(playerid, amount);
+    updateHP(playerid, 0);
+end
+
 function getHP(playerid)
     if PLAYERS[playerid] ~= nil then
         return PLAYERS[playerid].stats.hp;
