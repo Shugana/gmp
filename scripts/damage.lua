@@ -17,20 +17,45 @@ function OnPlayerHit(playerid, attackerid)
         damage = calculateDamage(getWeapon(attackerid, "ranged"), getProtections(playerid));
     end
     if (weaponmode == WEAPON_MAGIC) then
-        debug ("Magie default dmg: 50 fire");
-        damage = calculateDamage({blunt=0, edge=0, point=0, fire=50, water=0, earth=0, air=0}, getProtections(playerid));
+        damage = calculateDamage(getSpelldamage(attackerid), getProtections(playerid));
     end
     debug ("Schaden: "..damage);
     updateHP(playerid, -damage);
 end
 
 function OnPlayerSpellSetup(playerid, spellInstance)
-    debug("Spell prepared by "..playerid.." -> "..spellInstance);
+    if (spellInstance ~= "NULL") then
+        PLAYERS[playerid].spell = spellInstance;
+    end
 end
 
-function OnPlayerSpellCast(playerid, spellInstance)
-    debug("Spell cast by "..playerid.." -> "..spellInstance);
+function getSpelldamage(playerid)
+    local unknownspelldmg = {blunt=0, edge=0, point=0, fire=5, water=5, earth=5, air=5};
+    if (PLAYERS[playerid].spell == nil) then
+        debug ("Zauber: Unbekannter Zauber");
+        return unknownspelldmg;
+    end
+    local spells = DB_select("spells.*", "spells, items", "items.instance = '"..PLAYERS[playerid].spell.."' AND (spells.runeitemid = items.id OR spells.scrollitemid = items.id)");
+    for _key, spell in pairs(spells) do
+        debug ("Zauber: "..spell.name);
+        return {
+            blunt = 0,
+            edge = 0,
+            point = 0,
+            fire = tonumber(spells.fire) * PLAYERS[playerid].stats.maxmana * tonumber(spells.manascaling),
+            water = tonumber(spells.water) * PLAYERS[playerid].stats.maxmana * tonumber(spells.manascaling),
+            earth = tonumber(spells.earth) * PLAYERS[playerid].stats.maxmana * tonumber(spells.manascaling),
+            air = tonumber(spells.air) * PLAYERS[playerid].stats.maxmana * tonumber(spells.manascaling)
+        };
+    end
+    debug ("Zauber: Unbekannter Zauber");
+    return unknownspelldmg;
 end
+
+--function OnPlayerSpellCast(playerid, spellInstance)
+--    non damage spells should do something here
+--    debug("Spell cast by "..playerid.." -> "..spellInstance);
+--end
 
 function updateHP(playerid, delta)
     if PLAYERS[playerid] ~= nil then
