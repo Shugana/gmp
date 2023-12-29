@@ -71,6 +71,7 @@ function updateHP(playerid, delta)
         end
         SetPlayerHealth(playerid, newhp);
     end
+    updateFocussingMe(playerid);
 end
 
 function setHP(playerid, amount)
