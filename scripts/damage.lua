@@ -42,13 +42,13 @@ function getSpelldamage(playerid)
             blunt = 0,
             edge = 0,
             point = 0,
-            fire = tonumber(spells.fire) * PLAYERS[playerid].stats.maxmana * tonumber(spells.manascaling),
-            water = tonumber(spells.water) * PLAYERS[playerid].stats.maxmana * tonumber(spells.manascaling),
-            earth = tonumber(spells.earth) * PLAYERS[playerid].stats.maxmana * tonumber(spells.manascaling),
-            air = tonumber(spells.air) * PLAYERS[playerid].stats.maxmana * tonumber(spells.manascaling)
+            fire = tonumber(spell.fire) * PLAYERS[playerid].stats.maxmana * tonumber(spell.manascaling),
+            water = tonumber(spell.water) * PLAYERS[playerid].stats.maxmana * tonumber(spell.manascaling),
+            earth = tonumber(spell.earth) * PLAYERS[playerid].stats.maxmana * tonumber(spell.manascaling),
+            air = tonumber(spell.air) * PLAYERS[playerid].stats.maxmana * tonumber(spell.manascaling)
         };
     end
-    debug ("Zauber: Unbekannter Zauber");
+    debug ("Zauber: Unbekannt ("..PLAYERS[playerid].spell..")");
     return unknownspelldmg;
 end
 
