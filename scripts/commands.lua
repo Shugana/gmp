@@ -260,6 +260,11 @@ COMMANDS = {
         func = "showroom",
         help = "Spawned NPCs mit sämtlichen Rüstungen in einer Reihe vor dir";
         minadminlevel = ADMINRANKS.Support
+    },
+    changeattribute = {
+        func = "changeattribute",
+        help = "Ändert deine eigenen Stats";
+        minadminlevel = ADMINRANKS.Spielleiter
     }
 };
 
