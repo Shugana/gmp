@@ -111,11 +111,11 @@ end
 function setMaxMana(playerid, amount)
     if PLAYERS[playerid] ~= nil then
         PLAYERS[playerid].stats.maxmana = amount;
-        PLAYERS[playerid].stat.mana = math.min(PLAYERS[playerid].stat.mana, PLAYERS[playerid].stats.maxmana);
+        PLAYERS[playerid].stats.mana = math.min(PLAYERS[playerid].stats.mana, PLAYERS[playerid].stats.maxmana);
     end
     if NPCS[playerid] ~= nil then
         NPCS[playerid].stats.maxmana = amount;
-        NPCS[playerid].stat.mana = math.min(NPCS[playerid].stat.mana, NPCS[playerid].stats.maxmana);
+        NPCS[playerid].stats.mana = math.min(NPCS[playerid].stats.mana, NPCS[playerid].stats.maxmana);
     end
     SetPlayerMaxMana(playerid, amount);
     updateMana(playerid, 0);
