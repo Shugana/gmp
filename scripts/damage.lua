@@ -53,11 +53,23 @@ end
 --    debug("Spell cast by "..playerid.." -> "..spellInstance);
 --end
 
+function HPLoop()
+    for playerid, _value in pairs(PLAYERS) do
+        if (GetPlayerHealth(playerid) ~= PLAYERS[playerid].stats.hp) then
+            SetPlayerHealth(playerid, PLAYERS[playerid].stats.hp);
+        end
+    end
+    for npcid, _value in pairs(NPCS) do
+        if (GetPlayerHealth(npcid) ~= NPCS[npcid].stats.hp) then
+            SetPlayerHealth(npcid, NPCS[npcid].stats.hp);
+        end
+    end
+end
+
 function updateHP(playerid, delta)
     if PLAYERS[playerid] ~= nil then
         local newhp = math.min(math.max(0, PLAYERS[playerid].stats.hp+delta),GetPlayerMaxHealth(playerid));
         PLAYERS[playerid].stats.hp = newhp;
-        SetPlayerHealth(playerid, newhp);
     end
     if NPCS[playerid] ~= nil then
         local newhp = math.min(math.max(0, NPCS[playerid].stats.hp+delta),GetPlayerMaxHealth(playerid));
@@ -65,7 +77,6 @@ function updateHP(playerid, delta)
         if newhp < 1 then
             monsterAni(playerid, "T_DEAD");
         end
-        SetPlayerHealth(playerid, newhp);
     end
     updateFocussingMe(playerid);
 end
