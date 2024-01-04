@@ -4,4 +4,5 @@ function OnServerWorldTime(oldHour, oldMinute, newHour, newMinute)
     if (newMinute == 0) then
         tickWeather();
     end
+    debug(GetTickCount());
 end
