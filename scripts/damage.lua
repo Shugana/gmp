@@ -67,11 +67,11 @@ function HPLoop()
 end
 
 function updateHP(playerid, delta)
-    if PLAYERS[playerid] ~= nil then
+    if PLAYERS[playerid] ~= nil and PLAYERS[playerid].stats ~= nil and PLAYERS[playerid].stats.hp ~= nil then
         local newhp = math.min(math.max(0, PLAYERS[playerid].stats.hp+delta),GetPlayerMaxHealth(playerid));
         PLAYERS[playerid].stats.hp = newhp;
     end
-    if NPCS[playerid] ~= nil then
+    if NPCS[playerid] ~= nil and NPCS[playerid].stats ~= nil and NPCS[playerid].stats.hp ~= nil then
         local newhp = math.min(math.max(0, NPCS[playerid].stats.hp+delta),GetPlayerMaxHealth(playerid));
         NPCS[playerid].stats.hp = newhp;
         if newhp < 1 then
