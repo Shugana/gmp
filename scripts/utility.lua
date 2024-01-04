@@ -153,3 +153,7 @@ function showroom(playerid, params)
         end
     end
 end
+
+function OnPlayerUpdate(playerid) 
+    debug("playerupdate on player: "..playerid);
+end
