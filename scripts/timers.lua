@@ -6,4 +6,5 @@ function startTimers()
     TIMERS.buffs = SetTimer("BuffsLoop", 100, 1);
     TIMERS.itemrespawn = SetTimer("ItemRespawnLoop", 1000, 1);
     TIMERS.hpupdate = SetTimer("HPLoop", 100, 1);
+    TIMERS.aniwatcher = SetTimer("AniWatcher", 100, 1);
 end

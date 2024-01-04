@@ -67,14 +67,18 @@ function debug(text)
 end
 
 function showAni(playerid, params)
-    if NPCS[playerid] == nil then
-        NPCS[playerid] = {
-            anitoggle = true;
-            --debug("ani observe on");
-        };
+    if (PLAYERS[playerid].anitoggle ~= nil) then
+        PLAYERS[playerid].anitoggle = nil;
     else
-        NPCS[playerid] = nil;
-        --debug("ani observe off");
+        PLAYERS[playerid].anitoggle = true;
+    end
+end
+
+function AniWatcher()
+    for playerid, _value in pairs(PLAYERS) do
+        if (PLAYERS[playerid].anitoggle ~= nil) then
+            debug(playerid.." ani -> "..GetPlayerAnimationName(playerid));
+        end
     end
 end
 
@@ -156,5 +160,11 @@ end
 
 
 function OnPlayerDeath(victimid, unused, killerid, unused2, health)
+    victimid = victimid or "NULL";
+    unused = unused or "NULL";
+    killerid = killerid or "NULL";
+    unused2 = unused2 or "NULL";
+    health = health or "NULL";
+
     debug("onplayerdeath, victimid="..victimid..", unused="..unused..", killerid="..killerid..", unused2="..unused2..", health="..health);
 end
