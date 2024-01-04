@@ -77,7 +77,17 @@ end
 function AniWatcher()
     for playerid, _value in pairs(PLAYERS) do
         if (PLAYERS[playerid].anitoggle ~= nil) then
-            debug(playerid.." ani -> "..GetPlayerAnimationName(playerid));
+            local ani = GetPlayerAnimationName(playerid);
+            local tick = GetTickCount();
+            if PLAYERS[playerid].lastani == nil or PLAYERS[playerid].lastani ~= ani then
+                local duration = 0;
+                if (PLAYERS[playerid].lastanitick ~= nil) then
+                    duration = tick - PLAYERS[playerid].lastanitick;
+                end
+                debug("player "..playerid.." switched from ani "..PLAYERS[playerid].lastani.." to "..ani..", previous ani lasted "..duration.."ms");
+            end
+            PLAYERS[playerid].lastanitick = tick;
+            PLAYERS[playerid].lastani = ani;
         end
     end
 end
