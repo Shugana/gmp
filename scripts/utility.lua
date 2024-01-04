@@ -185,11 +185,11 @@ function OnPlayerDeath(victimid, unused, killerid, unused2, health)
     debug("onplayerdeath, victimid="..victimid..", unused="..unused..", killerid="..killerid..", unused2="..unused2..", health="..health);
 end
 
-function testnewfont(playerid, params)
-    if PLAYERS[playerid].keilschrift ~= nil then
-        DestroyPlayerDraw(playerid, PLAYERS[playerid].keilschrift)
+function cuneiform(playerid, params)
+    if PLAYERS[playerid].cuneiform ~= nil then
+        DestroyPlayerDraw(playerid, PLAYERS[playerid].cuneiform)
     end
     local startx, starty = convertToPixel(200, 400);
-    PLAYERS[playerid].keilschrift = CreatePlayerDraw(playerid, startx, starty, params, FONTS.keil, 240, 240, 240);
-    ShowPlayerDraw(playerid, PLAYERS[playerid].keilschrift);
+    PLAYERS[playerid].cuneiform = CreatePlayerDraw(playerid, startx, starty, params, FONTS.keil, 240, 240, 240);
+    ShowPlayerDraw(playerid, PLAYERS[playerid].cuneiform);
 end

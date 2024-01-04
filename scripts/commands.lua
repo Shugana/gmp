@@ -266,9 +266,9 @@ COMMANDS = {
         help = "Ändert deine eigenen Stats";
         minadminlevel = ADMINRANKS.Spielleiter
     },
-    testnewfont = {
-        func = "testnewfont",
-        help = "Noch nicht verfügbar";
+    keilschrift = {
+        func = "cuneiform",
+        help = "Schreibt text in Keilschrift auf den Screen";
         minadminlevel = ADMINRANKS.Admin
     }
 };
