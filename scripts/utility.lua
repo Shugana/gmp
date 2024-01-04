@@ -71,6 +71,9 @@ function showAni(playerid, params)
         PLAYERS[playerid].anitoggle = nil;
     else
         PLAYERS[playerid].anitoggle = true;
+        PLAYERS[playerid].lastani = "NULL";
+        PLAYERS[playerid].lastanitick = GetTickCount();
+
     end
 end
 
@@ -79,7 +82,7 @@ function AniWatcher()
         if (PLAYERS[playerid].anitoggle ~= nil) then
             local ani = GetPlayerAnimationName(playerid);
             local tick = GetTickCount();
-            if PLAYERS[playerid].lastani == nil or PLAYERS[playerid].lastani ~= ani then
+            if PLAYERS[playerid].lastani ~= ani then
                 local duration = 0;
                 if (PLAYERS[playerid].lastanitick ~= nil) then
                     duration = tick - PLAYERS[playerid].lastanitick;
