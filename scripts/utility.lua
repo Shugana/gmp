@@ -88,8 +88,7 @@ function AniWatcher()
                     duration = tick - PLAYERS[playerid].lastanitick;
                 end
                 debug("player "..playerid.." switched from ani "..PLAYERS[playerid].lastani.." to "..ani..", previous ani lasted "..duration.."ms");
-                if ((PLAYERS[playerid].lastani == "T_FALLDN_2_FALL" and ani == "T_FALL_2_FALLEN") 
-                    or (PLAYERS[playerid].lastani == "T_FALLDN_2_FALLB" and ani == "T_FALLB_2_FALLENB")) then
+                if (PLAYERS[playerid].lastani == "T_FALLDN_2_FALL" or PLAYERS[playerid].lastani == "T_FALLDN_2_FALLB") then
                     debug(playerid.." has fallen for "..duration.."ms");
                 end
                 PLAYERS[playerid].lastanitick = tick;
