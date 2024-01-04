@@ -92,8 +92,8 @@ function updateMana(playerid, delta)
         SetPlayerMana(playerid, newmana);
     end
     if NPCS[playerid] ~= nil then
-        local newmana = math.min(math.max(0, NPCS[playerid].stats.hp+delta),GetPlayerMaxMana(playerid));
-        NPCS[playerid].stats.hp = newmana;
+        local newmana = math.min(math.max(0, NPCS[playerid].stats.mana+delta),GetPlayerMaxMana(playerid));
+        NPCS[playerid].stats.mana = newmana;
         SetPlayerMana(playerid, newmana);
     end
 end
@@ -172,7 +172,7 @@ function saveStats(playerid)
     if PLAYERS[playerid] == nil or PLAYERS[playerid].character == nil then
         return;
     end
-    DB_update("character_stats", {hp=PLAYERS[playerid].stats.hp, mana=PLAYERS[playerid].stats.mana}, "characterid = "..PLAYERS[playerid].character);
+    DB_update("character_stats", {hp=getHP(playerid), mana=getMana(playerid)}, "characterid = "..PLAYERS[playerid].character);
 end
 
 function changeAttribute(playerid, params)

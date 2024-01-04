@@ -105,10 +105,10 @@ function setMaxHP(playerid, amount)
 end
 
 function getHP(playerid)
-    if PLAYERS[playerid] ~= nil then
+    if PLAYERS[playerid] ~= nil and PLAYERS[playerid].stats ~= nil and PLAYERS[playerid].stats.hp ~= nil then
         return PLAYERS[playerid].stats.hp;
     end
-    if NPCS[playerid] ~= nil then
+    if NPCS[playerid] ~= nil and NPCS[playerid].stats ~= nil and NPCS[playerid].stats.hp ~= nil then
         return NPCS[playerid].stats.hp;
     end
     return 0;
