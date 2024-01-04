@@ -186,7 +186,10 @@ function OnPlayerDeath(victimid, unused, killerid, unused2, health)
 end
 
 function testnewfont(playerid, params)
-    local startx, starty = convertToPixel(600, 200);
-    local draw = CreatePlayerDraw(playerid, startx, starty, "HI, WIE GEHTS? HIER EIN ZEICHEN: A", FONTS.keil, 240, 240, 240);
-    ShowPlayerDraw(playerid, draw);
+    if PLAYERS[playerid].keilschrift ~= nil then
+        DestroyPlayerDraw(playerid, PLAYERS[playerid].keilschrift)
+    end
+    local startx, starty = convertToPixel(200, 400);
+    PLAYERS[playerid].keilschrift = CreatePlayerDraw(playerid, startx, starty, params, FONTS.keil, 240, 240, 240);
+    ShowPlayerDraw(playerid, PLAYERS[playerid].keilschrift);
 end
