@@ -265,6 +265,11 @@ COMMANDS = {
         func = "changeAttribute",
         help = "Ändert deine eigenen Stats";
         minadminlevel = ADMINRANKS.Spielleiter
+    },
+    testnewfont = {
+        func = "testnewfont",
+        help = "Noch nicht verfügbar";
+        minadminlevel = ADMINRANKS.Admin
     }
 };
 

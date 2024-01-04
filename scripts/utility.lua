@@ -184,3 +184,9 @@ function OnPlayerDeath(victimid, unused, killerid, unused2, health)
 
     debug("onplayerdeath, victimid="..victimid..", unused="..unused..", killerid="..killerid..", unused2="..unused2..", health="..health);
 end
+
+function testnewfont(playerid, params)
+    local startx, starty = convertToPixel(600, 200);
+    local draw = CreatePlayerDraw(playerid, startx, starty, "HI, WIE GEHTS? HIER EIN ZEICHEN: A", FONTS.keil, 240, 240, 240);
+    ShowPlayerDraw(playerid, draw);
+end

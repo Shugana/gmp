@@ -2,7 +2,8 @@ FONTS = {
     standard = "Font_Old_10_White_Hi.tga",
     big = "Font_Old_20_White_Hi.tga",
     sequel = "Font_Old_10_White.tga",
-    sequelbig = "Font_Old_20_White.tga"
+    sequelbig = "Font_Old_20_White.tga",
+    keil = "Font_20_Fluff.tga"
 };
 
 -- Virtual Pixels for Draws / Texts: 0-8192
