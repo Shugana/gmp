@@ -88,9 +88,9 @@ function AniWatcher()
                     duration = tick - PLAYERS[playerid].lastanitick;
                 end
                 debug("player "..playerid.." switched from ani "..PLAYERS[playerid].lastani.." to "..ani..", previous ani lasted "..duration.."ms");
+                PLAYERS[playerid].lastanitick = tick;
+                PLAYERS[playerid].lastani = ani;
             end
-            PLAYERS[playerid].lastanitick = tick;
-            PLAYERS[playerid].lastani = ani;
         end
     end
 end
