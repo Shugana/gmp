@@ -154,6 +154,7 @@ function showroom(playerid, params)
     end
 end
 
-function OnPlayerUpdate(playerid) 
-    debug("playerupdate on player: "..playerid);
+
+function OnPlayerDeath(victimid, unused, killerid, unused2, health)
+    debug("onplayerdeath, victimid="..victimid..", unused="..unused..", killerid="..killerid..", unused2="..unused2..", health="..health);
 end
