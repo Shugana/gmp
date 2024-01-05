@@ -20,7 +20,9 @@ function despawn(playerid, params)
         sendERRMessage(playerid, "NPC mit der ID "..(npcid or -1).." existiert nicht");
         return;
     end
+    local name = GetPlayerName(npcid);
     removeMonster(npcid);
+    sendINFOMessage("NPC "..name.." ("..npcid..") wurde despawned");
 end
 
 function removeMonster(npcid)
