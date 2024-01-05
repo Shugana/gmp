@@ -284,6 +284,10 @@ function deleteItem(playerid, params)
     end
     itemname, itemid = getItemIDbyName(itemname);
     amount = RemoveItemById(playerid, itemid, amount);
+    if (amount < 1) then
+        sendERRMessage(playerid, "Du hast kein "..itemname);
+        return;
+    end
     sendINFOMessage(playerid, "Du hast "..amount.."x "..itemname.." gelöscht.");
 end
 
