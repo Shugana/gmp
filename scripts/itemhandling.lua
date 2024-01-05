@@ -242,11 +242,11 @@ function deleteItemSpawn(playerid, params)
         sendERRMessage(playerid, "Gib eine Spawn-ID an");
         return;
     end
-    if not(DB_exists("item_spawns.*, items.id as itemid, items.name as name", "items, item_spawns", "item_spawns.id = "..spawnid)) then
+    if not(DB_exists("*", "item_spawns", "id = "..spawnid)) then
         sendERRMessage("Item mit der Spawn-ID "..spawnid.." existiert nicht");
         return;
     end
-    local itemspawns = DB_select("item_spawns.*, items.id as itemid, items.name as name", "items, item_spawns", "item_spawns.id = "..spawnid);
+    local itemspawns = DB_select("item_spawns.*, items.id as itemid, items.name as name", "items, item_spawns", "items.id = item_spawns.itemid AND item_spawns.id = "..spawnid);
     for _key, itemspawn in pairs(itemspawns) do
         DB_delete("item_spawns", "id="..tonumber(itemspawn.id));
         if (tonumber(itemspawn.spawned) == 1) then
