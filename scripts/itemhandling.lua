@@ -124,7 +124,7 @@ function RemoveItemById(playerid, itemid, amount)
         for _key, inventory in pairs(inventories) do
             oldamount = tonumber(inventory.amount);
         end
-        if oldamount > amount then
+        if oldamount < amount then
             amount = oldamount;
         end
         local newamount = oldamount-amount;
