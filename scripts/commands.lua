@@ -285,6 +285,16 @@ COMMANDS = {
         func = "despawn",
         help = "Despawned einen NPC mit allem Loot, den er bei sich trägt. Ist es ein RespawnNPC, wird er normal respawnen",
         minadminlevel = ADMINRANKS.Eventler
+    },
+    delete = {
+        func = "delete",
+        help = "Löscht <Item> [<Anzahl>] Items aus deinem Inventar und der DB";
+        minadminlevel = ADMINRANKS.Spieler
+    },
+    clearinventory = {
+        func = "emptyInventory",
+        help = "Löscht dein gesamtes Inventar",
+        minadminlevel = ADMINRANKS.Support
     }
 };
 

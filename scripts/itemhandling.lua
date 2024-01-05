@@ -1,40 +1,24 @@
 WORLDITEMS = {};
 
 function cheatItem(playerid, params)
-    local result, recipientid, itemnameraw, amount = sscanf(params, "dsd");
+    local result, recipientid, itemname, amount = sscanf(params, "dsd");
     if (result ~= 1) then
-        result, recipientid, itemnameraw = sscanf(params, "ds");
+        result, recipientid, itemname = sscanf(params, "ds");
         amount = 1;
         if (result ~= 1) then
             sendERRMessage(playerid, "Ungültige Eingabe: versuche /giveitem <playerid> <itemname> [<anzahl>]");
             return;
         end
     end
-    if (amount < 1) then
-        sendERRMessage(playerid, "Ungültige Eingabe: Die Anzahl darf nicht negativ sein");
-        return;
-    end
+    amount = math.max(1, amount);
     if (PLAYERS[recipientid] == nil or PLAYERS[recipientid].character == nil) then
         sendERRMessage(playerid, "Spieler mit id "..recipientid.." ist nicht verbunden.");
         return;
     end
-    itemnameraw = capitalize(itemnameraw);
-    local itemname = nil;
-    local itemid = 0;
-    local responses = DB_select("*", "items", "name = '"..itemnameraw.."'");
-    for _key, response in pairs(responses) do
-        itemname = response.name;
-        itemid = tonumber(response.id);
-    end
-    if (itemname == nil) then
-        responses = DB_select("*", "items", "name LIKE '"..itemnameraw.."%'");
-        for _key, response in pairs(responses) do
-            itemname = response.name;
-            itemid = tonumber(response.id);
-        end
-    end
-    if (itemname == nil) then
-        sendERRMessage(playerid, "Item '"..itemnameraw.."' nicht in der DB vorhanden.");
+
+    itemname, itemid = getItemIDbyName(itemname);
+    if (itemid < 0) then
+        sendERRMessage(playerid, "Item '"..itemname.."' nicht in der DB vorhanden.");
         return;
     end
 
@@ -46,6 +30,17 @@ function cheatItem(playerid, params)
         ..GetPlayerName(recipientid).."("..PLAYERS[recipientid].character..") "
         ..amount.."x "..itemname.."("..itemid..")");
     GiveItemById(recipientid, itemid, amount);
+end
+
+function getItemIDbyName(itemname)
+    itemname = capitalize(itemname);
+    local itemid = -1;
+    local responses = DB_select("*", "items", "name = '"..itemname.."'");
+    for _key, response in pairs(responses) do
+        itemname = response.name;
+        itemid = tonumber(response.id);
+    end
+    return itemname, itemid;
 end
 
 function cheatItemAll(playerid, params)
@@ -120,7 +115,7 @@ function RemoveItemById(playerid, itemid, amount)
     if PLAYERS[playerid] == nil or PLAYERS[playerid].character == nil then
         sendERRMessage(playerid, "Du solltest ein Item gelöscht bekommen, aber der Server denkt du bist nicht eingelogged. Melde dies mit Datum und Uhrzeit dem Team.")
         log("bugs", "RemoveItemById - playerid: "..playerid..", itemid: "..itemid..", amount: "..amount);
-        return
+        return 0;
     end
     local oldamount = nil;
     local items = DB_select("*", "items", "id = "..itemid);
@@ -129,10 +124,22 @@ function RemoveItemById(playerid, itemid, amount)
         for _key, inventory in pairs(inventories) do
             oldamount = tonumber(inventory.amount);
         end
-        DB_update("character_inventory", {amount=oldamount-amount}, "characterid = "..PLAYERS[playerid].character.." AND itemid = "..itemid);
+        if oldamount > amount then
+            amount = oldamount;
+        end
+        local newamount = oldamount-amount;
+        DB_update("character_inventory", {amount=newamount}, "characterid = "..PLAYERS[playerid].character.." AND itemid = "..itemid);
         RemoveItem(playerid, item.instance, amount);
-        return;
+        return amount;
     end
+    return 0;
+end
+
+function RemoveItemByName(playerid, itemname, amount)
+    local itemid;
+    itemname, itemid = getItemIDbyName(itemname);
+    amount = RemoveItemById(playerid, itemid, amount);
+    return amount;
 end
 
 function loadInventory(playerid)
@@ -266,4 +273,38 @@ function OnPlayerUseItem(playerid, itemInstance, amount, hand)
     if (itemInstance == "ITPO_HEALTH_03") then
         drinkHealPot(playerid, 100, "DATA\\TEXTURES\\DESKTOP\\SKORIP\\SKO_R_ITPO_HEALTH_03_3DS.TGA", 300);
     end
+end
+
+function deleteItem(playerid, params)
+    local itemid = -1;
+    local itemname, amount = getItemnameAndAmount(params);
+    if itemname == nil then
+        sendERRMessage(playerid, "Benutze /delete <itemname> [<anzahl>]");
+        return;
+    end
+    itemname, itemid = getItemIDbyName(itemname);
+    amount = RemoveItemById(playerid, itemid, amount);
+    sendINFOMessage(playerid, "Du hast "..amount.."x "..itemname.." gelöscht.");
+end
+
+function getItemnameAndAmount(params)
+    local itemname;
+    local amount;
+    local result;
+    result, itemname, amount = sscanf(params, "sd");
+    if result ~= 1 then
+        result, itemname = sscanf(params, "s");
+        if result ~= 1 then
+            itemname = nil;
+        end
+        amount = 1;
+    end
+    amount = math.max(1, amount);
+    return itemname, amount;
+end
+
+function emptyInventory(playerid, params)
+    DB_update("character_inventory", {amount=0}, "characterid = "..PLAYERS[playerid].character);
+    ClearInventory(playerid);
+    sendINFOMessage(playerid, "Dein Inventar wurde gelöscht");
 end
