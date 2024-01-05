@@ -275,6 +275,11 @@ COMMANDS = {
         func = "setnumpad",
         help = "Setzt ein Macro auf eine Numpadtaste",
         minadminlevel = ADMINRANKS.Spieler
+    },
+    lastcommand = {
+        func = "lastcommand",
+        help = "Nutzt das letzte Command oder Text erneut",
+        minadminlevel = ADMINRANKS.Spieler
     }
 };
 
@@ -285,6 +290,9 @@ end
 function OnPlayerCommandText(playerid, text)
     if not(text) then
         return;
+    end
+    if (PLAYERS[playerid] ~= nil) then
+        PLAYERS[playerid].lastcommand = text;
     end
     local command, params = GetCommand(text);
     if command:sub(1,1) == "/" then
@@ -298,4 +306,12 @@ function OnPlayerCommandText(playerid, text)
     else
         chat(playerid, text);
     end
+end
+
+function lastcommand(playerid, params)
+    if (PLAYERS[playerid].lastcommand == nil) then
+        sendERRMessage(playerid, "Du hast bisher noch keinen Command benutzt");
+        return;
+    end
+    OnPlayerText(playerid, PLAYERS[playerid].lastcommand)
 end
