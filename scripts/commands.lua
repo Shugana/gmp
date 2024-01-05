@@ -291,9 +291,6 @@ function OnPlayerCommandText(playerid, text)
     if not(text) then
         return;
     end
-    if (PLAYERS[playerid] ~= nil) then
-        PLAYERS[playerid].lastcommand = text;
-    end
     local command, params = GetCommand(text);
     if command:sub(1,1) == "/" then
         command = command:sub(2):lower();
@@ -305,6 +302,9 @@ function OnPlayerCommandText(playerid, text)
         _G[COMMANDS[command].func](playerid, params or "");
     else
         chat(playerid, text);
+    end
+    if (PLAYERS[playerid] ~= nil and command ~= "lastcommand") then
+        PLAYERS[playerid].lastcommand = text;
     end
 end
 
