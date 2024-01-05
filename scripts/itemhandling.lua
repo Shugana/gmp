@@ -251,7 +251,7 @@ function deleteItemSpawn(playerid, params)
         DB_delete("item_spawns", "id="..tonumber(itemspawn.id));
         if (tonumber(itemspawn.spawned) == 1) then
             for worlditemid, worlditem in pairs(WORLDITEMS) do
-                if (worlditem.spawnid == itemspawn.id) then
+                if (worlditem.spawnid == spawnid) then
                     DestroyItem(worlditemid);
                     WORLDITEMS[worlditemid] = nil;
                 end
