@@ -1,19 +1,35 @@
 WORLDMONSTERS = {};
 
 function handleDeadMonsters()
-    for npcid, dbid in pairs(WORLDMONSTERS) do
-        if(GetPlayerHealth(npcid) < 1) then
-            if (NPCS[npcid].deathTimer == nil) then
+    for npcid, npc in pairs(NPCS) do
+        if(getHP(npcid) < 1) then
+            if (npc.deathTimer == nil) then
                 NPCS[npcid].deathTimer = 120;
             end
             NPCS[npcid].deathTimer = NPCS[npcid].deathTimer -1;
-            if (NPCS[npcid].deathTimer < 1) then
-                DestroyNPC(npcid);
-                WORLDMONSTERS[npcid] = nil;
-                DB_update("monster_spawns", {spawned=0}, "id="..dbid);
+            if (npc.deathTimer < 1) then
+                removeMonster(npcid);
             end
         end
     end
+end
+
+function despawn(playerid, params)
+    local result, npcid = sscanf(params, "d");
+    if result ~= 1 or NPCS[npcid] == nil then
+        sendERRMessage(playerid, "NPC mit der ID "..(npcid or -1).." existiert nicht");
+        return;
+    end
+    removeMonster(npcid);
+end
+
+function removeMonster(npcid)
+    DestroyNPC(npcid);
+    if (WORLDMONSTERS[npcid] ~= nil) then
+        DB_update("monster_spawns", {spawned=0}, "id="..WORLDMONSTERS[npcid]);
+        WORLDMONSTERS[npcid] = nil;
+    end
+    NPCS[npcid] = nil;
 end
 
 function respawnTickMonsters()
@@ -27,7 +43,7 @@ function respawnTickMonsters()
         );
         for _key, response in pairs(responses) do
             local monsterid = spawnMonster(response.name, response.world, response.x, response.y, response.z);
-            if (monsterid < 0) then
+            if (monsterid == nil or monsterid < 0) then
                 return;
             end
             WORLDMONSTERS[monsterid] = response.id;
@@ -44,7 +60,7 @@ function spawnMonstersOnServerInit()
     );
     for _key, response in pairs(responses) do
         local monsterid = spawnMonster(response.name, response.world, response.x, response.y, response.z);
-        if (monsterid < 0) then
+        if (monsterid == nil or monsterid < 0) then
             DB_update("monster_spawns", {spawned=0}, "id="..response.id);
             return;
         end

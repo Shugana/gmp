@@ -280,6 +280,11 @@ COMMANDS = {
         func = "lastcommand",
         help = "Nutzt das letzte Command oder Text erneut",
         minadminlevel = ADMINRANKS.Spieler
+    },
+    despawn = {
+        func = "despawn",
+        help = "Despawned einen NPC mit allem Loot, den er bei sich trägt. Ist es ein RespawnNPC, wird er normal respawnen",
+        minadminlevel = ADMINRANKS.Eventler
     }
 };
 

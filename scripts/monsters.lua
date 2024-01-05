@@ -98,7 +98,7 @@ function spawnMonster(instance, world, x, y, z)
             if (tonumber(loot.chance) > rnd) then
                 table.insert(NPCS[npcid].loot, {
                     itemid = tonumber(loot.itemid),
-                    trophy = tonumber(loot.trophy), 
+                    trophy = tonumber(loot.trophy),
                     amount = tonumber(loot.amount)
                 });
             end
@@ -109,7 +109,6 @@ function spawnMonster(instance, world, x, y, z)
 end
 
 function NPCLoop()
-    local distance;
     for npcid, npc in pairs(NPCS) do
         if (getHP(npcid) > 0) then
             _G[NPCSTATES[npc.state].func](npcid);
@@ -127,10 +126,7 @@ end
 function getMonsteraniByWeaponmode(monsterid, prefix, animation)
     local weapontext = "FIST";
     local weaponmode = GetPlayerWeaponMode(monsterid);
-    if (weaponmode == WEAPON_NONE) then
-        weapontext = "FIST";
-    end
-    if (weaponmode == WEAPON_FIST) then
+    if (weaponmode == WEAPON_NONE or weaponmode == WEAPON_FIST) then
         weapontext = "FIST";
     end
     if (weaponmode == WEAPON_1H) then
