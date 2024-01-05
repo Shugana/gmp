@@ -58,7 +58,22 @@ function loginAccountById(playerid, accountid)
     for _, account in pairs(accounts) do
         PLAYERS[playerid] = {
             account = tonumber(account.id),
-            adminlevel = tonumber(account.adminlevel)
+            adminlevel = tonumber(account.adminlevel),
+            stats = {
+                hp = 1,
+                maxhp = 1,
+                mana = 0,
+                maxmana = 0,
+                protections = {
+                    blunt = 0,
+                    edge = 0,
+                    point = 0,
+                    fire = 0,
+                    water = 0,
+                    earth = 0,
+                    air = 0
+                }
+            }
         }
         if not(DB_exists("*","account_autologins", "accountid="..accountid)) then
             DB_insert("account_autologins", {accountid=accountid, mac=mac});
