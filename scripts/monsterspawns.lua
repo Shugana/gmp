@@ -22,7 +22,7 @@ function despawn(playerid, params)
     end
     local name = GetPlayerName(npcid);
     removeMonster(npcid);
-    sendINFOMessage("NPC "..name.." ("..npcid..") wurde despawned");
+    sendINFOMessage(playerid, "NPC "..name.." ("..npcid..") wurde despawned");
 end
 
 function removeMonster(npcid)
