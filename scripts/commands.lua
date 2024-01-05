@@ -287,7 +287,7 @@ COMMANDS = {
         minadminlevel = ADMINRANKS.Eventler
     },
     delete = {
-        func = "delete",
+        func = "deleteItem",
         help = "Löscht <Item> [<Anzahl>] Items aus deinem Inventar und der DB";
         minadminlevel = ADMINRANKS.Spieler
     },
