@@ -214,7 +214,7 @@ function setnumpad(playerid, params)
         return;
     end
     if not (DB_exists("*", "account_numpadmacros", "accountid="..PLAYERS[playerid].account.." AND numpadkey="..numpadkey)) then
-        DB_insert("account_numpadmacros", {accountid=PLAYERS[playerid].account, macro=mysql_escape_string(DB.HANDLER, macro)});
+        DB_insert("account_numpadmacros", {accountid=PLAYERS[playerid].account, numpadkey=numpadkey, macro=mysql_escape_string(DB.HANDLER, macro)});
     else
         DB_update("account_numpadmacros", {macro=mysql_escape_string(DB.HANDLER, macro)}, "accountid="..PLAYERS[playerid].account.." AND numpadkey="..numpadkey);
     end
