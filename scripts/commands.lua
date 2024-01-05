@@ -268,8 +268,13 @@ COMMANDS = {
     },
     keilschrift = {
         func = "cuneiform",
-        help = "Schreibt text in Keilschrift auf den Screen";
+        help = "Schreibt text in Keilschrift auf den Screen",
         minadminlevel = ADMINRANKS.Admin
+    },
+    numpadtaste = {
+        func = "setnumpad",
+        help = "Setzt ein Macro auf eine Numpadtaste",
+        minadminlevel = ADMINRANKS.Spieler
     }
 };
 

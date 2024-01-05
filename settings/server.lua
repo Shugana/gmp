@@ -94,8 +94,35 @@ function OnPlayerKey(playerid, keyDown, keyUp)
     clearMenu(playerid);
     unfreeze(playerid, "mobsi");
     end
-    if (keyDown == KEY_F3) then
-        huntingCheck(playerid);
+    if (keyDown == KEY_NUMPAD0) then
+        callNumpad(playerid, 0);
+    end
+    if (keyDown == KEY_NUMPAD1) then
+        callNumpad(playerid, 1);
+    end
+    if (keyDown == KEY_NUMPAD2) then
+        callNumpad(playerid, 2);
+    end
+    if (keyDown == KEY_NUMPAD3) then
+        callNumpad(playerid, 3);
+    end
+    if (keyDown == KEY_NUMPAD4) then
+        callNumpad(playerid, 4);
+    end
+    if (keyDown == KEY_NUMPAD5) then
+        callNumpad(playerid, 5);
+    end
+    if (keyDown == KEY_NUMPAD6) then
+        callNumpad(playerid, 6);
+    end
+    if (keyDown == KEY_NUMPAD7) then
+        callNumpad(playerid, 7);
+    end
+    if (keyDown == KEY_NUMPAD8) then
+        callNumpad(playerid, 8);
+    end
+    if (keyDown == KEY_NUMPAD9) then
+        callNumpad(playerid, 9);
     end
 end
 

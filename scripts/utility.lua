@@ -193,3 +193,30 @@ function cuneiform(playerid, params)
     PLAYERS[playerid].cuneiform = CreatePlayerDraw(playerid, startx, starty, params, FONTS.keil, 240, 240, 240);
     ShowPlayerDraw(playerid, PLAYERS[playerid].cuneiform);
 end
+
+function callNumpad(playerid, numpadkey)
+    local command = "/wurf";
+    local macros = DB_select("*", "accounts_numpadmacros", "accountid="..PLAYERS[playerid].account.." AND numpadkey="..numpadkey);
+    for _key, macro in pairs(macros) do
+        command = macro.macro;
+    end
+    OnPlayerText(playerid, command);
+end
+
+function setnumpad(playerid, params)
+    local result, numpadkey, macro = sscanf(params, "ds");
+    if result ~= 1 then
+        sendERRMessage(playerid, "Du musst ein Macro in folgender Form speichern /numpadtaste <Zahl> <Macro>");
+        return;
+    end
+    if numpadkey < 0 or numpadkey > 9 then
+        sendERRMessage(playerid, "Hast du ein Numpad was größer ist als 0 bis 9?");
+        return;
+    end
+    if not (DB_exists("*", "accounts_numpadmacros", "accountid="..PLAYERS[playerid].account.." AND numpadkey="..numpadkey)) then
+        DB_insert("accounts_numpadmacros", {accountid=PLAYERS[playerid].account, macro=mysql_escape_string(DB.HANDLER, macro)});
+    else
+        DB_update("accounts_numpadmacros", {macro=mysql_escape_string(DB.HANDLER, macro)}, "accountid="..PLAYERS[playerid].account.." AND numpadkey="..numpadkey);
+    end
+    sendINFOMessage(playerid, "Nunmpadtaste "..numpadkey.." löst nun bei dir folgendes aus: '"..macro.."'");
+end
