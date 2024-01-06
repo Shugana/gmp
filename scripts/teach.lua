@@ -170,7 +170,7 @@ function gainXP(playerid, xp)
     end
     local characters = DB_select("*", "character_stats", "characterid = "..PLAYERS[playerid].character);
     for _key, character in pairs(characters) do
-        DB_update("player_stats", {xp=tonumber(character.xp)+xp}, "characterid = "..PLAYERS[playerid].character);
+        DB_update("character_stats", {xp=tonumber(character.xp)+xp}, "characterid = "..PLAYERS[playerid].character);
         return;
     end
 end
