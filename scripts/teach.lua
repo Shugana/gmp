@@ -1,5 +1,6 @@
 XPPERLP = 400;
 DAILYLP = 4;
+LASTLPLOOP = 0;
 
 LEVELUPSOUND = CreateSound("LEVELUP.WAV");
 
@@ -135,7 +136,7 @@ function gainLP(playerid, lp, free)
     for _key, character in pairs(characters) do
         local xp = tonumber(character.xp);
         local lpToday = tonumber(character.lptoday);
-        local lpExpected = math.max(DAILYLP, math.floor(xp/XPPERLP));
+        local lpExpected = math.min(DAILYLP, math.floor(xp/XPPERLP));
         local dbLP = tonumber(character.lp);
         if (free == true) then
             DB_update("character_stats", {lp=dbLP+lp}, "characterid = "..PLAYERS[playerid].character);
@@ -151,7 +152,7 @@ function gainLP(playerid, lp, free)
             DB_update("character_stats", {lptoday=lpToday+lp, lp=dbLP+lp}, "characterid = "..PLAYERS[playerid].character);
             SetPlayerLearnPoints(playerid, dbLP+lp);
             PlaySound(playerid, LEVELUPSOUND);
-            sendINFOMessage(playerid, "Du hast einen Lernpunkt erhalten. Nun hast du "..(dbLP+lp).." Lernpunkte. Damit hast du für heute "..(lpToday+lp).."/"..DAILYLP.." Lernpunkte erhalten.");
+            sendINFOMessage(playerid, "Du hast einen Lernpunkt erhalten. Nun hast du "..(dbLP+lp).." Lernpunkte. Heute hast du "..(lpToday+lp).."/"..DAILYLP.." Lernpunkte erhalten.");
             return true;
         end
     end

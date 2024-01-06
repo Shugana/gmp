@@ -10,7 +10,8 @@ function OnServerWorldTime(oldHour, oldMinute, newHour, newMinute)
     if (rlHour == 0 and rlMinute == 0) then
         resetLPCap();
     end
-    if (rlMinute%15 == 5) then
+    if (rlMinute ~= LASTLPLOOP and rlMinute%15 == 5) then
+        LASTLPLOOP = rlMinute;
         gainLPLoop();
     end
 end
