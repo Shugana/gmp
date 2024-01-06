@@ -1,3 +1,8 @@
+XPPERLP = 400;
+DAILYLP = 4;
+
+LEVELUPSOUND = CreateSound("LEVELUP.WAV");
+
 function teachsimulator(playerid, params)
     local result, lp = sscanf(params, "d");
     if (result ~= 1) then
@@ -64,9 +69,6 @@ function teachmenu(playerid)
     end
 end
 
-
-LEVELUPSOUND = CreateSound("LEVELUP.WAV");
-
 function teach(playerid, args)
     DB_update("character_stats", {
         [args.stat]=args.oldstat+1,
@@ -105,8 +107,6 @@ function getNextTeachCost(playerid)
     };
 end
 
-
-
 function PlaySound(playerid, sound)
 	local x, y, z = GetPlayerPos(playerid)
 	for listener, _ in pairs(PLAYERS) do
@@ -116,4 +116,61 @@ function PlaySound(playerid, sound)
             end
 		end
 	end
+end
+
+function gainLPLoop()
+    for playerid, player in pairs(PLAYERS) do
+        if (PLAYERS[playerid] ~= nil and PLAYERS[playerid].character ~= nil) then
+            gainLP(playerid, 1, false);
+        end
+    end
+end
+
+function gainLP(playerid, lp, free)
+    lp = math.max(1, lp);
+    if (PLAYERS[playerid] == nil or PLAYERS[playerid].character == nil) then
+        return false;
+    end
+    local characters = DB_select("*", "character_stats", "characterid = "..PLAYERS[playerid].character);
+    for _key, character in pairs(characters) do
+        local xp = tonumber(character.xp);
+        local lpToday = tonumber(character.lptoday);
+        local lpExpected = math.max(DAILYLP, math.floor(xp/XPPERLP));
+        local dbLP = tonumber(character.lp);
+        if (free == true) then
+            DB_update("character_stats", {lp=dbLP+lp}, "characterid = "..PLAYERS[playerid].character);
+            SetPlayerLearnPoints(playerid, dbLP+lp);
+            PlaySound(playerid, LEVELUPSOUND);
+            sendINFOMessage(playerid, "Dir wurden "..lp.." geschenkt.Nun hast du "..(dbLP+lp).." Lernpunkte. Dies hat keinen Einfluss auf dein tägliches Limit für heute "..(lpToday).."/"..DAILYLP);
+            return true;
+        end
+        if (lpToday < lpExpected) then
+            if (lpToday + lp > DAILYLP) then
+                lp = DAILYLP - lpToday;
+            end
+            DB_update("character_stats", {lptoday=lpToday+lp, lp=dbLP+lp}, "characterid = "..PLAYERS[playerid].character);
+            SetPlayerLearnPoints(playerid, dbLP+lp);
+            PlaySound(playerid, LEVELUPSOUND);
+            sendINFOMessage(playerid, "Du hast einen Lernpunkt erhalten. Nun hast du "..(dbLP+lp).." Lernpunkte. Damit hast du für heute "..(lpToday+lp).."/"..DAILYLP.." Lernpunkte erhalten.");
+            return true;
+        end
+    end
+    return true;
+end
+
+function resetLPCap()
+    debug("LP Daily Reset");
+    DB_update("character_stats", {lptoday=0, xp=0}, "1");
+end
+
+function gainXP(playerid, xp)
+    debug(playerid.." gained "..xp.." XP");
+    if (PLAYERS[playerid] == nil or PLAYERS[playerid].character == nil or xp < 1) then
+        return;
+    end
+    local characters = DB_select("*", "character_stats", "characterid = "..PLAYERS[playerid].character);
+    for _key, character in pairs(characters) do
+        DB_update("player_stats", {xp=tonumber(character.xp)+xp}, "characterid = "..PLAYERS[playerid].character);
+        return;
+    end
 end

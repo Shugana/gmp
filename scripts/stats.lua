@@ -1,7 +1,3 @@
-XPPERLEVEL = 500;
-BASEHP = 400;
-HPPERLEVEL = 50;
-
 STATFUNCTIONS = {
     get = {
         str = {"GetPlayerStrength", nil},
@@ -127,11 +123,9 @@ function loadStats(playerid)
     end
     local responses = DB_select("*", "character_stats", "characterid = "..PLAYERS[playerid].character);
     for _key, response in pairs(responses) do
-        local lvl = math.floor(tonumber(response.xp)/XPPERLEVEL);
         SetPlayerLearnPoints(playerid, tonumber(response.lp));
-        SetPlayerLevel(playerid, lvl);
-        SetPlayerExperience(playerid, tonumber(response.xp)%XPPERLEVEL);
-        SetPlayerMaxHealth(playerid, BASEHP+HPPERLEVEL*lvl);
+        SetPlayerLevel(playerid, 0);
+        SetPlayerMaxHealth(playerid, tonumber(response.maxhp));
         SetPlayerHealth(playerid, tonumber(response.hp));
         SetPlayerMagicLevel(playerid, tonumber(response.circle))
         SetPlayerMaxMana(playerid, tonumber(response.maxmana));
@@ -144,9 +138,10 @@ function loadStats(playerid)
         SetPlayerSkillWeapon (playerid, SKILL_CBOW, tonumber(response.crossbow));
         PLAYERS[playerid].stats = {
             hp = tonumber(response.hp),
-            maxhp = tonumber(BASEHP+HPPERLEVEL*lvl),
+            maxhp = tonumber(response.maxhp),
             mana = tonumber(response.mana),
             maxmana = tonumber(response.maxmana),
+            xp = tonumber(response.xp),
             protections = {
                 blunt = 0,
                 edge = 0,

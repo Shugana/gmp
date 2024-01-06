@@ -137,6 +137,9 @@ function sendChatToArea(playerid, command, range, text, colors);
     local listeners = table.concat(hearrange, ", ");
     local logtext = GetPlayerName(playerid).."("..PLAYERS[playerid].character..") "..command.." > ("..listeners..") "..text;
     log("chat", logtext);
+    if (#text > 0) then
+        gainXP(playerid, #text);
+    end;
 end
 
 function roll(playerid, params)
