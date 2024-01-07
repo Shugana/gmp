@@ -190,6 +190,11 @@ function newCharacter(playerid, params)
         sendERRMessage(playerid, "Charaktererstellung fehlgeschlagen.");
         return;
     end
+    local character_equip_id = DB_insert("character_equips", {characterid=character_id});
+    if (character_equip_id < 0) then
+        sendERRMessage(playerid, "Charaktererstellung fehlgeschlagen.");
+        return;
+    end
     switchCharakter(playerid, params);
     createStats(playerid);
     createJobs(playerid);
@@ -253,6 +258,7 @@ function loadChar(playerid)
     loadPosition(playerid);
     loadStats(playerid);
     loadInventory(playerid);
+    loadEquip(playerid);
 end
 
 function savePosition(playerid)
@@ -317,4 +323,71 @@ function tryAutologinCharacter(playerid)
         switchCharacterById(playerid, response.characterid);
         return;
     end
+end
+
+function loadEquip(playerid)
+    local equips = DB_select("*",
+        "character_equips",
+        "characterid = "..PLAYERS[playerid].character);
+    for _key, equip in pairs(responses) do
+        local meleeid = tonumber(equip.melee);
+        local rangedid = tonumber(equip.ranged);
+        local armorid = tonumber(equip.armor);
+        local spellid = tonumber(equip.spell);
+        if (meleeid ~= 0) then
+            local melees = DB_select("*", "items", "itemid = "..meleeid);
+            for _key, melee in pairs(melees) do
+                RemoveItem(playerid, melee.instance, 1);
+                EquipMeleeWeapon(playerid, melee.instance);
+            end
+        end
+        if (rangedid ~= 0) then
+            local rangeds = DB_select("*", "items", "itemid = "..rangedid);
+            for _key, ranged in pairs(rangeds) do
+                RemoveItem(playerid, ranged.instance, 1);
+                EquipRangedWeapon(playerid, ranged.instance);
+            end
+        end
+        if (armorid ~= 0) then
+            local armors = DB_select("*", "items", "itemid = "..armorid);
+            for _key, armor in pairs(armors) do
+                RemoveItem(playerid, armor.instance, 1);
+                EquipArmor(playerid, armor.instance);
+            end
+        end
+        if (spellid ~= 0) then
+            local spells = DB_select("*", "items", "itemid = "..spellid);
+            for _key, spell in pairs(spells) do
+                RemoveItem(playerid, spell.instance, 1);
+                EquipItem(playerid, spell.instance);
+            end
+        end
+    end
+end
+
+function OnPlayerChangeMeleeWeapon(playerid, newWeapon, _oldWeapon)
+    local itemid = 0;
+    local items = DB_select("*", "items", "instance="..newWeapon);
+    for _key, item in pairs(items) do
+       itemid = tonumber(item.id);
+    end
+    DB_update("character_equips", {melee=itemid}, "characterid="..PLAYERS[playerid].character);
+end
+
+function OnPlayerChangeRangedWeapon(playerid, newWeapon, _oldWeapon)
+    local itemid = 0;
+    local items = DB_select("*", "items", "instance="..newWeapon);
+    for _key, item in pairs(items) do
+       itemid = tonumber(item.id);
+    end
+    DB_update("character_equips", {ranged=itemid}, "characterid="..PLAYERS[playerid].character);
+end
+
+function OnPlayerChangeArmor(playerid, newArmor, _oldArmor)
+    local itemid = 0;
+    local items = DB_select("*", "items", "instance="..newArmor);
+    for _key, item in pairs(items) do
+       itemid = tonumber(item.id);
+    end
+    DB_update("character_equips", {armor=itemid}, "characterid="..PLAYERS[playerid].character);
 end
