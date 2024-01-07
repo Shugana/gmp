@@ -370,7 +370,7 @@ function OnPlayerChangeMeleeWeapon(playerid, newWeapon, _oldWeapon)
         return;
     end
     local itemid = 0;
-    local items = DB_select("*", "items", "instance="..newWeapon);
+    local items = DB_select("*", "items", "instance='"..newWeapon.."'");
     for _key, item in pairs(items) do
        itemid = tonumber(item.id);
     end
@@ -382,7 +382,7 @@ function OnPlayerChangeRangedWeapon(playerid, newWeapon, _oldWeapon)
         return;
     end
     local itemid = 0;
-    local items = DB_select("*", "items", "instance="..newWeapon);
+    local items = DB_select("*", "items", "instance='"..newWeapon.."'");
     for _key, item in pairs(items) do
        itemid = tonumber(item.id);
     end
@@ -394,7 +394,7 @@ function OnPlayerChangeArmor(playerid, newArmor, _oldArmor)
         return;
     end
     local itemid = 0;
-    local items = DB_select("*", "items", "instance="..newArmor);
+    local items = DB_select("*", "items", "instance='"..newArmor.."'");
     for _key, item in pairs(items) do
        itemid = tonumber(item.id);
     end
