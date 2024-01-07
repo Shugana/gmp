@@ -360,7 +360,7 @@ function loadEquip(playerid)
             if (spellid ~= 0) then
                 local spells = DB_select("items.*, character_inventory.amount", "items, character_inventory", "character_inventory.itemid = items.id AND items.id = "..spellid.." AND character_inventory.characterid = "..PLAYERS[playerid].character);
                 for _key, spell in pairs(spells) do
-                    local amount = tonumber(spells.amount);
+                    local amount = tonumber(spell.amount);
                     RemoveItem(playerid, spell.instance, amount);
                     EquipItem(playerid, spell.instance);
                     GiveItem(playerid, spell.instance, amount-1);
