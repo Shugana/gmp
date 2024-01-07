@@ -222,8 +222,8 @@ function setnumpad(playerid, params)
 end
 
 function invis(playerid, PARAMS)
+    saveChar(playerid);
     local instance = "PC_GHOST";
-    local bodyModel, bodyTextureID, headModel, headTextureID = GetPlayerAdditionalVisual(playerid);
     local prefix = "Du bist nun ";
     local infix = "";
     local suffix = "unsichtbar"
@@ -236,7 +236,6 @@ function invis(playerid, PARAMS)
         SetPlayerStreamable(playerid, 0);
         PLAYERS[playerid].invis = true;
     end
-    SetPlayerInstance(playerid, instance);
-    SetPlayerAdditionalVisual(playerid, bodyModel, bodyTextureID, headModel, headTextureID);
+    loadChar(playerid, instance);
     sendINFOMessage(playerid, prefix..infix..suffix);
 end

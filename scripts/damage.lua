@@ -286,7 +286,7 @@ function ressurect(playerid, hp);
     if (PLAYERS[playerid] ~= nil and IsDead(playerid)) then
         saveChar(playerid);
         SpawnPlayer(playerid, GetPlayerPos(playerid));
-        loadChar(playerid);
+        loadChar(playerid, "PC_HERO");
         PlayAnimation(playerid, "T_JUMPB");
         unfreeze(playerid, "dead");
     end

@@ -241,7 +241,7 @@ function switchCharacterById(playerid, characterid)
         clearMenu(playerid);
         saveChar(playerid)
         PLAYERS[playerid].character = response.id;
-        loadChar(playerid);
+        loadChar(playerid, "PC_HERO");
         sendINFOMessage(playerid, "Erfolgreich auf Charakter '"..response.name.."' gewechselt.");
         return;
     end
@@ -252,9 +252,9 @@ function saveChar(playerid)
     saveStats(playerid);
 end
 
-function loadChar(playerid)
+function loadChar(playerid, instance)
     ClearInventory(playerid);
-    loadFace(playerid);
+    loadFace(playerid, instance);
     loadPosition(playerid);
     loadStats(playerid);
     loadInventory(playerid);
@@ -294,12 +294,12 @@ function loadPosition(playerid)
     end
 end
 
-function loadFace(playerid)
+function loadFace(playerid, instance)
     if (PLAYERS[playerid].character == nil) then
         sendERRMessage(playerid, "Face Laden fehlgeschlagen.");
         return;
     end
-    SetPlayerInstance(playerid, "PC_HERO");
+    SetPlayerInstance(playerid, instance);
     local responses = DB_select("*", "characters", "accountid = "..PLAYERS[playerid].account.." AND id = "..PLAYERS[playerid].character);
     for _key, response in pairs(responses) do
         PLAYERS[playerid].character = response.id;
