@@ -220,3 +220,23 @@ function setnumpad(playerid, params)
     end
     sendINFOMessage(playerid, "Nunmpadtaste "..numpadkey.." löst nun bei dir folgendes aus: '"..macro.."'");
 end
+
+function invis(playerid, PARAMS)
+    local instance = "PC_GHOST";
+    local bodyModel, bodyTextureID, headModel, headTextureID = GetPlayerAdditionalVisual(playerid);
+    local prefix = "Du bist nun ";
+    local infix = "";
+    local suffix = "unsichtbar"
+    if (PLAYERS[playerid].invis ~= nil) then
+        instance = "PC_HERO";
+        infix = "nicht mehr ";
+        SetPlayerStreamable(playerid, 1);
+        PLAYERS[playerid].invis = nil;
+    else
+        SetPlayerStreamable(playerid, 0);
+        PLAYERS[playerid].invis = true;
+    end
+    SetPlayerInstance(playerid, instance);
+    SetPlayerAdditionalVisual(playerid, bodyModel, bodyTextureID, headModel, headTextureID);
+    sendINFOMessage(playerid, prefix..infix..suffix);
+end

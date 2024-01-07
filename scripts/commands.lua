@@ -295,6 +295,11 @@ COMMANDS = {
         func = "emptyInventory",
         help = "Löscht dein gesamtes Inventar",
         minadminlevel = ADMINRANKS.Support
+    },
+    invis = {
+        func = "invis",
+        help = "Setzt dir Unsichtbarkeitsstatus oder entfernt diesen wieder",
+        minadminlevel = ADMINRANKS.Eventler
     }
 };
 
