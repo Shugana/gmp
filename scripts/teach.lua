@@ -160,12 +160,10 @@ function gainLP(playerid, lp, free)
 end
 
 function resetLPCap()
-    debug("LP Daily Reset");
     DB_update("character_stats", {lptoday=0, xp=0}, "1");
 end
 
 function gainXP(playerid, xp)
-    debug(playerid.." gained "..xp.." XP");
     if (PLAYERS[playerid] == nil or PLAYERS[playerid].character == nil or xp < 1) then
         return;
     end

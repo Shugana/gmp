@@ -331,9 +331,6 @@ function loadEquip(playerid)
         "characterid = "..PLAYERS[playerid].character);
     for _key, equip in pairs(equips) do
         local meleeid = tonumber(equip.melee);
-        local rangedid = tonumber(equip.ranged);
-        local armorid = tonumber(equip.armor);
-        local spellid = tonumber(equip.spell);
         if (meleeid ~= 0) then
             local melees = DB_select("*", "items", "id = "..meleeid);
             for _key, melee in pairs(melees) do
@@ -341,6 +338,7 @@ function loadEquip(playerid)
                 EquipMeleeWeapon(playerid, melee.instance);
             end
         end
+        local rangedid = tonumber(equip.ranged);
         if (rangedid ~= 0) then
             local rangeds = DB_select("*", "items", "id = "..rangedid);
             for _key, ranged in pairs(rangeds) do
@@ -348,6 +346,7 @@ function loadEquip(playerid)
                 EquipRangedWeapon(playerid, ranged.instance);
             end
         end
+        local armorid = tonumber(equip.armor);
         if (armorid ~= 0) then
             local armors = DB_select("*", "items", "id = "..armorid);
             for _key, armor in pairs(armors) do
@@ -355,13 +354,21 @@ function loadEquip(playerid)
                 EquipArmor(playerid, armor.instance);
             end
         end
-        if (spellid ~= 0) then
-            local spells = DB_select("*", "items", "id = "..spellid);
-            for _key, spell in pairs(spells) do
-                RemoveItem(playerid, spell.instance, 1);
-                EquipItem(playerid, spell.instance);
+        PLAYERS[playerid].spellslots = {};
+        for slot=4,10 do
+            local spellid = tonumber(equip["spellslot"..slot]);
+            if (spellid ~= 0) then
+                local spells = DB_select("*", "items", "id = "..spellid);
+                for _key, spell in pairs(spells) do
+                    RemoveItem(playerid, spell.instance, 1);
+                    EquipItem(playerid, spell.instance);
+                    PLAYERS[playerid].spellslots[spell.instance] = slot;
+                    PLAYERS[playerid].spellslots[slot] = spell.instance;
+                end
             end
         end
+         
+
     end
 end
 
@@ -399,4 +406,29 @@ function OnPlayerChangeArmor(playerid, newArmor, _oldArmor)
        itemid = tonumber(item.id);
     end
     DB_update("character_equips", {armor=itemid}, "characterid="..PLAYERS[playerid].character);
+end
+
+function OnPlayerEquipRune(playerid, isActive, iteminstance)
+    local itemid = 0;
+    local slot = 4;
+    if (PLAYERS[playerid].spellslots[iteminstance] ~= nil) then
+        slot = PLAYERS[playerid].spellslots[iteminstance];
+    end
+    if (isActive == 1) then
+        slot = 4;
+        while PLAYERS[playerid].spellslots[slot] ~= nil do
+            slot = slot+1;
+        end
+        local items = DB_select("*", "items", "instance='"..iteminstance.."'");
+        for _key, item in pairs(items) do
+            itemid = tonumber(item.id);
+        end
+        PLAYERS[playerid].spellslots[slot] = iteminstance;
+        PLAYERS[playerid].spellslots[iteminstance] = slot;
+    end
+    if (isActive == 0) then
+        PLAYERS[playerid].spellslots[slot] = nil;
+        PLAYERS[playerid].spellslots[iteminstance] = nil;
+    end
+    DB_update("character_equips", {["spellslot"..slot]=itemid}, "characterid="..PLAYERS[playerid].character);
 end
