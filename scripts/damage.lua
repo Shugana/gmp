@@ -55,7 +55,7 @@ end
 
 function HPLoop()
     for playerid, _value in pairs(PLAYERS) do
-        if (GetPlayerHealth(playerid) ~= PLAYERS[playerid].stats.hp) then
+        if (PLAYERS[playerid].stats ~= nil and PLAYERS[playerid].stats.hp ~= nil and GetPlayerHealth(playerid) ~= PLAYERS[playerid].stats.hp) then
             SetPlayerHealth(playerid, PLAYERS[playerid].stats.hp);
         end
     end
