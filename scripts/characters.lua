@@ -335,28 +335,28 @@ function loadEquip(playerid)
         local armorid = tonumber(equip.armor);
         local spellid = tonumber(equip.spell);
         if (meleeid ~= 0) then
-            local melees = DB_select("*", "items", "itemid = "..meleeid);
+            local melees = DB_select("*", "items", "id = "..meleeid);
             for _key, melee in pairs(melees) do
                 RemoveItem(playerid, melee.instance, 1);
                 EquipMeleeWeapon(playerid, melee.instance);
             end
         end
         if (rangedid ~= 0) then
-            local rangeds = DB_select("*", "items", "itemid = "..rangedid);
+            local rangeds = DB_select("*", "items", "id = "..rangedid);
             for _key, ranged in pairs(rangeds) do
                 RemoveItem(playerid, ranged.instance, 1);
                 EquipRangedWeapon(playerid, ranged.instance);
             end
         end
         if (armorid ~= 0) then
-            local armors = DB_select("*", "items", "itemid = "..armorid);
+            local armors = DB_select("*", "items", "id = "..armorid);
             for _key, armor in pairs(armors) do
                 RemoveItem(playerid, armor.instance, 1);
                 EquipArmor(playerid, armor.instance);
             end
         end
         if (spellid ~= 0) then
-            local spells = DB_select("*", "items", "itemid = "..spellid);
+            local spells = DB_select("*", "items", "id = "..spellid);
             for _key, spell in pairs(spells) do
                 RemoveItem(playerid, spell.instance, 1);
                 EquipItem(playerid, spell.instance);
