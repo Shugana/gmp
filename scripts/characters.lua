@@ -358,10 +358,12 @@ function loadEquip(playerid)
         for slot=4,10 do
             local spellid = tonumber(equip["spellslot"..slot]);
             if (spellid ~= 0) then
-                local spells = DB_select("*", "items", "id = "..spellid);
+                local spells = DB_select("items.*, character_inventory.amount", "items, character_inventory", "character_inventory.itemid = items.id AND items.id = "..spellid.." AND character_inventory.characterid = "..PLAYERS[playerid].character);
                 for _key, spell in pairs(spells) do
-                    RemoveItem(playerid, spell.instance, 1);
+                    local amount = tonumber(spells.amount);
+                    RemoveItem(playerid, spell.instance, amount);
                     EquipItem(playerid, spell.instance);
+                    GiveItem(playerid, spell.instance, amount-1);
                 end
             end
         end
