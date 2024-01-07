@@ -362,13 +362,9 @@ function loadEquip(playerid)
                 for _key, spell in pairs(spells) do
                     RemoveItem(playerid, spell.instance, 1);
                     EquipItem(playerid, spell.instance);
-                    PLAYERS[playerid].spellslots[spell.instance] = slot;
-                    PLAYERS[playerid].spellslots[slot] = spell.instance;
                 end
             end
         end
-         
-
     end
 end
 
