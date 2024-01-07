@@ -329,7 +329,7 @@ function loadEquip(playerid)
     local equips = DB_select("*",
         "character_equips",
         "characterid = "..PLAYERS[playerid].character);
-    for _key, equip in pairs(responses) do
+    for _key, equip in pairs(equips) do
         local meleeid = tonumber(equip.melee);
         local rangedid = tonumber(equip.ranged);
         local armorid = tonumber(equip.armor);
