@@ -300,6 +300,11 @@ COMMANDS = {
         func = "invis",
         help = "Setzt dir Unsichtbarkeitsstatus oder entfernt diesen wieder",
         minadminlevel = ADMINRANKS.Eventler
+    },
+    tier = {
+        func = "changeCharInstance",
+        help = "Verwandelt dich in ein Tier",
+        minadminlevel = ADMINRANKS.Eventler
     }
 };
 

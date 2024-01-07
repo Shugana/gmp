@@ -254,11 +254,12 @@ end
 
 function loadChar(playerid, instance)
     ClearInventory(playerid);
+    SetPlayerInstance(playerid, instance);
     loadFace(playerid, instance);
     loadPosition(playerid);
     loadStats(playerid);
     loadInventory(playerid);
-    loadEquip(playerid);
+    loadEquip(playerid, instance);
 end
 
 function savePosition(playerid)
@@ -299,7 +300,9 @@ function loadFace(playerid, instance)
         sendERRMessage(playerid, "Face Laden fehlgeschlagen.");
         return;
     end
-    SetPlayerInstance(playerid, instance);
+    if (instance ~= "PC_HERO" and instance ~= "PC_GHOST") then
+        return;
+    end
     local responses = DB_select("*", "characters", "accountid = "..PLAYERS[playerid].account.." AND id = "..PLAYERS[playerid].character);
     for _key, response in pairs(responses) do
         PLAYERS[playerid].character = response.id;
@@ -325,7 +328,10 @@ function tryAutologinCharacter(playerid)
     end
 end
 
-function loadEquip(playerid)
+function loadEquip(playerid, instance)
+    if (instance ~= "PC_HERO" and instance ~= "PC_GHOST") then
+        return;
+    end
     local equips = DB_select("*",
         "character_equips",
         "characterid = "..PLAYERS[playerid].character);
@@ -429,4 +435,23 @@ function OnPlayerEquipRune(playerid, isActive, iteminstance)
         PLAYERS[playerid].spellslots[iteminstance] = nil;
     end
     DB_update("character_equips", {["spellslot"..slot]=itemid}, "characterid="..PLAYERS[playerid].character);
+end
+
+function changeCharInstance(playerid, params)
+    local result, monsterinstance = sscanf(params, "s");
+    if (result ~= 1) then
+        sendERRMessage(playerid, "Benutze /tier <Tiername>");
+        return;
+    end
+    monsterinstance = capitalize(monsterinstance);
+    if not(DB_exists("*", "monsters", "name = '"..monsterinstance.."'")) then
+        sendERRMessage(playerid, "Tier '"..monsterinstance.."' nicht in der Datenbank");
+        return;
+    end
+    saveChar(playerid);
+    local monsters = DB_select("*", "monsters", "name = '"..monsterinstance.."'");
+    for _key, monster in pairs(monsters) do
+        loadChar(playerid, monster.instance);
+        return;
+    end
 end
