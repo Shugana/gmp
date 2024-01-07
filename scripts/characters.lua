@@ -366,6 +366,9 @@ function loadEquip(playerid)
 end
 
 function OnPlayerChangeMeleeWeapon(playerid, newWeapon, _oldWeapon)
+    if PLAYERS[playerid] == nil then
+        return;
+    end
     local itemid = 0;
     local items = DB_select("*", "items", "instance="..newWeapon);
     for _key, item in pairs(items) do
@@ -375,6 +378,9 @@ function OnPlayerChangeMeleeWeapon(playerid, newWeapon, _oldWeapon)
 end
 
 function OnPlayerChangeRangedWeapon(playerid, newWeapon, _oldWeapon)
+    if PLAYERS[playerid] == nil then
+        return;
+    end
     local itemid = 0;
     local items = DB_select("*", "items", "instance="..newWeapon);
     for _key, item in pairs(items) do
@@ -384,6 +390,9 @@ function OnPlayerChangeRangedWeapon(playerid, newWeapon, _oldWeapon)
 end
 
 function OnPlayerChangeArmor(playerid, newArmor, _oldArmor)
+    if PLAYERS[playerid] == nil then
+        return;
+    end
     local itemid = 0;
     local items = DB_select("*", "items", "instance="..newArmor);
     for _key, item in pairs(items) do
